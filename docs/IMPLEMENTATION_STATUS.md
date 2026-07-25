@@ -10,11 +10,12 @@ No real payments, TON, FabricBot writes, real partner payouts, real promo codes,
 
 ## Current Stage
 
-Stage 2 hardened. Moving to Stage 3 hardening next.
+Stage 3 hardened. Moving to Stage 4 asset expansion next.
 
 - Stage 1: Foundation and Our Room.
 - Stage 2: First game economy.
 - Stage 3: AtlasRepo Community Loop.
+- Stage 4: Asset System expansion.
 
 ## Completed
 
@@ -39,6 +40,10 @@ Stage 2 hardened. Moving to Stage 3 hardening next.
 - Offline income recap.
 - Local resource transaction journal.
 - AtlasRepo First Scan mission.
+- Clear AtlasRepo mission states: answering, ready, claimed.
+- Atlas Rank derived from Contribution.
+- Contribution event history.
+- Correct-answer bonus for the First Scan.
 - Atlas Fragment and reward preview.
 - Interactive mocks: Want2View, Network Terminal, Funding Hub, YouTube Wall, Reward Vault, Ecosystem Goal.
 - Locked previews: My Room, Network City, Create Project, TON Layer, Partner Marketplace.
@@ -99,12 +104,14 @@ Screenshots:
 - `output/playwright/atlas-flow-completed.png`
 - `output/playwright/profile-progress.png`
 - `output/playwright/factory-generator-upgrade.png`
+- `output/playwright/atlas-rank-history.png`
+- `output/playwright/profile-rank-history.png`
 
 ## Next Stage
 
-Harden Stage 3:
+Harden Stage 4:
 
-- Atlas Rank;
-- contribution history;
-- clearer mission states;
-- reward preview progression.
+- Expand assets beyond the first hardware set;
+- add asset list/index behavior;
+- connect digital assets, subscriptions and products into the same inspection model;
+- keep all real values and rewards mock-only.

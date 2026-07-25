@@ -678,6 +678,30 @@ button {
   gap: 8px;
 }
 
+.repo-heading,
+.rank-header,
+.contribution-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+
+.repo-heading span,
+.rank-header b,
+.contribution-row b {
+  flex: 0 0 auto;
+  font-size: 11px;
+}
+
+.answer-good {
+  color: var(--atlas);
+}
+
+.answer-miss {
+  color: var(--funding);
+}
+
 .option-row {
   display: flex;
   flex-wrap: wrap;
@@ -698,6 +722,82 @@ button {
 .option-row .is-selected {
   border-color: var(--atlas);
   color: var(--atlas);
+}
+
+.rank-card,
+.contribution-history {
+  display: grid;
+  gap: 8px;
+  border: 1px solid rgba(32, 200, 120, 0.24);
+  border-radius: 8px;
+  background: rgba(32, 200, 120, 0.04);
+  padding: 10px;
+}
+
+.rank-header span {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.rank-header strong {
+  display: block;
+  font-size: 18px;
+}
+
+.rank-bar {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+}
+
+.rank-bar i {
+  display: block;
+  height: 100%;
+  min-width: 4px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--atlas), var(--gold));
+}
+
+.rank-card p,
+.contribution-history p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.contribution-history h3 {
+  margin: 0;
+  font-size: 13px;
+}
+
+.contribution-row {
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: rgba(255,255,255,0.03);
+  padding: 8px;
+}
+
+.contribution-row div {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.contribution-row strong {
+  font-size: 12px;
+}
+
+.contribution-row span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.contribution-row b {
+  color: var(--gold);
+  font-family: "JetBrains Mono", monospace;
 }
 
 .reward-preview {

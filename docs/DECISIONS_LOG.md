@@ -57,3 +57,19 @@ Reason: Stage 2 needs visible upgrade progression before full economy tuning exi
 Temporary: yes.
 
 Revisit when: Factory includes multiple generators and synergies.
+
+### Decision: Derive Atlas Rank from Contribution instead of storing a separate rank
+
+Reason: Stage 3 needs reputation-like progression without real tokens, payouts or server authority. Deriving rank from Contribution keeps the prototype simple and auditable while still making the player identity feel persistent.
+
+Temporary: partly.
+
+Revisit when: Production Mode introduces server-side contribution_events and anti-abuse rules.
+
+### Decision: Keep contribution events local and mission-sourced
+
+Reason: The first vertical slice should prove the loop before connecting real AtlasRepo, FabricBot, Telegram identity or reward grants.
+
+Temporary: yes.
+
+Revisit when: real lessons, promos, partner tools or tokenized reputation become active.

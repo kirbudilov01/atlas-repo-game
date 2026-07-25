@@ -7,6 +7,8 @@
 - Prototype storage is local only and not secure against manipulation.
 - Offline income is intentionally simple and should move server-side in Production Mode.
 - Resource transaction journal is local-only and limited to latest 30 entries.
+- Atlas Rank and contribution history are local-only and can be manipulated.
+- First Scan answers use mock repository cards, not live AtlasRepo data.
 - Referral, reward, funding and Want2View systems are mock-only.
 - No lint script is configured yet.
 - No automated tests are configured yet.
@@ -18,4 +20,5 @@
 - HUD crowding on very narrow screens.
 - Bottom sheet height on small devices.
 - Economy tuning may be too generous after generator upgrades are added.
+- Atlas Rank thresholds are rough prototype values and need balance testing.
 - Scene object density may become too high as more systems unlock.

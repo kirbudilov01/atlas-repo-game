@@ -2,7 +2,7 @@ import { assets } from "../config/assets";
 import { atlasFirstScanRepos } from "../config/missions";
 import { products } from "../config/products";
 import { generatorTypes } from "../config/generators";
-import { getGeneratorRatePerHour, getGeneratorUpgradeCost, type GameState } from "../store/gameStore";
+import { getAtlasRankProgress, getGeneratorRatePerHour, getGeneratorUpgradeCost, type GameState } from "../store/gameStore";
 import type { MissionRepo, RoomObjectConfig } from "../types/game";
 
 interface Props {
@@ -126,16 +126,22 @@ function AssetCard({ assetId }: { assetId: string }) {
 function AtlasMission({ state, onAnswerRepo, onComplete }: { state: GameState; onAnswerRepo: (repo: MissionRepo, answer: string) => void; onComplete: () => void }) {
   const answered = Object.keys(state.atlasMission.answers).length;
   const claimed = state.atlasMission.status === "claimed";
+  const ready = state.atlasMission.status === "ready";
+  const correctCount = atlasFirstScanRepos.filter((repo) => state.atlasMission.answers[repo.id] === repo.correct).length;
   return (
     <div className="mission-flow">
+      <AtlasRankCard state={state} />
       <div className="metric-card tone-atlas">
         <strong>AtlasRepo First Scan</strong>
-        <span>{answered}/3 repositories reviewed</span>
-        <p>Spend 30 Compute to convert repository research into Knowledge and Contribution.</p>
+        <span>{claimed ? `${correctCount}/3 signals matched` : `${answered}/3 repositories reviewed`}</span>
+        <p>{claimed ? "Contribution history saved locally. This is a prototype proof of reputation, not a real token or payout." : "Answer all repository signals, then spend 30 Compute to create Knowledge and Contribution."}</p>
       </div>
       {atlasFirstScanRepos.map((repo) => (
         <div className="repo-card" key={repo.id}>
-          <strong>{repo.name}</strong>
+          <div className="repo-heading">
+            <strong>{repo.name}</strong>
+            {claimed && <span className={state.atlasMission.answers[repo.id] === repo.correct ? "answer-good" : "answer-miss"}>{state.atlasMission.answers[repo.id] === repo.correct ? "matched" : "missed"}</span>}
+          </div>
           <p>{repo.description}</p>
           <div className="option-row">
             {repo.options.map((option) => (
@@ -151,10 +157,30 @@ function AtlasMission({ state, onAnswerRepo, onComplete }: { state: GameState; o
           </div>
         </div>
       ))}
-      <button className="primary-cta" onClick={onComplete} disabled={claimed}>
-        {claimed ? "Atlas Fragment Preview Unlocked" : "Run First Scan"}
+      <button className="primary-cta" onClick={onComplete} disabled={claimed || (!ready && !claimed)}>
+        {claimed ? "Atlas Fragment Preview Unlocked" : ready ? "Run First Scan · 30 Compute" : `Answer ${3 - answered} more`}
       </button>
       {claimed && <RewardPreview state={state} />}
+      <ContributionHistory state={state} />
+    </div>
+  );
+}
+
+function AtlasRankCard({ state }: { state: GameState }) {
+  const progress = getAtlasRankProgress(state.resources.contribution);
+  return (
+    <div className="rank-card">
+      <div className="rank-header">
+        <div>
+          <span>Atlas Rank</span>
+          <strong>Rank {progress.rank}</strong>
+        </div>
+        <b>{progress.remaining === 0 ? "Max preview" : `${progress.remaining} Contribution to next`}</b>
+      </div>
+      <div className="rank-bar" aria-label={`Atlas Rank progress ${progress.percent}%`}>
+        <i style={{ width: `${progress.percent}%` }} />
+      </div>
+      <p>Rank is generated from Contribution events. Later it can unlock lessons, promos, network rooms and partner tools.</p>
     </div>
   );
 }
@@ -205,6 +231,28 @@ function TransactionJournal({ state }: { state: GameState }) {
             <strong className={tx.amount >= 0 ? "tx-positive" : "tx-negative"}>
               {tx.amount >= 0 ? "+" : ""}{tx.amount} {tx.resource}
             </strong>
+          </div>
+        ))
+      )}
+    </section>
+  );
+}
+
+function ContributionHistory({ state }: { state: GameState }) {
+  const rows = state.contributionEvents.slice(0, 5);
+  return (
+    <section className="contribution-history">
+      <h3>Contribution history</h3>
+      {rows.length === 0 ? (
+        <p>No contribution events yet. Complete AtlasRepo First Scan to write the first one.</p>
+      ) : (
+        rows.map((event) => (
+          <div className="contribution-row" key={event.id}>
+            <div>
+              <strong>{event.title}</strong>
+              <span>{event.impact}</span>
+            </div>
+            <b>+{event.amount}</b>
           </div>
         ))
       )}
@@ -278,6 +326,8 @@ function ProfilePanel({ state, onReset }: { state: GameState; onReset: () => voi
         <div><span>Knowledge</span><strong>{Math.floor(state.resources.knowledge)}</strong></div>
         <div><span>Contribution</span><strong>{Math.floor(state.resources.contribution)}</strong></div>
       </div>
+      <AtlasRankCard state={state} />
+      <ContributionHistory state={state} />
       <div className="locked-stats">
         <span>Reputation locked</span>
         <span>Network Power locked</span>

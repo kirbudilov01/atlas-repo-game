@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { generatorTypes } from "../config/generators";
+import { atlasFirstScanRepos } from "../config/missions";
 import type { MissionRepo, ResourceCode } from "../types/game";
 
 const STORAGE_KEY = "atlas-room-prototype-v1";
@@ -8,6 +9,7 @@ export interface GameState {
   onboarded: boolean;
   resources: Record<ResourceCode, number>;
   transactions: ResourceTransaction[];
+  contributionEvents: ContributionEvent[];
   accountLevel: number;
   coreClicks: number;
   combo: number;
@@ -18,7 +20,7 @@ export interface GameState {
   lastOfflineClaimAt: string;
   lastOfflineEarned: number;
   atlasMission: {
-    status: "locked" | "available" | "running" | "completed" | "claimed";
+    status: "locked" | "available" | "running" | "ready" | "claimed";
     answers: Record<string, string>;
     fragmentPreview: boolean;
     rewardPreview: boolean;
@@ -34,13 +36,26 @@ export interface ResourceTransaction {
   createdAt: string;
 }
 
+export interface ContributionEvent {
+  id: string;
+  title: string;
+  source: "atlasrepo" | "generator" | "network" | "funding" | "reward";
+  amount: number;
+  impact: string;
+  createdAt: string;
+}
+
 const nowIso = () => new Date().toISOString();
 const transactionId = () => `tx_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+const eventId = () => `ce_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+
+const atlasRankThresholds = [0, 5, 15, 35, 75, 140];
 
 const initialState = (): GameState => ({
   onboarded: false,
   resources: { compute: 0, knowledge: 0, contribution: 0 },
   transactions: [],
+  contributionEvents: [],
   accountLevel: 1,
   coreClicks: 0,
   combo: 0,
@@ -77,6 +92,29 @@ export function getGeneratorRatePerHour(level: number): number {
   return Math.floor(generatorTypes[0].ratePerHour * (1 + (level - 1) * 0.18));
 }
 
+export function getAtlasRank(contribution: number): number {
+  let rank = 1;
+  atlasRankThresholds.forEach((threshold, index) => {
+    if (contribution >= threshold) rank = index + 1;
+  });
+  return rank;
+}
+
+export function getAtlasRankProgress(contribution: number) {
+  const rank = getAtlasRank(contribution);
+  const currentThreshold = atlasRankThresholds[rank - 1] ?? 0;
+  const nextThreshold = atlasRankThresholds[rank] ?? currentThreshold;
+  const span = Math.max(1, nextThreshold - currentThreshold);
+  const earned = Math.max(0, contribution - currentThreshold);
+  return {
+    rank,
+    currentThreshold,
+    nextThreshold,
+    percent: nextThreshold === currentThreshold ? 100 : Math.min(100, Math.floor((earned / span) * 100)),
+    remaining: Math.max(0, nextThreshold - contribution)
+  };
+}
+
 function calculateOfflineCompute(state: GameState): number {
   if (!state.generatorPurchased) return 0;
   const last = new Date(state.lastOfflineClaimAt).getTime();
@@ -91,6 +129,17 @@ function tx(resource: ResourceCode, amount: number, reason: string): ResourceTra
     resource,
     amount,
     reason,
+    createdAt: nowIso()
+  };
+}
+
+function contributionEvent(title: string, amount: number, impact: string): ContributionEvent {
+  return {
+    id: eventId(),
+    title,
+    source: "atlasrepo",
+    amount,
+    impact,
     createdAt: nowIso()
   };
 }
@@ -135,10 +184,11 @@ export function useGameStore() {
       };
     }
     if (state.atlasMission.status !== "claimed") {
+      const answerCount = Object.keys(state.atlasMission.answers).length;
       return {
-        title: "Run AtlasRepo First Scan",
-        body: "Turn Compute into Knowledge and Contribution.",
-        cta: "Open Atlas",
+        title: answerCount >= 3 ? "Claim AtlasRepo signal" : "Run AtlasRepo First Scan",
+        body: answerCount >= 3 ? "Spend Compute to mint Knowledge and Contribution history." : "Review 3 repositories to unlock the first Atlas Fragment.",
+        cta: answerCount >= 3 ? "Claim Scan" : "Open Atlas",
         target: "atlas" as const
       };
     }
@@ -250,7 +300,7 @@ export function useGameStore() {
       ...current,
       atlasMission: {
         ...current.atlasMission,
-        status: "running",
+        status: Object.keys({ ...current.atlasMission.answers, [repo.id]: answer }).length >= 3 ? "ready" : "running",
         answers: { ...current.atlasMission.answers, [repo.id]: answer }
       }
     }));
@@ -268,13 +318,21 @@ export function useGameStore() {
         return { ...current, debugMessage: "Atlas scan needs 30 Compute. Generate a little more." };
       }
       ok = true;
+      const correctCount = Object.entries(current.atlasMission.answers).filter(([repoId, answer]) => {
+        const repo = atlasFirstScanRepos.find((item) => item.id === repoId);
+        return repo?.correct === answer;
+      }).length;
+      const contributionGain = 5 + correctCount;
+      const knowledgeGain = 25 + correctCount * 3;
+      const newContribution = current.resources.contribution + contributionGain;
+      const newRank = getAtlasRank(newContribution);
       return {
         ...current,
-        accountLevel: Math.max(current.accountLevel, 2),
+        accountLevel: Math.max(current.accountLevel, newRank),
         resources: {
           compute: current.resources.compute - 30,
-          knowledge: current.resources.knowledge + 25,
-          contribution: current.resources.contribution + 5
+          knowledge: current.resources.knowledge + knowledgeGain,
+          contribution: newContribution
         },
         atlasMission: {
           ...current.atlasMission,
@@ -284,11 +342,19 @@ export function useGameStore() {
         },
         transactions: [
           tx("compute", -30, "atlas_first_scan_cost"),
-          tx("knowledge", 25, "atlas_first_scan_reward"),
-          tx("contribution", 5, "atlas_first_scan_contribution"),
+          tx("knowledge", knowledgeGain, "atlas_first_scan_reward"),
+          tx("contribution", contributionGain, "atlas_first_scan_contribution"),
           ...current.transactions
         ].slice(0, 30),
-        debugMessage: "Atlas Fragment preview unlocked. +25 Knowledge, +5 Contribution."
+        contributionEvents: [
+          contributionEvent(
+            "AtlasRepo First Scan",
+            contributionGain,
+            `${correctCount}/3 repo signals matched. Rank ${newRank} progress updated.`
+          ),
+          ...current.contributionEvents
+        ].slice(0, 20),
+        debugMessage: `Atlas Fragment preview unlocked. +${knowledgeGain} Knowledge, +${contributionGain} Contribution.`
       };
     });
     return ok;

@@ -32,6 +32,8 @@ The current prototype uses CSS/SVG-like placeholders. Replace these later with a
 - Atlas Core pulse.
 - Generator online indicator.
 - Generator level badge / factory node art.
+- Atlas Rank progress badge.
+- Contribution history event icon set.
 - Reward unlock glow.
 - Offline income recap effect.
 
