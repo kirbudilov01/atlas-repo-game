@@ -85,3 +85,31 @@ export interface MissionRepo {
   options: string[];
   correct: string;
 }
+
+export interface NetworkNode {
+  id: string;
+  title: string;
+  status: "locked" | "preview" | "active";
+  metric: string;
+  strategy: string;
+  unlock: string;
+}
+
+export interface FundingGoal {
+  id: string;
+  title: string;
+  targetUsd: number;
+  currentUsd: number;
+  strategy: string;
+  useOfFunds: string[];
+  perkPreview: string;
+  status: "mock" | "planned" | "locked";
+}
+
+export interface RewardTier {
+  id: string;
+  title: string;
+  requirement: string;
+  benefitPreview: string;
+  status: "locked" | "preview" | "unlocked";
+}

@@ -1,8 +1,11 @@
 import { useMemo, useState } from "react";
 import { assets } from "../config/assets";
+import { fundingGoals } from "../config/funding";
 import { atlasFirstScanRepos } from "../config/missions";
+import { networkNodes } from "../config/network";
 import { products } from "../config/products";
 import { generatorTypes } from "../config/generators";
+import { rewardTiers } from "../config/rewards";
 import { getAtlasRankProgress, getGeneratorRatePerHour, getGeneratorUpgradeCost, type GameState } from "../store/gameStore";
 import type { Asset, MissionRepo, RoomObjectConfig } from "../types/game";
 
@@ -54,13 +57,8 @@ export function ObjectBottomSheet({
         {object.id === "want2view" && <MockPanel title="Want2View Terminal" metric="Trend Scanner locked" cta="Unlock after Atlas Rank 2" tone="compute">
           <p>Preview the product loop: Trend Scanner will turn Attention into a real Want2View research and a subscription discount.</p>
         </MockPanel>}
-        {object.id === "network-terminal" && <MockPanel title="Network Terminal" metric="Network Power locked" cta="Copy prototype invite" tone="network">
-          <code>https://t.me/atlas_room_bot/app?startapp=ref_demo</code>
-          <p>Next build tracks active friends. Prototype mode has no valuable referral rewards.</p>
-        </MockPanel>}
-        {object.id === "funding-hub" && <MockPanel title="Funding Hub" metric="$460 / $1,500" cta="Back this mission later" tone="funding">
-          <p>Mock mission: Activate New Mac mini. Funds support infrastructure, development and testing. No equity, no guaranteed return.</p>
-        </MockPanel>}
+        {object.id === "network-terminal" && <NetworkPanel state={state} />}
+        {object.id === "funding-hub" && <FundingPanel />}
         {object.id === "youtube-wall" && <MockPanel title="YouTube Wall" metric="Season 0" cta="Open next episode later" tone="network">
           <p>Real life becomes video; video becomes patch notes; patch notes become community missions.</p>
         </MockPanel>}
@@ -315,6 +313,7 @@ function ContributionHistory({ state }: { state: GameState }) {
 }
 
 function RewardPreview({ state }: { state: GameState }) {
+  const rank = getAtlasRankProgress(state.resources.contribution).rank;
   return (
     <div className="reward-preview">
       <div className={`fragment ${state.atlasMission.fragmentPreview ? "is-unlocked" : ""}`}>Atlas Fragment</div>
@@ -322,10 +321,73 @@ function RewardPreview({ state }: { state: GameState }) {
         <h3>Future benefit preview</h3>
         <p>{state.atlasMission.rewardPreview ? "Free AtlasRepo lesson preview unlocked. Prototype mode does not grant real access." : "Complete AtlasRepo First Scan to preview a real product benefit."}</p>
         <div className="reward-list">
-          <span>Closed lesson</span>
-          <span>AtlasRepo discount</span>
-          <span>Founder history</span>
+          {rewardTiers.map((tier) => (
+            <span key={tier.id} className={tier.status === "unlocked" && state.atlasMission.rewardPreview ? "is-unlocked" : ""}>
+              {tier.title} · {tier.status === "preview" && rank >= 3 ? "claimable later" : tier.status}
+            </span>
+          ))}
         </div>
+      </div>
+    </div>
+  );
+}
+
+function NetworkPanel({ state }: { state: GameState }) {
+  const rank = getAtlasRankProgress(state.resources.contribution).rank;
+  return (
+    <div className="system-panel">
+      <div className="metric-card tone-network">
+        <strong>Network Terminal</strong>
+        <span>Rank {rank} · invite preview only</span>
+        <code>https://t.me/atlas_room_bot/app?startapp=ref_demo</code>
+        <p>Prototype mode tracks no valuable referral rewards. Network systems should reward useful verified actions, not empty invites.</p>
+      </div>
+      <div className="system-list">
+        {networkNodes.map((node) => (
+          <article className="system-card" key={node.id}>
+            <div className="system-head">
+              <strong>{node.title}</strong>
+              <span>{node.status}</span>
+            </div>
+            <b>{node.metric}</b>
+            <p>{node.strategy}</p>
+            <em>{node.unlock}</em>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function FundingPanel() {
+  return (
+    <div className="system-panel">
+      <div className="metric-card tone-funding">
+        <strong>Funding Hub</strong>
+        <span>Support strategy · mock only</span>
+        <p>These are contribution and perk previews, not equity, debt, profit share, token claims or guaranteed returns.</p>
+      </div>
+      <div className="system-list">
+        {fundingGoals.map((goal) => {
+          const progress = Math.floor((goal.currentUsd / goal.targetUsd) * 100);
+          return (
+            <article className="system-card" key={goal.id}>
+              <div className="system-head">
+                <strong>{goal.title}</strong>
+                <span>{goal.status}</span>
+              </div>
+              <b>${goal.currentUsd} / ${goal.targetUsd}</b>
+              <div className="mini-progress" aria-label={`${goal.title} progress ${progress}%`}>
+                <i style={{ width: `${progress}%` }} />
+              </div>
+              <p>{goal.strategy}</p>
+              <div className="asset-tags">
+                {goal.useOfFunds.map((item) => <span key={item}>{item}</span>)}
+              </div>
+              <em>{goal.perkPreview}</em>
+            </article>
+          );
+        })}
       </div>
     </div>
   );

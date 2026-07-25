@@ -10,7 +10,7 @@ No real payments, TON, FabricBot writes, real partner payouts, real promo codes,
 
 ## Current Stage
 
-Stage 4 hardened. Moving to Stage 5 systems expansion next.
+Stage 5 hardened. Next work can move toward retention polish or backend boundary design.
 
 - Stage 1: Foundation and Our Room.
 - Stage 2: First game economy.
@@ -51,6 +51,9 @@ Stage 4 hardened. Moving to Stage 5 systems expansion next.
 - Correct-answer bonus for the First Scan.
 - Atlas Fragment and reward preview.
 - Interactive mocks: Want2View, Network Terminal, Funding Hub, YouTube Wall, Reward Vault, Ecosystem Goal.
+- Data-driven Network Terminal strategy cards.
+- Data-driven Funding Hub support-goal cards.
+- Reward Vault tiers.
 - Locked previews: My Room, Network City, Create Project, TON Layer, Partner Marketplace.
 
 ## Mock Features
@@ -112,12 +115,12 @@ Screenshots:
 - `output/playwright/atlas-rank-history.png`
 - `output/playwright/profile-rank-history.png`
 - `output/playwright/asset-index-digital.png`
+- `output/playwright/funding-hub-strategy.png`
 
 ## Next Stage
 
-Harden Stage 5:
+Recommended next stage:
 
-- Network Terminal active friend mock;
-- Funding Hub support-goal strategy cards;
-- Reward Vault progression states;
-- keep payouts, commissions, promo grants and subscriptions mock-only.
+- retention and pacing polish;
+- visual animation pass;
+- backend boundary design for server-authoritative balances, Telegram initData validation and reward entitlement checks.

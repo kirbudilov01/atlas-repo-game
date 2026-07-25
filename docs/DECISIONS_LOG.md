@@ -89,3 +89,19 @@ Reason: Bottom navigation is already dense on mobile. A terminal object keeps th
 Temporary: yes.
 
 Revisit when the app gets a wider navigation model or a dedicated inventory route.
+
+### Decision: Keep Network, Funding and Reward Vault config-driven but mock-only
+
+Reason: Stage 5 needs these systems to feel intentional without introducing real referrals, payments, commissions, promo grants, subscriptions or token claims.
+
+Temporary: yes.
+
+Revisit when server-side identity, anti-abuse, payments, entitlement checks and legal framing are ready.
+
+### Decision: Funding Hub copy must explicitly separate support perks from investments
+
+Reason: The product concept can drift into financial expectations. The prototype should repeatedly state that support goals are not equity, debt, profit share, token claims or guaranteed returns.
+
+Temporary: no.
+
+Revisit with legal review before any real payment flow.

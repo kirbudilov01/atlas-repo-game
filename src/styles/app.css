@@ -600,6 +600,7 @@ button {
 .mission-flow,
 .generator-panel,
 .profile-panel,
+.system-panel,
 .transaction-journal {
   display: grid;
   gap: 12px;
@@ -918,10 +919,76 @@ button {
 }
 
 .reward-list,
-.locked-stats {
+.locked-stats,
+.system-list {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+}
+
+.reward-list .is-unlocked {
+  color: var(--atlas);
+  border-color: rgba(32, 200, 120, 0.35);
+}
+
+.system-panel,
+.system-list {
+  display: grid;
+  gap: 10px;
+}
+
+.system-card {
+  display: grid;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.035);
+  padding: 10px;
+}
+
+.system-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.system-head strong {
+  font-size: 14px;
+}
+
+.system-head span {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.system-card b {
+  color: var(--network);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+}
+
+.system-card p,
+.system-card em {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.mini-progress {
+  height: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+}
+
+.mini-progress i {
+  display: block;
+  height: 100%;
+  min-width: 3px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--funding), var(--gold));
 }
 
 code {

@@ -18,6 +18,7 @@ The current prototype uses CSS/SVG-like placeholders. Replace these later with a
 - Want2View Terminal.
 - Network Terminal.
 - Funding Hub strategy table.
+- Funding Hub support-goal cards.
 - YouTube Wall.
 - Reward Vault.
 - Ecosystem Goal board.
@@ -38,6 +39,8 @@ The current prototype uses CSS/SVG-like placeholders. Replace these later with a
 - Asset category icon set.
 - Intangible asset list card states.
 - Reward unlock glow.
+- Network strategy card icons.
+- Support-goal progress bars.
 - Offline income recap effect.
 
 ## Visual Requirements
