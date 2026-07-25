@@ -2,10 +2,9 @@ import type { GameState } from "../store/gameStore";
 
 interface Props {
   state: GameState;
-  onReality: () => void;
 }
 
-export function ResourceHUD({ state, onReality }: Props) {
+export function ResourceHUD({ state }: Props) {
   return (
     <header className="hud">
       <div className="hud-left">
@@ -13,7 +12,6 @@ export function ResourceHUD({ state, onReality }: Props) {
           <span>Season 0</span>
           <strong>Becoming autonomous</strong>
         </div>
-        <button className="reality-chip" onClick={onReality}>Reality Update</button>
       </div>
       <div className="resource-strip">
         <div className="resource-pill compute"><span>Compute</span><strong>{Math.floor(state.resources.compute)}</strong></div>

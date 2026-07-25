@@ -113,3 +113,11 @@ Reason: The product concept can drift into financial expectations. The prototype
 Temporary: no.
 
 Revisit with legal review before any real payment flow.
+
+### Decision: Put Scan mode on the room map instead of the HUD
+
+Reason: the HUD is too tight on mobile and Scan changes the map itself. Keeping the toggle inside the room caption makes the interaction discoverable and avoids invisible controls.
+
+Temporary: yes.
+
+Revisit when the app has a dedicated toolbar or final Telegram Mini App chrome.

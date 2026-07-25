@@ -10,7 +10,7 @@ No real payments, TON, FabricBot writes, real partner payouts, real promo codes,
 
 ## Current Stage
 
-Stage 5 hardened. Next work can move toward retention polish or backend boundary design.
+Application shell polish in progress. Next work can move toward richer animation, retention loops or backend boundary design.
 
 - Stage 1: Foundation and Our Room.
 - Stage 2: First game economy.
@@ -24,6 +24,8 @@ Stage 5 hardened. Next work can move toward retention polish or backend boundary
 - Mobile-first Our Room shell.
 - Photo-based Our Room map from the real room reference.
 - Real-room hotspot layer for desk, monitors, Dell laptop, bed, wall grid and floor zones.
+- Real-room onboarding hero.
+- Map-level Scan mode toggle.
 - Mock onboarding.
 - Data-driven room object configuration.
 - Atlas Core clicker.
@@ -36,6 +38,7 @@ Stage 5 hardened. Next work can move toward retention polish or backend boundary
 - Asset category filters.
 - Asset utility and monthly-burn summary.
 - Context action bar.
+- Season 0 quest progress steps.
 - Bottom navigation.
 - Bottom sheets.
 - LocalStorage persistence.
@@ -119,6 +122,9 @@ Screenshots:
 - `output/playwright/asset-index-digital.png`
 - `output/playwright/funding-hub-strategy.png`
 - `output/playwright/photo-room-game-map.png`
+- `output/playwright/full-app-onboarding-room.png`
+- `output/playwright/full-app-room-scan-toggle.png`
+- `output/playwright/full-app-atlas-nav-after-generator.png`
 
 ## Next Stage
 

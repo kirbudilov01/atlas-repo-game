@@ -6,17 +6,23 @@ import { RoomObject } from "./RoomObject";
 interface Props {
   state: GameState;
   selectedId?: string;
+  scanMode: boolean;
+  onToggleScan: () => void;
   onObject: (object: RoomObjectConfig) => void;
   onCoreClick: () => void;
 }
 
-export function RoomScene({ state, selectedId, onObject, onCoreClick }: Props) {
+export function RoomScene({ state, selectedId, scanMode, onToggleScan, onObject, onCoreClick }: Props) {
   return (
     <section className="room-scene" aria-label="Our Room">
-      <div className="room-backdrop">
+      <div className={`room-backdrop ${scanMode ? "scan-mode" : ""}`}>
         <img className="room-photo" src="/assets/our-room-map.png" alt="" draggable={false} />
         <div className="room-cinematic-grade" />
         <div className="room-game-vignette" />
+        <button className="room-map-caption" onClick={onToggleScan}>
+          <span>Our Room</span>
+          <strong>{scanMode ? "Scan mode" : "Live map"}</strong>
+        </button>
         {state.generatorPurchased && <div className="generator-node">Compute Generator L{state.generatorLevel}</div>}
         {roomObjects.map((object) => (
           <RoomObject

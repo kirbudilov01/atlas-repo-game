@@ -36,25 +36,13 @@ const virtualObjects: Record<string, RoomObjectConfig> = {
     z: 0,
     accent: "atlas"
   },
-  reality: {
-    id: "reality-update",
-    type: "terminal",
-    label: "Reality Update #04",
-    subtitle: "Mac mini connected",
-    visualId: "reality",
-    x: 0,
-    y: 0,
-    w: 0,
-    h: 0,
-    z: 0,
-    accent: "network"
-  }
 };
 
 export default function App() {
   const game = useGameStore();
   const [selected, setSelected] = useState<RoomObjectConfig | null>(null);
   const [flash, setFlash] = useState(0);
+  const [scanMode, setScanMode] = useState(false);
 
   const selectedId = selected?.id;
 
@@ -63,32 +51,40 @@ export default function App() {
     setFlash((value) => value + 1);
   };
 
-  const handlePrimary = () => {
-    if (game.nextAction.target === "core") {
-      handleCoreClick();
-      return;
-    }
-    if (game.nextAction.target === "factory") {
-      setSelected(virtualObjects.factory);
-      return;
-    }
-    if (game.nextAction.target === "atlas") {
-      setSelected({
-        id: "atlas-terminal",
-        type: "terminal",
-        label: "AtlasRepo Terminal",
-        subtitle: "Knowledge core",
-        visualId: "atlas-terminal",
-        x: 0,
-        y: 0,
-        w: 0,
-        h: 0,
-        z: 0,
-        linkedEntityId: "atlasrepo",
-        accent: "atlas"
-      });
-      return;
-    }
+  const openAtlas = () => {
+    setSelected({
+      id: "atlas-terminal",
+      type: "terminal",
+      label: "AtlasRepo Terminal",
+      subtitle: "Knowledge core",
+      visualId: "atlas-terminal",
+      x: 0,
+      y: 0,
+      w: 0,
+      h: 0,
+      z: 0,
+      linkedEntityId: "atlasrepo",
+      accent: "atlas"
+    });
+  };
+
+  const openNetwork = () => {
+    setSelected({
+      id: "network-terminal",
+      type: "terminal",
+      label: "Network Terminal",
+      subtitle: "Distribution",
+      visualId: "network-terminal",
+      x: 0,
+      y: 0,
+      w: 0,
+      h: 0,
+      z: 0,
+      accent: "network"
+    });
+  };
+
+  const openReward = () => {
     setSelected({
       id: "reward-vault",
       type: "reward",
@@ -104,6 +100,22 @@ export default function App() {
     });
   };
 
+  const handlePrimary = () => {
+    if (game.nextAction.target === "core") {
+      handleCoreClick();
+      return;
+    }
+    if (game.nextAction.target === "factory") {
+      setSelected(virtualObjects.factory);
+      return;
+    }
+    if (game.nextAction.target === "atlas") {
+      openAtlas();
+      return;
+    }
+    openReward();
+  };
+
   const appClass = useMemo(() => `app-shell flash-${flash % 2}`, [flash]);
 
   if (!game.state.onboarded) {
@@ -112,27 +124,13 @@ export default function App() {
 
   return (
     <main className={appClass}>
-      <ResourceHUD state={game.state} onReality={() => setSelected(virtualObjects.reality)} />
-      <RoomScene state={game.state} selectedId={selectedId} onObject={setSelected} onCoreClick={handleCoreClick} />
+      <ResourceHUD state={game.state} />
+      <RoomScene state={game.state} selectedId={selectedId} scanMode={scanMode} onToggleScan={() => setScanMode((value) => !value)} onObject={setSelected} onCoreClick={handleCoreClick} />
       <ContextActionBar state={game.state} nextAction={game.nextAction} onPrimary={handlePrimary} />
       <BottomNavigation
         onFactory={() => setSelected(virtualObjects.factory)}
-        onAtlas={handlePrimary}
-        onNetwork={() =>
-          setSelected({
-            id: "network-terminal",
-            type: "terminal",
-            label: "Network Terminal",
-            subtitle: "Distribution",
-            visualId: "network-terminal",
-            x: 0,
-            y: 0,
-            w: 0,
-            h: 0,
-            z: 0,
-            accent: "network"
-          })
-        }
+        onAtlas={openAtlas}
+        onNetwork={openNetwork}
         onProfile={() => setSelected(virtualObjects.profile)}
       />
       <ObjectBottomSheet

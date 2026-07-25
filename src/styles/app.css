@@ -62,7 +62,14 @@ button {
 
 .hud-left {
   min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.hud-actions {
   display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 4px;
 }
 
@@ -76,7 +83,7 @@ button {
 }
 
 .season-chip {
-  padding: 6px 8px;
+  padding: 6px 7px;
   display: grid;
   gap: 1px;
 }
@@ -96,15 +103,22 @@ button {
 }
 
 .season-chip strong {
-  font-size: 11px;
-  white-space: nowrap;
+  display: none;
 }
 
 .reality-chip {
   color: var(--network);
-  padding: 4px 7px;
-  font-size: 10px;
-  text-align: left;
+  padding: 6px 7px;
+  font-size: 9px;
+  text-align: center;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.reality-chip.is-on {
+  color: var(--atlas);
+  border-color: rgba(32, 200, 120, 0.42);
+  background: rgba(32, 200, 120, 0.11);
 }
 
 .resource-strip {
@@ -169,6 +183,46 @@ button {
   position: absolute;
   inset: 0;
   pointer-events: none;
+}
+
+.room-map-caption {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  z-index: 24;
+  display: grid;
+  gap: 1px;
+  padding: 6px 8px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  background: rgba(5, 7, 12, 0.58);
+  color: var(--text);
+  text-align: left;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+}
+
+.room-map-caption span {
+  color: var(--muted);
+  font-size: 8px;
+  text-transform: uppercase;
+}
+
+.room-map-caption strong {
+  font-size: 11px;
+}
+
+.scan-mode .object-label {
+  opacity: 1;
+}
+
+.scan-mode .room-object {
+  opacity: 1;
+}
+
+.scan-mode .object-art {
+  background: rgba(8, 10, 15, 0.72);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 0 26px currentColor;
 }
 
 .room-cinematic-grade {
@@ -526,6 +580,28 @@ button {
 .debug-note {
   color: var(--atlas) !important;
   font-style: normal;
+}
+
+.quest-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding-top: 3px;
+}
+
+.quest-steps span {
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: rgba(255,255,255,0.035);
+  color: var(--muted);
+  padding: 4px 6px;
+  font-size: 10px;
+}
+
+.quest-steps .is-done {
+  color: var(--atlas);
+  border-color: rgba(32, 200, 120, 0.34);
+  background: rgba(32, 200, 120, 0.08);
 }
 
 .primary-cta,
@@ -1115,8 +1191,27 @@ code {
   margin: 18px;
   border: 1px solid var(--line);
   border-radius: 12px;
-  background: linear-gradient(180deg, #101827, #070a10);
+  background: #050505;
   box-shadow: inset 0 0 80px rgba(0,0,0,0.58);
+  overflow: hidden;
+}
+
+.onboarding-room img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 54% 50%;
+  filter: saturate(1.08) contrast(1.06) brightness(0.72);
+}
+
+.onboarding-grade {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 53% 45%, rgba(139, 92, 246, 0.18), transparent 24%),
+    linear-gradient(180deg, rgba(0,0,0,0.24), rgba(0,0,0,0.5));
 }
 
 .mini-core,
