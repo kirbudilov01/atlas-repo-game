@@ -73,3 +73,19 @@ Reason: The first vertical slice should prove the loop before connecting real At
 Temporary: yes.
 
 Revisit when: real lessons, promos, partner tools or tokenized reputation become active.
+
+### Decision: Treat intangible ecosystem state as assets
+
+Reason: Stage 4 needs the game to represent more than physical devices. Knowledge bases, subscriptions, content plans, support ledgers and community signals all affect the ecosystem, so they belong in the same inspectable asset model.
+
+Temporary: no.
+
+Revisit when: backend schema separates asset ownership, operational expenses, support goals and reward entitlements.
+
+### Decision: Add Asset Index as a room terminal instead of a bottom navigation tab
+
+Reason: Bottom navigation is already dense on mobile. A terminal object keeps the room metaphor intact and avoids removing Network from the primary nav.
+
+Temporary: yes.
+
+Revisit when the app gets a wider navigation model or a dedicated inventory route.

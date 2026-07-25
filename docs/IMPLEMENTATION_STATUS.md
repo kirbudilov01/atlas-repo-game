@@ -10,12 +10,13 @@ No real payments, TON, FabricBot writes, real partner payouts, real promo codes,
 
 ## Current Stage
 
-Stage 3 hardened. Moving to Stage 4 asset expansion next.
+Stage 4 hardened. Moving to Stage 5 systems expansion next.
 
 - Stage 1: Foundation and Our Room.
 - Stage 2: First game economy.
 - Stage 3: AtlasRepo Community Loop.
 - Stage 4: Asset System expansion.
+- Stage 5: Network/Funding/Rewards mock systems.
 
 ## Completed
 
@@ -28,6 +29,10 @@ Stage 3 hardened. Moving to Stage 4 asset expansion next.
 - Combo counter and click animation.
 - Kirill and Black Box placeholder characters.
 - Real room objects: MacBook, Mac mini, Old Dell.
+- Asset Index terminal.
+- Expanded asset catalog across physical, digital, subscription, content and community categories.
+- Asset category filters.
+- Asset utility and monthly-burn summary.
 - Context action bar.
 - Bottom navigation.
 - Bottom sheets.
@@ -106,12 +111,13 @@ Screenshots:
 - `output/playwright/factory-generator-upgrade.png`
 - `output/playwright/atlas-rank-history.png`
 - `output/playwright/profile-rank-history.png`
+- `output/playwright/asset-index-digital.png`
 
 ## Next Stage
 
-Harden Stage 4:
+Harden Stage 5:
 
-- Expand assets beyond the first hardware set;
-- add asset list/index behavior;
-- connect digital assets, subscriptions and products into the same inspection model;
-- keep all real values and rewards mock-only.
+- Network Terminal active friend mock;
+- Funding Hub support-goal strategy cards;
+- Reward Vault progression states;
+- keep payouts, commissions, promo grants and subscriptions mock-only.

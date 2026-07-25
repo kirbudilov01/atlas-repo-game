@@ -38,7 +38,7 @@ export interface Asset {
   id: string;
   slug: string;
   name: string;
-  category: "physical" | "digital" | "subscription" | "product" | "decoration";
+  category: "physical" | "digital" | "subscription" | "product" | "content" | "community" | "decoration";
   owner: "ecosystem" | "kirill" | "partner" | "user";
   status: "active" | "offline" | "degraded" | "expiring" | "planned" | "funding" | "retired";
   conditionPct?: number;

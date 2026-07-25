@@ -5,6 +5,7 @@ export const roomObjects: RoomObjectConfig[] = [
   { id: "goal", type: "goal", label: "Ecosystem Goal", subtitle: "$0 / $3,000 MRR", visualId: "goal-board", x: 38, y: 5, w: 24, h: 11, z: 2, accent: "funding" },
   { id: "network-door", type: "locked", label: "Network City", subtitle: "Locked", visualId: "door-network", x: 68, y: 4, w: 15, h: 24, z: 2, accent: "network", lockedReason: "Unlocks after partner systems are live." },
   { id: "my-room-door", type: "locked", label: "My Room", subtitle: "Coming soon", visualId: "door-room", x: 84, y: 9, w: 12, h: 20, z: 2, accent: "compute", lockedReason: "Your personal AI factory opens in the next build." },
+  { id: "asset-index", type: "terminal", label: "Asset Index", subtitle: "Intangible assets", visualId: "asset-index", x: 36, y: 20, w: 19, h: 12, z: 3, accent: "funding" },
   { id: "atlas-terminal", type: "terminal", label: "AtlasRepo Terminal", subtitle: "Knowledge core", visualId: "atlas-terminal", x: 9, y: 29, w: 20, h: 17, z: 4, linkedEntityId: "atlasrepo", accent: "atlas" },
   { id: "macbook", type: "asset", label: "MacBook", subtitle: "Vision node", visualId: "macbook", x: 28, y: 36, w: 15, h: 12, z: 5, linkedEntityId: "macbook", accent: "atlas" },
   { id: "kirill", type: "character", label: "Kirill", subtitle: "Vision", visualId: "kirill", x: 23, y: 47, w: 13, h: 22, z: 8, accent: "atlas" },

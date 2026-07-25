@@ -1,9 +1,10 @@
+import { useMemo, useState } from "react";
 import { assets } from "../config/assets";
 import { atlasFirstScanRepos } from "../config/missions";
 import { products } from "../config/products";
 import { generatorTypes } from "../config/generators";
 import { getAtlasRankProgress, getGeneratorRatePerHour, getGeneratorUpgradeCost, type GameState } from "../store/gameStore";
-import type { MissionRepo, RoomObjectConfig } from "../types/game";
+import type { Asset, MissionRepo, RoomObjectConfig } from "../types/game";
 
 interface Props {
   object: RoomObjectConfig | null;
@@ -48,6 +49,7 @@ export function ObjectBottomSheet({
           <button className="ghost-button" onClick={onClose}>Close</button>
         </header>
         {asset && <AssetCard assetId={asset.id} />}
+        {object.id === "asset-index" && <AssetIndex />}
         {object.id === "atlas-terminal" && <AtlasMission state={state} onAnswerRepo={onAnswerRepo} onComplete={onCompleteAtlasMission} />}
         {object.id === "want2view" && <MockPanel title="Want2View Terminal" metric="Trend Scanner locked" cta="Unlock after Atlas Rank 2" tone="compute">
           <p>Preview the product loop: Trend Scanner will turn Attention into a real Want2View research and a subscription discount.</p>
@@ -78,6 +80,58 @@ export function ObjectBottomSheet({
           </div>
         )}
       </section>
+    </div>
+  );
+}
+
+function AssetIndex() {
+  const [category, setCategory] = useState<Asset["category"] | "all">("all");
+  const categories = useMemo(() => ["all", ...Array.from(new Set(assets.map((item) => item.category)))] as Array<Asset["category"] | "all">, []);
+  const filtered = category === "all" ? assets : assets.filter((item) => item.category === category);
+  const totalUtility = filtered.reduce((sum, item) => sum + item.utilityScore, 0);
+  const monthlyBurn = filtered.reduce((sum, item) => sum + (item.monthlyCostUsd ?? 0), 0);
+  const plannedCount = filtered.filter((item) => item.status === "planned" || item.status === "funding" || item.status === "expiring").length;
+
+  return (
+    <div className="asset-index">
+      <div className="metric-card tone-funding">
+        <strong>Uncountable Assets</strong>
+        <span>{filtered.length} visible assets · {plannedCount} need attention</span>
+        <p>Hardware, knowledge, content, subscriptions and community signals are all modeled as assets. Real payouts and investment logic remain locked.</p>
+      </div>
+      <div className="stat-grid">
+        <div><span>Utility</span><strong>{totalUtility}</strong></div>
+        <div><span>Monthly burn</span><strong>${monthlyBurn}</strong></div>
+        <div><span>Catalog</span><strong>{assets.length}</strong></div>
+        <div><span>Mode</span><strong>mock</strong></div>
+      </div>
+      <div className="category-filter">
+        {categories.map((item) => (
+          <button key={item} className={category === item ? "is-selected" : ""} onClick={() => setCategory(item)}>
+            {item}
+          </button>
+        ))}
+      </div>
+      <div className="asset-list">
+        {filtered.map((item) => (
+          <article className="asset-row-card" key={item.id}>
+            <div className="asset-row-head">
+              <div>
+                <strong>{item.name}</strong>
+                <span>{item.category} · {item.status} · {item.owner}</span>
+              </div>
+              <b>{item.utilityScore}</b>
+            </div>
+            <p>{item.purpose}</p>
+            <div className="asset-tags">
+              <span>{item.realFunction[0]}</span>
+              <span>{item.gameFunction[0]}</span>
+              {item.monthlyCostUsd ? <span>${item.monthlyCostUsd}/mo</span> : null}
+            </div>
+            <em>{item.fundingRelationship}</em>
+          </article>
+        ))}
+      </div>
     </div>
   );
 }

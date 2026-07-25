@@ -13,6 +13,7 @@ The current prototype uses CSS/SVG-like placeholders. Replace these later with a
 - MacBook.
 - Mac mini.
 - Old Dell.
+- Asset Index terminal.
 - AtlasRepo Terminal.
 - Want2View Terminal.
 - Network Terminal.
@@ -34,6 +35,8 @@ The current prototype uses CSS/SVG-like placeholders. Replace these later with a
 - Generator level badge / factory node art.
 - Atlas Rank progress badge.
 - Contribution history event icon set.
+- Asset category icon set.
+- Intangible asset list card states.
 - Reward unlock glow.
 - Offline income recap effect.
 
