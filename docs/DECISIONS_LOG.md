@@ -42,3 +42,18 @@ Temporary: yes.
 
 Revisit when: animation complexity or scene density requires Pixi/Phaser.
 
+### Decision: Store a local resource transaction journal in Prototype Mode
+
+Reason: Stage 2 requires a local ledger-like history without backend. Keeping the latest 30 transactions makes economy changes auditable for QA while staying lightweight.
+
+Temporary: yes.
+
+Revisit when: Production Mode introduces server-side resource_transactions.
+
+### Decision: Compute Generator output scales by level with a simple formula
+
+Reason: Stage 2 needs visible upgrade progression before full economy tuning exists.
+
+Temporary: yes.
+
+Revisit when: Factory includes multiple generators and synergies.

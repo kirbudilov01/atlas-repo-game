@@ -31,6 +31,7 @@ The current prototype uses CSS/SVG-like placeholders. Replace these later with a
 - Compute particles.
 - Atlas Core pulse.
 - Generator online indicator.
+- Generator level badge / factory node art.
 - Reward unlock glow.
 - Offline income recap effect.
 
@@ -40,4 +41,3 @@ The current prototype uses CSS/SVG-like placeholders. Replace these later with a
 - Real hardware should feel recognizable but stylized.
 - Avoid cheap neon and cartoon casino visuals.
 - Keep Telegram mobile readability.
-

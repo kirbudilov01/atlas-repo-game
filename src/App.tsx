@@ -140,6 +140,7 @@ export default function App() {
         state={game.state}
         onClose={() => setSelected(null)}
         onBuyGenerator={game.buyComputeGenerator}
+        onUpgradeGenerator={game.upgradeComputeGenerator}
         onClaimOffline={game.claimOfflineNow}
         onAnswerRepo={game.answerRepo}
         onCompleteAtlasMission={game.completeAtlasMission}

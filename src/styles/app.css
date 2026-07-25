@@ -598,7 +598,8 @@ button {
 .asset-card,
 .mission-flow,
 .generator-panel,
-.profile-panel {
+.profile-panel,
+.transaction-journal {
   display: grid;
   gap: 12px;
   padding-top: 12px;
@@ -751,6 +752,48 @@ code {
   display: block;
   font-family: "JetBrains Mono", monospace;
   font-size: 18px;
+}
+
+.transaction-journal {
+  gap: 6px;
+}
+
+.transaction-journal h3 {
+  margin: 0;
+  font-size: 13px;
+}
+
+.transaction-journal p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.tx-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.03);
+  border-radius: 7px;
+  padding: 7px 8px;
+  font-size: 11px;
+}
+
+.tx-row span {
+  color: var(--muted);
+}
+
+.tx-row strong {
+  font-family: "JetBrains Mono", monospace;
+}
+
+.tx-positive {
+  color: var(--atlas);
+}
+
+.tx-negative {
+  color: var(--funding);
 }
 
 .onboarding {

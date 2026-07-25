@@ -7,13 +7,16 @@ const STORAGE_KEY = "atlas-room-prototype-v1";
 export interface GameState {
   onboarded: boolean;
   resources: Record<ResourceCode, number>;
+  transactions: ResourceTransaction[];
   accountLevel: number;
   coreClicks: number;
   combo: number;
   generatorPurchased: boolean;
+  generatorLevel: number;
   generatorPurchasedAt?: string;
   lastSavedAt: string;
   lastOfflineClaimAt: string;
+  lastOfflineEarned: number;
   atlasMission: {
     status: "locked" | "available" | "running" | "completed" | "claimed";
     answers: Record<string, string>;
@@ -23,17 +26,29 @@ export interface GameState {
   debugMessage?: string;
 }
 
+export interface ResourceTransaction {
+  id: string;
+  resource: ResourceCode;
+  amount: number;
+  reason: string;
+  createdAt: string;
+}
+
 const nowIso = () => new Date().toISOString();
+const transactionId = () => `tx_${Date.now()}_${Math.random().toString(16).slice(2)}`;
 
 const initialState = (): GameState => ({
   onboarded: false,
   resources: { compute: 0, knowledge: 0, contribution: 0 },
+  transactions: [],
   accountLevel: 1,
   coreClicks: 0,
   combo: 0,
   generatorPurchased: false,
+  generatorLevel: 0,
   lastSavedAt: nowIso(),
   lastOfflineClaimAt: nowIso(),
+  lastOfflineEarned: 0,
   atlasMission: {
     status: "available",
     answers: {},
@@ -52,13 +67,32 @@ function loadState(): GameState {
   }
 }
 
+export function getGeneratorUpgradeCost(level: number): number {
+  if (level <= 0) return generatorTypes[0].costCompute;
+  return Math.floor(generatorTypes[0].costCompute * Math.pow(1.18, level) + level * 12);
+}
+
+export function getGeneratorRatePerHour(level: number): number {
+  if (level <= 0) return 0;
+  return Math.floor(generatorTypes[0].ratePerHour * (1 + (level - 1) * 0.18));
+}
+
 function calculateOfflineCompute(state: GameState): number {
   if (!state.generatorPurchased) return 0;
-  const generator = generatorTypes[0];
   const last = new Date(state.lastOfflineClaimAt).getTime();
   const elapsedSeconds = Math.max(0, (Date.now() - last) / 1000);
   const cappedSeconds = Math.min(elapsedSeconds, 2 * 60 * 60);
-  return Math.floor((generator.ratePerHour / 3600) * cappedSeconds);
+  return Math.floor((getGeneratorRatePerHour(state.generatorLevel) / 3600) * cappedSeconds);
+}
+
+function tx(resource: ResourceCode, amount: number, reason: string): ResourceTransaction {
+  return {
+    id: transactionId(),
+    resource,
+    amount,
+    reason,
+    createdAt: nowIso()
+  };
 }
 
 export function useGameStore() {
@@ -70,6 +104,11 @@ export function useGameStore() {
       ...loaded,
       resources: { ...loaded.resources, compute: loaded.resources.compute + offline },
       lastOfflineClaimAt: nowIso(),
+      lastOfflineEarned: offline,
+      transactions: [
+        tx("compute", offline, "offline_income"),
+        ...loaded.transactions
+      ].slice(0, 30),
       debugMessage: `Offline income collected: +${offline} Compute`
     };
   });
@@ -125,6 +164,10 @@ export function useGameStore() {
         coreClicks: current.coreClicks + 1,
         combo,
         resources: { ...current.resources, compute: current.resources.compute + earned },
+        transactions: [
+          tx("compute", earned, combo >= 10 ? "atlas_core_combo" : "atlas_core_click"),
+          ...current.transactions
+        ].slice(0, 30),
         debugMessage: earned > 1 ? `Combo boost: +${earned} Compute` : undefined
       };
     });
@@ -144,9 +187,14 @@ export function useGameStore() {
       return {
         ...current,
         generatorPurchased: true,
+        generatorLevel: 1,
         generatorPurchasedAt: nowIso(),
         lastOfflineClaimAt: nowIso(),
         resources: { ...current.resources, compute: current.resources.compute - 25 },
+        transactions: [
+          tx("compute", -25, "buy_compute_generator"),
+          ...current.transactions
+        ].slice(0, 30),
         debugMessage: "Compute Generator online. Passive production started."
       };
     });
@@ -160,9 +208,41 @@ export function useGameStore() {
         ...current,
         resources: { ...current.resources, compute: current.resources.compute + offline },
         lastOfflineClaimAt: nowIso(),
+        lastOfflineEarned: offline,
+        transactions: offline > 0
+          ? [
+              tx("compute", offline, "offline_income_claim"),
+              ...current.transactions
+            ].slice(0, 30)
+          : current.transactions,
         debugMessage: offline > 0 ? `Collected +${offline} Compute` : "Generator is warming up."
       };
     });
+  }
+
+  function upgradeComputeGenerator(): boolean {
+    let ok = false;
+    setState((current) => {
+      if (!current.generatorPurchased) {
+        return { ...current, debugMessage: "Buy the Compute Generator first." };
+      }
+      const cost = getGeneratorUpgradeCost(current.generatorLevel);
+      if (current.resources.compute < cost) {
+        return { ...current, debugMessage: `Need ${cost - current.resources.compute} more Compute for generator upgrade.` };
+      }
+      ok = true;
+      return {
+        ...current,
+        generatorLevel: current.generatorLevel + 1,
+        resources: { ...current.resources, compute: current.resources.compute - cost },
+        transactions: [
+          tx("compute", -cost, `upgrade_compute_generator_l${current.generatorLevel + 1}`),
+          ...current.transactions
+        ].slice(0, 30),
+        debugMessage: `Compute Generator upgraded to Level ${current.generatorLevel + 1}.`
+      };
+    });
+    return ok;
   }
 
   function answerRepo(repo: MissionRepo, answer: string) {
@@ -202,6 +282,12 @@ export function useGameStore() {
           fragmentPreview: true,
           rewardPreview: true
         },
+        transactions: [
+          tx("compute", -30, "atlas_first_scan_cost"),
+          tx("knowledge", 25, "atlas_first_scan_reward"),
+          tx("contribution", 5, "atlas_first_scan_contribution"),
+          ...current.transactions
+        ].slice(0, 30),
         debugMessage: "Atlas Fragment preview unlocked. +25 Knowledge, +5 Contribution."
       };
     });
@@ -227,6 +313,7 @@ export function useGameStore() {
     completeOnboarding,
     clickCore,
     buyComputeGenerator,
+    upgradeComputeGenerator,
     claimOfflineNow,
     answerRepo,
     completeAtlasMission,

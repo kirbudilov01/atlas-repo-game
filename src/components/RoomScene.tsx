@@ -18,7 +18,7 @@ export function RoomScene({ state, selectedId, onObject, onCoreClick }: Props) {
         <div className="floor-plane" />
         <div className="light-cone cone-left" />
         <div className="light-cone cone-right" />
-        {state.generatorPurchased && <div className="generator-node">Compute Generator online</div>}
+        {state.generatorPurchased && <div className="generator-node">Compute Generator L{state.generatorLevel}</div>}
         {roomObjects.map((object) => (
           <RoomObject
             key={object.id}

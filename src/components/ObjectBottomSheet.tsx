@@ -2,7 +2,7 @@ import { assets } from "../config/assets";
 import { atlasFirstScanRepos } from "../config/missions";
 import { products } from "../config/products";
 import { generatorTypes } from "../config/generators";
-import type { GameState } from "../store/gameStore";
+import { getGeneratorRatePerHour, getGeneratorUpgradeCost, type GameState } from "../store/gameStore";
 import type { MissionRepo, RoomObjectConfig } from "../types/game";
 
 interface Props {
@@ -10,6 +10,7 @@ interface Props {
   state: GameState;
   onClose: () => void;
   onBuyGenerator: () => void;
+  onUpgradeGenerator: () => void;
   onClaimOffline: () => void;
   onAnswerRepo: (repo: MissionRepo, answer: string) => void;
   onCompleteAtlasMission: () => void;
@@ -22,6 +23,7 @@ export function ObjectBottomSheet({
   state,
   onClose,
   onBuyGenerator,
+  onUpgradeGenerator,
   onClaimOffline,
   onAnswerRepo,
   onCompleteAtlasMission,
@@ -66,7 +68,7 @@ export function ObjectBottomSheet({
         </MockPanel>}
         {object.type === "locked" && <LockedPreview object={object} />}
         {object.type === "character" && <CharacterPanel object={object} state={state} />}
-        {object.id === "factory-panel" && <GeneratorPanel state={state} onBuyGenerator={onBuyGenerator} onClaimOffline={onClaimOffline} onSimulateOffline={onSimulateOffline} />}
+        {object.id === "factory-panel" && <GeneratorPanel state={state} onBuyGenerator={onBuyGenerator} onUpgradeGenerator={onUpgradeGenerator} onClaimOffline={onClaimOffline} onSimulateOffline={onSimulateOffline} />}
         {object.id === "profile-panel" && <ProfilePanel state={state} onReset={onReset} />}
         {product && object.id !== "atlas-terminal" && object.id !== "want2view" && (
           <div className={`metric-card tone-${product.color}`}>
@@ -157,26 +159,56 @@ function AtlasMission({ state, onAnswerRepo, onComplete }: { state: GameState; o
   );
 }
 
-function GeneratorPanel({ state, onBuyGenerator, onClaimOffline, onSimulateOffline }: { state: GameState; onBuyGenerator: () => void; onClaimOffline: () => void; onSimulateOffline: () => void }) {
+function GeneratorPanel({ state, onBuyGenerator, onUpgradeGenerator, onClaimOffline, onSimulateOffline }: { state: GameState; onBuyGenerator: () => void; onUpgradeGenerator: () => void; onClaimOffline: () => void; onSimulateOffline: () => void }) {
   const generator = generatorTypes[0];
+  const level = state.generatorLevel;
+  const rate = getGeneratorRatePerHour(level || 1);
+  const upgradeCost = getGeneratorUpgradeCost(level);
   return (
     <div className="generator-panel">
       <div className="metric-card tone-compute">
         <strong>{generator.name}</strong>
-        <span>{state.generatorPurchased ? "Online" : `${generator.costCompute} Compute`}</span>
+        <span>{state.generatorPurchased ? `Level ${level} · Online` : `${generator.costCompute} Compute`}</span>
         <p>{generator.description}</p>
       </div>
       <div className="stat-grid">
-        <div><span>Output</span><strong>{generator.ratePerHour}/hr</strong></div>
+        <div><span>Output</span><strong>{state.generatorPurchased ? rate : generator.ratePerHour}/hr</strong></div>
         <div><span>Status</span><strong>{state.generatorPurchased ? "purchased" : "available"}</strong></div>
+        <div><span>Next upgrade</span><strong>{state.generatorPurchased ? `${upgradeCost} C` : "buy first"}</strong></div>
+        <div><span>Offline last</span><strong>+{state.lastOfflineEarned}</strong></div>
       </div>
       {!state.generatorPurchased ? (
         <button className="primary-cta" onClick={onBuyGenerator}>Buy Compute Generator</button>
       ) : (
-        <button className="primary-cta" onClick={onClaimOffline}>Collect passive Compute</button>
+        <>
+          <button className="primary-cta" onClick={onClaimOffline}>Collect passive Compute</button>
+          <button className="ghost-button wide" onClick={onUpgradeGenerator}>Upgrade Generator</button>
+        </>
       )}
       <button className="ghost-button wide" onClick={onSimulateOffline}>Debug: simulate 1 hour offline</button>
+      <TransactionJournal state={state} />
     </div>
+  );
+}
+
+function TransactionJournal({ state }: { state: GameState }) {
+  const rows = state.transactions.slice(0, 8);
+  return (
+    <section className="transaction-journal">
+      <h3>Local resource journal</h3>
+      {rows.length === 0 ? (
+        <p>No transactions yet. Click Atlas Core to start the ledger.</p>
+      ) : (
+        rows.map((tx) => (
+          <div className="tx-row" key={tx.id}>
+            <span>{tx.reason.replace(/_/g, " ")}</span>
+            <strong className={tx.amount >= 0 ? "tx-positive" : "tx-negative"}>
+              {tx.amount >= 0 ? "+" : ""}{tx.amount} {tx.resource}
+            </strong>
+          </div>
+        ))
+      )}
+    </section>
   );
 }
 
@@ -251,6 +283,7 @@ function ProfilePanel({ state, onReset }: { state: GameState; onReset: () => voi
         <span>Network Power locked</span>
         <span>Credits locked</span>
       </div>
+      <TransactionJournal state={state} />
       <button className="danger-button" onClick={onReset}>Reset prototype progress</button>
     </div>
   );

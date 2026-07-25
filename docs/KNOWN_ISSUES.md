@@ -6,6 +6,7 @@
 - Room labels are readable but dense; final art pass should reduce text reliance.
 - Prototype storage is local only and not secure against manipulation.
 - Offline income is intentionally simple and should move server-side in Production Mode.
+- Resource transaction journal is local-only and limited to latest 30 entries.
 - Referral, reward, funding and Want2View systems are mock-only.
 - No lint script is configured yet.
 - No automated tests are configured yet.
@@ -18,4 +19,3 @@
 - Bottom sheet height on small devices.
 - Economy tuning may be too generous after generator upgrades are added.
 - Scene object density may become too high as more systems unlock.
-

@@ -10,7 +10,7 @@ No real payments, TON, FabricBot writes, real partner payouts, real promo codes,
 
 ## Current Stage
 
-Stage 1-3 baseline implemented and under hardening:
+Stage 2 hardened. Moving to Stage 3 hardening next.
 
 - Stage 1: Foundation and Our Room.
 - Stage 2: First game economy.
@@ -33,7 +33,11 @@ Stage 1-3 baseline implemented and under hardening:
 - LocalStorage persistence.
 - Debug reset.
 - Compute Generator purchase.
-- Passive/offline income baseline.
+- Compute Generator levels.
+- Compute Generator upgrade cost.
+- Passive/offline income.
+- Offline income recap.
+- Local resource transaction journal.
 - AtlasRepo First Scan mission.
 - Atlas Fragment and reward preview.
 - Interactive mocks: Want2View, Network Terminal, Funding Hub, YouTube Wall, Reward Vault, Ecosystem Goal.
@@ -94,15 +98,13 @@ Screenshots:
 - `output/playwright/mac-mini-asset-card.png`
 - `output/playwright/atlas-flow-completed.png`
 - `output/playwright/profile-progress.png`
+- `output/playwright/factory-generator-upgrade.png`
 
 ## Next Stage
 
-Harden Stage 2 and Stage 3:
+Harden Stage 3:
 
-- generator levels and upgrade costs;
-- resource transaction journal;
-- stronger offline income recap;
 - Atlas Rank;
 - contribution history;
-- clearer asset labels without clutter.
-
+- clearer mission states;
+- reward preview progression.
