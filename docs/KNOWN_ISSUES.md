@@ -2,8 +2,9 @@
 
 ## Current
 
-- Visual assets are placeholders and need final illustration replacement.
-- Room labels are readable but dense; final art pass should reduce text reliance.
+- Visual assets are still prototype-grade and need final illustration/Figma replacement.
+- Current room map is a cropped real photo; final production needs a cleaned, stylized game-art pass.
+- Hotspot coordinates are hand-tuned for the current mobile crop and may need adjustment on wider layouts.
 - Prototype storage is local only and not secure against manipulation.
 - Offline income is intentionally simple and should move server-side in Production Mode.
 - Resource transaction journal is local-only and limited to latest 30 entries.

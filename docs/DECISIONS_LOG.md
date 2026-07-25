@@ -18,6 +18,14 @@ Temporary: yes.
 
 Revisit when: artist-ready asset pack exists.
 
+### Decision: Base Our Room on the real room photo instead of an abstract illustrated room
+
+Reason: the intended game fantasy depends on the player's recognition of Kirill's actual room: bed, monitors, Dell laptop, wall grid, wires and workspace. A random synthetic lab loses the personal digital-twin feeling.
+
+Temporary: partly.
+
+Revisit when: a Figma or illustrated room map is drawn directly over `public/assets/our-room-map.png`.
+
 ### Decision: MVP active resources are Compute, Knowledge and Contribution
 
 Reason: Revision 2 narrowed MVP economy to one finished loop. Other resources remain locked/preview.

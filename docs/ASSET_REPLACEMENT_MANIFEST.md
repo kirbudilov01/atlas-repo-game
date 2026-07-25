@@ -1,6 +1,12 @@
 # Asset Replacement Manifest
 
-The current prototype uses CSS/SVG-like placeholders. Replace these later with a consistent production asset pack.
+The current prototype uses a cropped real room photo plus CSS/SVG-like placeholders. Replace these later with a consistent production asset pack drawn over the real room layout.
+
+## Room Map
+
+- Source gameplay map: `public/assets/our-room-map.png`.
+- Figma/art pass should preserve the real geometry: bed foreground, desk/monitors center, Dell laptop right, wall grid upper right, wires and floor zones.
+- Do not replace with a generic cyber lab; the room must stay recognizable as Kirill's real room.
 
 ## Characters
 

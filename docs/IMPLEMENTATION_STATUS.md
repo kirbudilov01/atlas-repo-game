@@ -1,6 +1,6 @@
 # Implementation Status
 
-Last updated: 2026-07-25
+Last updated: 2026-07-26
 
 ## Current Mode
 
@@ -22,6 +22,8 @@ Stage 5 hardened. Next work can move toward retention polish or backend boundary
 
 - React + TypeScript + Vite app scaffold.
 - Mobile-first Our Room shell.
+- Photo-based Our Room map from the real room reference.
+- Real-room hotspot layer for desk, monitors, Dell laptop, bed, wall grid and floor zones.
 - Mock onboarding.
 - Data-driven room object configuration.
 - Atlas Core clicker.
@@ -116,6 +118,7 @@ Screenshots:
 - `output/playwright/profile-rank-history.png`
 - `output/playwright/asset-index-digital.png`
 - `output/playwright/funding-hub-strategy.png`
+- `output/playwright/photo-room-game-map.png`
 
 ## Next Stage
 
@@ -123,4 +126,5 @@ Recommended next stage:
 
 - retention and pacing polish;
 - visual animation pass;
+- Figma/illustration pass over `public/assets/our-room-map.png`;
 - backend boundary design for server-authoritative balances, Telegram initData validation and reward entitlement checks.

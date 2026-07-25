@@ -14,10 +14,9 @@ export function RoomScene({ state, selectedId, onObject, onCoreClick }: Props) {
   return (
     <section className="room-scene" aria-label="Our Room">
       <div className="room-backdrop">
-        <div className="wall-grid" />
-        <div className="floor-plane" />
-        <div className="light-cone cone-left" />
-        <div className="light-cone cone-right" />
+        <img className="room-photo" src="/assets/our-room-map.png" alt="" draggable={false} />
+        <div className="room-cinematic-grade" />
+        <div className="room-game-vignette" />
         {state.generatorPurchased && <div className="generator-node">Compute Generator L{state.generatorLevel}</div>}
         {roomObjects.map((object) => (
           <RoomObject
