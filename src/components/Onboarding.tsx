@@ -3,10 +3,12 @@ interface Props {
 }
 
 export function Onboarding({ onDone }: Props) {
+  const roomMapSrc = `${import.meta.env.BASE_URL}assets/our-room-map.png`;
+
   return (
     <main className="onboarding">
       <div className="onboarding-room">
-        <img src="/assets/our-room-map.png" alt="" draggable={false} />
+        <img src={roomMapSrc} alt="" draggable={false} />
         <div className="onboarding-grade" />
         <div className="mini-core" />
         <div className="mini-character kirill-mini" />

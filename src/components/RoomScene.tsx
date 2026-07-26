@@ -13,10 +13,12 @@ interface Props {
 }
 
 export function RoomScene({ state, selectedId, scanMode, onToggleScan, onObject, onCoreClick }: Props) {
+  const roomMapSrc = `${import.meta.env.BASE_URL}assets/our-room-map.png`;
+
   return (
     <section className="room-scene" aria-label="Our Room">
       <div className={`room-backdrop ${scanMode ? "scan-mode" : ""}`}>
-        <img className="room-photo" src="/assets/our-room-map.png" alt="" draggable={false} />
+        <img className="room-photo" src={roomMapSrc} alt="" draggable={false} />
         <div className="room-cinematic-grade" />
         <div className="room-game-vignette" />
         <button className="room-map-caption" onClick={onToggleScan}>
