@@ -21,9 +21,11 @@ Application shell polish in progress. Next work can move toward richer animation
 ## Completed
 
 - React + TypeScript + Vite app scaffold.
+- GitHub Pages deployment workflow.
 - Mobile-first Our Room shell.
 - Photo-based Our Room map from the real room reference.
 - Real-room hotspot layer for desk, monitors, Dell laptop, bed, wall grid and floor zones.
+- More game-like room pins, couch clicker placement and bottom dock.
 - Real-room onboarding hero.
 - Map-level Scan mode toggle.
 - Mock onboarding.
@@ -125,6 +127,7 @@ Screenshots:
 - `output/playwright/full-app-onboarding-room.png`
 - `output/playwright/full-app-room-scan-toggle.png`
 - `output/playwright/full-app-atlas-nav-after-generator.png`
+- `output/playwright/game-visual-pass-preview.png`
 
 ## Next Stage
 

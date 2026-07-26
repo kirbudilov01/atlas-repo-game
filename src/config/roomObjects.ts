@@ -9,7 +9,7 @@ export const roomObjects: RoomObjectConfig[] = [
   { id: "atlas-terminal", type: "terminal", label: "AtlasRepo Terminal", subtitle: "Knowledge core", visualId: "atlas-terminal", x: 43, y: 34, w: 13, h: 16, z: 12, linkedEntityId: "atlasrepo", accent: "atlas" },
   { id: "macbook", type: "asset", label: "MacBook", subtitle: "Vision node", visualId: "macbook", x: 52, y: 32, w: 14, h: 17, z: 12, linkedEntityId: "macbook", accent: "atlas" },
   { id: "kirill", type: "character", label: "Kirill", subtitle: "Vision", visualId: "kirill", x: 43, y: 52, w: 9, h: 35, z: 18, accent: "atlas" },
-  { id: "atlas-core", type: "core", label: "Atlas Core", subtitle: "Generate Compute", visualId: "atlas-core", x: 51, y: 55, w: 13, h: 24, z: 17, accent: "compute" },
+  { id: "atlas-core", type: "core", label: "Atlas Core", subtitle: "Generate Compute", visualId: "atlas-core", x: 28, y: 65, w: 18, h: 18, z: 21, accent: "compute" },
   { id: "black-box", type: "character", label: "Black Box", subtitle: "Execution", visualId: "black-box", x: 64, y: 50, w: 9, h: 35, z: 18, accent: "compute" },
   { id: "mac-mini", type: "asset", label: "Mac mini", subtitle: "Production node", visualId: "mac-mini", x: 63, y: 33, w: 13, h: 17, z: 12, linkedEntityId: "mac-mini", accent: "compute" },
   { id: "old-dell", type: "asset", label: "Old Dell", subtitle: "Legacy research", visualId: "old-dell", x: 72, y: 43, w: 13, h: 20, z: 13, linkedEntityId: "old-dell", accent: "atlas" },

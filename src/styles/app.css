@@ -42,20 +42,22 @@ button {
   min-height: 660px;
   margin: 0 auto;
   display: grid;
-  grid-template-rows: 11fr 58fr 18fr 13fr;
-  background: linear-gradient(180deg, rgba(8, 10, 15, 0.92), rgba(8, 10, 15, 0.98));
+  grid-template-rows: 9fr 60fr 18fr 13fr;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.14), transparent 18rem),
+    linear-gradient(180deg, #05070c 0%, #0a0e17 100%);
   position: relative;
   overflow: hidden;
 }
 
 .hud {
-  padding: max(10px, env(safe-area-inset-top)) 12px 6px;
+  padding: max(8px, env(safe-area-inset-top)) 10px 5px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  border-bottom: 1px solid var(--line);
-  background: rgba(8, 10, 15, 0.86);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: rgba(4, 6, 10, 0.82);
   backdrop-filter: blur(18px);
   z-index: 20;
 }
@@ -150,7 +152,7 @@ button {
 .room-scene {
   position: relative;
   overflow: hidden;
-  padding: 6px 8px;
+  padding: 5px 7px;
 }
 
 .room-backdrop {
@@ -158,9 +160,9 @@ button {
   width: 100%;
   height: 100%;
   border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 10px;
+  border-radius: 14px;
   background: #050505;
-  box-shadow: inset 0 0 90px rgba(0, 0, 0, 0.72), 0 18px 48px rgba(0, 0, 0, 0.48);
+  box-shadow: inset 0 0 90px rgba(0, 0, 0, 0.72), 0 18px 48px rgba(0, 0, 0, 0.58);
   overflow: hidden;
   perspective: 800px;
 }
@@ -173,7 +175,7 @@ button {
   object-fit: cover;
   object-position: 54% 50%;
   transform: scale(1.01);
-  filter: saturate(1.08) contrast(1.06) brightness(0.76);
+  filter: saturate(1.15) contrast(1.08) brightness(0.72);
   user-select: none;
   pointer-events: none;
 }
@@ -194,8 +196,8 @@ button {
   gap: 1px;
   padding: 6px 8px;
   border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 8px;
-  background: rgba(5, 7, 12, 0.58);
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(7, 10, 17, 0.78), rgba(5, 7, 12, 0.54));
   color: var(--text);
   text-align: left;
   backdrop-filter: blur(10px);
@@ -274,20 +276,41 @@ button {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 36px;
   transform: translate(-50%, -50%);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 999px;
-  background: rgba(8, 10, 15, 0.52);
-  box-shadow: 0 0 0 1px rgba(0,0,0,0.18), 0 0 24px rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px 999px 999px 8px;
+  background:
+    radial-gradient(circle at 45% 33%, rgba(255,255,255,0.78), transparent 0.18rem),
+    linear-gradient(160deg, rgba(255,255,255,0.18), rgba(8, 10, 15, 0.76));
+  box-shadow: 0 10px 22px rgba(0,0,0,0.34), 0 0 24px currentColor;
+  backdrop-filter: blur(10px);
+  rotate: -45deg;
 }
 
-.accent-atlas .object-art { border-color: rgba(32, 200, 120, 0.46); box-shadow: 0 0 20px rgba(32, 200, 120, 0.22); }
-.accent-compute .object-art { border-color: rgba(139, 92, 246, 0.52); box-shadow: 0 0 22px rgba(139, 92, 246, 0.28); }
-.accent-funding .object-art { border-color: rgba(245, 158, 11, 0.52); box-shadow: 0 0 20px rgba(245, 158, 11, 0.24); }
-.accent-network .object-art { border-color: rgba(73, 183, 255, 0.48); box-shadow: 0 0 20px rgba(73, 183, 255, 0.22); }
+.accent-atlas { color: rgba(32, 200, 120, 0.84); }
+.accent-compute { color: rgba(139, 92, 246, 0.9); }
+.accent-funding { color: rgba(245, 158, 11, 0.9); }
+.accent-network { color: rgba(73, 183, 255, 0.86); }
+
+.accent-atlas .object-art { border-color: rgba(32, 200, 120, 0.56); }
+.accent-compute .object-art { border-color: rgba(139, 92, 246, 0.62); }
+.accent-funding .object-art { border-color: rgba(245, 158, 11, 0.62); }
+.accent-network .object-art { border-color: rgba(73, 183, 255, 0.58); }
+
+.object-art::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 11px;
+  height: 11px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 14px currentColor;
+}
 
 .object-label {
   position: absolute;
@@ -388,13 +411,13 @@ button {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 10px;
-  height: 10px;
+  width: 0;
+  height: 0;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  background: currentColor;
+  background: transparent;
   color: rgba(32, 200, 120, 0.9);
-  box-shadow: 0 0 0 5px rgba(32, 200, 120, 0.12), 0 0 22px rgba(32, 200, 120, 0.38);
+  box-shadow: none;
 }
 
 .terminal-lines::before {
@@ -444,8 +467,8 @@ button {
 
 .type-reward .object-art,
 .type-goal .object-art {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 40px;
 }
 
 .type-locked {
@@ -466,13 +489,26 @@ button {
   cursor: pointer;
   display: grid;
   place-items: center;
+  filter: drop-shadow(0 18px 24px rgba(0,0,0,0.45));
+}
+
+.core-floor-glow {
+  position: absolute;
+  left: 50%;
+  bottom: 9%;
+  width: 78%;
+  height: 24%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(139, 92, 246, 0.44), transparent 68%);
+  filter: blur(8px);
 }
 
 .core-ring {
   position: absolute;
   border-radius: 50%;
-  border: 1px solid rgba(139, 92, 246, 0.62);
-  box-shadow: 0 0 26px rgba(139, 92, 246, 0.3);
+  border: 1px solid rgba(215, 189, 255, 0.68);
+  box-shadow: inset 0 0 18px rgba(139, 92, 246, 0.24), 0 0 26px rgba(139, 92, 246, 0.38);
   animation: core-pulse 1.8s ease-in-out infinite;
 }
 
@@ -483,8 +519,20 @@ button {
   animation-delay: 0.3s;
 }
 
+.core-sigil {
+  position: absolute;
+  width: 62%;
+  aspect-ratio: 1;
+  border-radius: 34% 66% 42% 58%;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.2), transparent 45%),
+    linear-gradient(145deg, rgba(139, 92, 246, 0.78), rgba(32, 200, 120, 0.5));
+  box-shadow: inset 0 0 16px rgba(255,255,255,0.16), 0 0 34px rgba(139,92,246,0.42);
+  animation: core-float 2.4s ease-in-out infinite;
+}
+
 .core-orb {
-  width: 38%;
+  width: 30%;
   aspect-ratio: 1;
   border-radius: 50%;
   background: radial-gradient(circle, #f4f0e8, var(--compute) 45%, rgba(139, 92, 246, 0.1) 70%);
@@ -500,10 +548,11 @@ button {
 }
 
 .core-label {
-  bottom: -13px;
-  padding: 4px 7px;
-  font-size: 9px;
+  bottom: -8px;
+  padding: 5px 8px;
+  font-size: 10px;
   font-weight: 800;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.38);
 }
 
 .combo-badge {
@@ -535,6 +584,11 @@ button {
 @keyframes core-pulse {
   0%, 100% { transform: scale(0.95); opacity: 0.7; }
   50% { transform: scale(1.07); opacity: 1; }
+}
+
+@keyframes core-float {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-4px) rotate(4deg); }
 }
 
 @keyframes particle-pop {
@@ -642,26 +696,61 @@ button {
 }
 
 .bottom-nav {
-  padding: 8px 10px max(8px, env(safe-area-inset-bottom));
+  padding: 7px 9px max(8px, env(safe-area-inset-bottom));
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 6px;
-  background: rgba(8, 10, 15, 0.96);
+  gap: 7px;
+  background:
+    linear-gradient(180deg, rgba(15, 20, 31, 0.96), rgba(4, 6, 10, 0.98));
+  box-shadow: 0 -12px 34px rgba(0,0,0,0.42);
 }
 
 .bottom-nav button {
-  min-height: 44px;
-  border-radius: 8px;
-  border: 1px solid var(--line);
-  background: rgba(17, 23, 34, 0.74);
+  min-height: 62px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 4px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.065), rgba(255,255,255,0.025)),
+    rgba(17, 23, 34, 0.78);
   color: var(--muted);
   font-weight: 700;
-  font-size: 12px;
+  font-size: 10px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 10px 20px rgba(0,0,0,0.28);
+}
+
+.bottom-nav button span {
+  width: 25px;
+  height: 25px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+  color: var(--text);
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.bottom-nav button strong {
+  font-size: 9px;
+  line-height: 1;
 }
 
 .bottom-nav .is-current {
   color: var(--atlas);
   border-color: rgba(32, 200, 120, 0.36);
+  background:
+    linear-gradient(180deg, rgba(32, 200, 120, 0.14), rgba(32, 200, 120, 0.035)),
+    rgba(17, 23, 34, 0.88);
+}
+
+.bottom-nav .is-current span {
+  background: rgba(32, 200, 120, 0.18);
+  color: var(--atlas);
+  box-shadow: 0 0 18px rgba(32, 200, 120, 0.22);
 }
 
 .sheet-backdrop {
