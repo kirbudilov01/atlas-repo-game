@@ -12,7 +12,7 @@ Live prototype URL: `https://kirbudilov01.github.io/atlas-repo-game/`
 
 ## Current Stage
 
-Application shell polish in progress. Next work can move toward richer animation, retention loops or backend boundary design.
+Application shell and first retention loop polish in progress. Next work can move toward richer animation, Figma/game-art production or backend boundary design.
 
 - Stage 1: Foundation and Our Room.
 - Stage 2: First game economy.
@@ -28,6 +28,8 @@ Application shell polish in progress. Next work can move toward richer animation
 - Photo-based Our Room map from the real room reference.
 - Real-room hotspot layer for desk, monitors, Dell laptop, bed, wall grid and floor zones.
 - More game-like room pins, couch clicker placement and bottom dock.
+- Mac mini moved into the empty left room zone as a dedicated render node hotspot.
+- More game-like bottom navigation glyphs.
 - Real-room onboarding hero.
 - Map-level Scan mode toggle.
 - Mock onboarding.
@@ -51,6 +53,7 @@ Application shell polish in progress. Next work can move toward richer animation
 - Compute Generator levels.
 - Compute Generator upgrade cost.
 - Passive/offline income.
+- Device Generator Shop with phone, MacBook social kit and Mac mini render node generators.
 - Offline income recap.
 - Local resource transaction journal.
 - AtlasRepo First Scan mission.
@@ -62,7 +65,10 @@ Application shell polish in progress. Next work can move toward richer animation
 - Interactive mocks: Want2View, Network Terminal, Funding Hub, YouTube Wall, Reward Vault, Ecosystem Goal.
 - Data-driven Network Terminal strategy cards.
 - Data-driven Funding Hub support-goal cards.
+- Mock Mac mini crowdfunding button: $1000 support preview adds 1000 local FBC and fills the Mac mini goal.
+- FBC mock support-credit resource.
 - Reward Vault tiers.
+- Perk Shop reservations using local FBC for lesson, promo and render-priority previews.
 - Locked previews: My Room, Network City, Create Project, TON Layer, Partner Marketplace.
 
 ## Mock Features
@@ -72,6 +78,7 @@ Application shell polish in progress. Next work can move toward richer animation
 - Network Terminal/referrals.
 - Funding Hub support.
 - Rewards grants.
+- FBC support credits and perk reservations.
 - YouTube episodes.
 - Reality Updates.
 - FabricBot integration.
@@ -85,6 +92,8 @@ Application shell polish in progress. Next work can move toward richer animation
 - Partner Marketplace.
 - Real rewards.
 - Real payments.
+- Real FBC/GRAM/TON token issuance.
+- Real perk fulfillment.
 
 ## Latest Build
 
@@ -112,6 +121,10 @@ Tested with Playwright mobile emulation:
 - see Atlas Fragment and reward preview;
 - open Mac mini asset card;
 - reset prototype progress.
+- open Factory and see Device Generator Shop;
+- open Funding Hub and register mock Mac mini support;
+- verify 1000 FBC local credit and disabled duplicate support button;
+- open Reward Vault and reserve a FBC perk.
 
 Screenshots:
 
@@ -131,6 +144,12 @@ Screenshots:
 - `output/playwright/full-app-atlas-nav-after-generator.png`
 - `output/playwright/game-visual-pass-preview.png`
 - `output/playwright/github-pages-live-fixed.png`
+- `output/playwright/mac-mini-left-zone-and-shop-map.png`
+- `output/playwright/device-generator-shop.png`
+- `output/playwright/fbc-mac-mini-support.png`
+- `output/playwright/fbc-support-claimed.png`
+- `output/playwright/perk-shop-fbc.png`
+- `output/playwright/perk-shop-reserved.png`
 
 ## Next Stage
 

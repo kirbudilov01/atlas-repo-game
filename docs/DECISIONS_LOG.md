@@ -121,3 +121,27 @@ Reason: the HUD is too tight on mobile and Scan changes the map itself. Keeping 
 Temporary: yes.
 
 Revisit when the app has a dedicated toolbar or final Telegram Mini App chrome.
+
+### Decision: Model FBC as a local mock support-credit only
+
+Reason: the product needs a playable support loop, but the prototype must not imply real tokens, equity, profit share or guaranteed returns. FBC currently mirrors a GRAM-style placeholder credit inside local game state only.
+
+Temporary: yes.
+
+Revisit with legal, payments, TON and backend review before any real payment, credit, emission or fulfillment flow.
+
+### Decision: Make Mac mini a render-node crowdfunding object
+
+Reason: the left empty zone in the real room photo should become meaningful game space. A Mac mini render node creates a concrete $1000 support goal tied to vertical video generation, service promos and Kirill's social montage pipeline.
+
+Temporary: partly.
+
+Revisit when the final room art pass replaces CSS hotspots with dedicated device illustrations.
+
+### Decision: Add Perk Shop reservations instead of real rewards
+
+Reason: users need a reason to want FBC and keep playing, but the app cannot grant real lessons, promos, subscription discounts or render priority yet. Local reservations prove the loop without making external promises.
+
+Temporary: yes.
+
+Revisit when entitlement checks, admin tools and real product fulfillment exist.

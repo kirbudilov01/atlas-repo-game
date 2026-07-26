@@ -12,13 +12,13 @@ export const fundingGoals: FundingGoal[] = [
     status: "mock"
   },
   {
-    id: "mac-mini-upgrade",
-    title: "Mac mini Upgrade",
-    targetUsd: 460,
+    id: "mac-mini-render-node",
+    title: "Mac mini Render Node",
+    targetUsd: 1000,
     currentUsd: 0,
-    strategy: "Increase local agent/render capacity and turn the upgrade into a public Reality Update.",
-    useOfFunds: ["External SSD", "Backup storage", "Thermal cleanup", "Automation queue"],
-    perkPreview: "Mac mini supporter badge preview",
+    strategy: "Buy a dedicated device for rendering vertical videos, service promos and Kirill's social edits without blocking the main workstation.",
+    useOfFunds: ["Mac mini device", "External SSD", "Vertical video render queue", "Social montage pipeline"],
+    perkPreview: "1000 FBC mock support credit plus future recognition if real utility/emission is designed",
     status: "planned"
   },
   {

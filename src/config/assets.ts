@@ -36,12 +36,12 @@ export const assets: Asset[] = [
     status: "active",
     conditionPct: 86,
     moneyValueUsd: 700,
-    utilityScore: 920,
-    purpose: "Local production node for agents, rendering, automation and background data jobs.",
-    realFunction: ["Runs AI agents", "Supports automations", "Renders media", "Handles local data jobs"],
-    gameFunction: ["Boosts Execution", "+12% Compute production", "Supports Video Agent and AtlasRepo background tasks"],
-    connectedProductIds: ["atlasrepo", "youtube"],
-    connectedSubscriptionIds: ["Codex/GitHub", "Cloud storage", "API credits"],
+    utilityScore: 1420,
+    purpose: "Dedicated render and vertical-video device for services, social edits and Kirill's content pipeline.",
+    realFunction: ["Renders vertical videos", "Exports social clips", "Supports service promo generation", "Keeps main workstation free"],
+    gameFunction: ["Render Node generator", "+140 Compute/hour when bought in Factory", "Unlocks video-service shop perks later"],
+    connectedProductIds: ["youtube", "want2view", "atlasrepo"],
+    connectedSubscriptionIds: ["Video tools", "Cloud storage", "API credits"],
     producedResource: "compute",
     outputModifier: 12,
     currentLoadPct: 73,
@@ -50,8 +50,8 @@ export const assets: Asset[] = [
       { id: "ssd", title: "Add external SSD", requirement: "Funding campaign", effect: "+6% Compute output", status: "funding" },
       { id: "render", title: "Connect render queue", requirement: "Video Agent milestone", effect: "+Video Credits later", status: "locked" }
     ],
-    realityUpdates: ["Reality Update #04: Mac mini connected as local AI node."],
-    fundingRelationship: "Can link to Activate New Mac mini / Add external SSD campaign."
+    realityUpdates: ["Reality Update #04: Mac mini planned as a dedicated vertical video render node."],
+    fundingRelationship: "Crowdfunding preview target: $1,000. Support grants mock FBC credit only, not equity, profit share or token rights."
   },
   {
     id: "old-dell",

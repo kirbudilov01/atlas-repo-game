@@ -18,6 +18,7 @@ The current prototype uses a cropped real room photo plus CSS/SVG-like placehold
 - Atlas Core.
 - MacBook.
 - Mac mini.
+- Mac mini render node in the empty left room zone.
 - Old Dell.
 - Asset Index terminal.
 - AtlasRepo Terminal.
@@ -27,6 +28,8 @@ The current prototype uses a cropped real room photo plus CSS/SVG-like placehold
 - Funding Hub support-goal cards.
 - YouTube Wall.
 - Reward Vault.
+- Device Generator Shop cards: Phone Render Bot, MacBook Social Kit, Mac mini Render Node.
+- Perk Shop cards: AtlasRepo lesson key, Want2View promo slot, vertical render priority.
 - Ecosystem Goal board.
 - Network City locked door.
 - My Room locked door.
@@ -47,6 +50,7 @@ The current prototype uses a cropped real room photo plus CSS/SVG-like placehold
 - Reward unlock glow.
 - Network strategy card icons.
 - Support-goal progress bars.
+- FBC mock-credit badge and reservation state.
 - Offline income recap effect.
 
 ## Visual Requirements

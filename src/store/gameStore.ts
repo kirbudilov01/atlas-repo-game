@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
+import { deviceGenerators } from "../config/deviceGenerators";
 import { generatorTypes } from "../config/generators";
 import { atlasFirstScanRepos } from "../config/missions";
+import { perkShop } from "../config/perks";
 import type { MissionRepo, ResourceCode } from "../types/game";
 
 const STORAGE_KEY = "atlas-room-prototype-v1";
@@ -15,6 +17,9 @@ export interface GameState {
   combo: number;
   generatorPurchased: boolean;
   generatorLevel: number;
+  purchasedDeviceGeneratorIds: string[];
+  purchasedPerkRewardIds: string[];
+  mockSupportUsd: number;
   generatorPurchasedAt?: string;
   lastSavedAt: string;
   lastOfflineClaimAt: string;
@@ -53,7 +58,7 @@ const atlasRankThresholds = [0, 5, 15, 35, 75, 140];
 
 const initialState = (): GameState => ({
   onboarded: false,
-  resources: { compute: 0, knowledge: 0, contribution: 0 },
+  resources: { compute: 0, knowledge: 0, contribution: 0, fbc: 0 },
   transactions: [],
   contributionEvents: [],
   accountLevel: 1,
@@ -61,6 +66,9 @@ const initialState = (): GameState => ({
   combo: 0,
   generatorPurchased: false,
   generatorLevel: 0,
+  purchasedDeviceGeneratorIds: [],
+  purchasedPerkRewardIds: [],
+  mockSupportUsd: 0,
   lastSavedAt: nowIso(),
   lastOfflineClaimAt: nowIso(),
   lastOfflineEarned: 0,
@@ -76,7 +84,16 @@ function loadState(): GameState {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return initialState();
-    return { ...initialState(), ...JSON.parse(raw) };
+    const parsed = JSON.parse(raw);
+    const initial = initialState();
+    return {
+      ...initial,
+      ...parsed,
+      resources: { ...initial.resources, ...parsed.resources },
+      atlasMission: { ...initial.atlasMission, ...parsed.atlasMission },
+      purchasedDeviceGeneratorIds: parsed.purchasedDeviceGeneratorIds ?? initial.purchasedDeviceGeneratorIds,
+      purchasedPerkRewardIds: parsed.purchasedPerkRewardIds ?? initial.purchasedPerkRewardIds
+    };
   } catch {
     return initialState();
   }
@@ -90,6 +107,17 @@ export function getGeneratorUpgradeCost(level: number): number {
 export function getGeneratorRatePerHour(level: number): number {
   if (level <= 0) return 0;
   return Math.floor(generatorTypes[0].ratePerHour * (1 + (level - 1) * 0.18));
+}
+
+export function getDeviceGeneratorRatePerHour(ids: string[]): number {
+  return ids.reduce((sum, id) => {
+    const generator = deviceGenerators.find((item) => item.id === id);
+    return sum + (generator?.ratePerHour ?? 0);
+  }, 0);
+}
+
+export function getTotalComputeRatePerHour(state: Pick<GameState, "generatorLevel" | "purchasedDeviceGeneratorIds">): number {
+  return getGeneratorRatePerHour(state.generatorLevel) + getDeviceGeneratorRatePerHour(state.purchasedDeviceGeneratorIds);
 }
 
 export function getAtlasRank(contribution: number): number {
@@ -116,11 +144,11 @@ export function getAtlasRankProgress(contribution: number) {
 }
 
 function calculateOfflineCompute(state: GameState): number {
-  if (!state.generatorPurchased) return 0;
+  if (!state.generatorPurchased && state.purchasedDeviceGeneratorIds.length === 0) return 0;
   const last = new Date(state.lastOfflineClaimAt).getTime();
   const elapsedSeconds = Math.max(0, (Date.now() - last) / 1000);
   const cappedSeconds = Math.min(elapsedSeconds, 2 * 60 * 60);
-  return Math.floor((getGeneratorRatePerHour(state.generatorLevel) / 3600) * cappedSeconds);
+  return Math.floor((getTotalComputeRatePerHour(state) / 3600) * cappedSeconds);
 }
 
 function tx(resource: ResourceCode, amount: number, reason: string): ResourceTransaction {
@@ -332,7 +360,8 @@ export function useGameStore() {
         resources: {
           compute: current.resources.compute - 30,
           knowledge: current.resources.knowledge + knowledgeGain,
-          contribution: newContribution
+          contribution: newContribution,
+          fbc: current.resources.fbc
         },
         atlasMission: {
           ...current.atlasMission,
@@ -368,6 +397,82 @@ export function useGameStore() {
     }));
   }
 
+  function buyDeviceGenerator(generatorId: string): boolean {
+    let ok = false;
+    setState((current) => {
+      const generator = deviceGenerators.find((item) => item.id === generatorId);
+      if (!generator) return current;
+      if (current.purchasedDeviceGeneratorIds.includes(generatorId)) {
+        return { ...current, debugMessage: `${generator.name} is already producing Compute.` };
+      }
+      if (current.resources.compute < generator.costCompute) {
+        return { ...current, debugMessage: `Need ${generator.costCompute - current.resources.compute} more Compute for ${generator.name}.` };
+      }
+      ok = true;
+      return {
+        ...current,
+        purchasedDeviceGeneratorIds: [...current.purchasedDeviceGeneratorIds, generatorId],
+        resources: { ...current.resources, compute: current.resources.compute - generator.costCompute },
+        transactions: [
+          tx("compute", -generator.costCompute, `buy_${generatorId}`),
+          ...current.transactions
+        ].slice(0, 30),
+        debugMessage: `${generator.name} purchased. +${generator.ratePerHour} Compute/hr.`
+      };
+    });
+    return ok;
+  }
+
+  function mockSupportMacMini(): boolean {
+    let ok = false;
+    setState((current) => {
+      if (current.mockSupportUsd >= 1000) {
+        return { ...current, debugMessage: "Mac mini support preview is already registered." };
+      }
+      ok = true;
+      return {
+        ...current,
+        mockSupportUsd: current.mockSupportUsd + 1000,
+        resources: { ...current.resources, fbc: current.resources.fbc + 1000 },
+        transactions: [
+          tx("fbc", 1000, "mock_mac_mini_support_fbc"),
+          ...current.transactions
+        ].slice(0, 30),
+        debugMessage: "Mock support registered: +1000 FBC. No real payment, token, equity or return."
+      };
+    });
+    return ok;
+  }
+
+  function buyPerkReward(perkId: string): boolean {
+    let ok = false;
+    setState((current) => {
+      const perk = perkShop.find((item) => item.id === perkId);
+      if (!perk) return current;
+      if (current.purchasedPerkRewardIds.includes(perkId)) {
+        return { ...current, debugMessage: `${perk.title} is already reserved in prototype mode.` };
+      }
+      if (current.resources[perk.costResource] < perk.costAmount) {
+        return { ...current, debugMessage: `Need ${perk.costAmount - current.resources[perk.costResource]} more ${perk.costResource.toUpperCase()} for ${perk.title}.` };
+      }
+      ok = true;
+      return {
+        ...current,
+        purchasedPerkRewardIds: [...current.purchasedPerkRewardIds, perkId],
+        resources: {
+          ...current.resources,
+          [perk.costResource]: current.resources[perk.costResource] - perk.costAmount
+        },
+        transactions: [
+          tx(perk.costResource, -perk.costAmount, `reserve_${perkId}`),
+          ...current.transactions
+        ].slice(0, 30),
+        debugMessage: `${perk.title} reserved locally. Prototype only: no real access or token claim.`
+      };
+    });
+    return ok;
+  }
+
   function resetProgress() {
     localStorage.removeItem(STORAGE_KEY);
     setState(initialState());
@@ -380,6 +485,9 @@ export function useGameStore() {
     clickCore,
     buyComputeGenerator,
     upgradeComputeGenerator,
+    buyDeviceGenerator,
+    mockSupportMacMini,
+    buyPerkReward,
     claimOfflineNow,
     answerRepo,
     completeAtlasMission,

@@ -11,7 +11,7 @@ export const roomObjects: RoomObjectConfig[] = [
   { id: "kirill", type: "character", label: "Kirill", subtitle: "Vision", visualId: "kirill", x: 43, y: 52, w: 9, h: 35, z: 18, accent: "atlas" },
   { id: "atlas-core", type: "core", label: "Atlas Core", subtitle: "Generate Compute", visualId: "atlas-core", x: 28, y: 65, w: 18, h: 18, z: 21, accent: "compute" },
   { id: "black-box", type: "character", label: "Black Box", subtitle: "Execution", visualId: "black-box", x: 64, y: 50, w: 9, h: 35, z: 18, accent: "compute" },
-  { id: "mac-mini", type: "asset", label: "Mac mini", subtitle: "Production node", visualId: "mac-mini", x: 63, y: 33, w: 13, h: 17, z: 12, linkedEntityId: "mac-mini", accent: "compute" },
+  { id: "mac-mini", type: "asset", label: "Mac mini", subtitle: "Render node", visualId: "mac-mini", x: 15, y: 31, w: 15, h: 18, z: 12, linkedEntityId: "mac-mini", accent: "compute" },
   { id: "old-dell", type: "asset", label: "Old Dell", subtitle: "Legacy research", visualId: "old-dell", x: 72, y: 43, w: 13, h: 20, z: 13, linkedEntityId: "old-dell", accent: "atlas" },
   { id: "want2view", type: "terminal", label: "Want2View", subtitle: "Trend intelligence", visualId: "want2view-terminal", x: 50, y: 32, w: 12, h: 15, z: 13, linkedEntityId: "want2view", accent: "compute" },
   { id: "network-terminal", type: "terminal", label: "Network Terminal", subtitle: "Distribution", visualId: "network-terminal", x: 86, y: 57, w: 11, h: 18, z: 11, accent: "network" },

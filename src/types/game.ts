@@ -1,4 +1,4 @@
-export type ResourceCode = "compute" | "knowledge" | "contribution";
+export type ResourceCode = "compute" | "knowledge" | "contribution" | "fbc";
 
 export type RoomObjectType =
   | "core"
@@ -78,6 +78,16 @@ export interface GeneratorType {
   linkedProductId: string;
 }
 
+export interface DeviceGenerator {
+  id: string;
+  name: string;
+  tier: "starter" | "pro" | "render";
+  description: string;
+  costCompute: number;
+  ratePerHour: number;
+  unlock: string;
+}
+
 export interface MissionRepo {
   id: string;
   name: string;
@@ -112,4 +122,14 @@ export interface RewardTier {
   requirement: string;
   benefitPreview: string;
   status: "locked" | "preview" | "unlocked";
+}
+
+export interface PerkReward {
+  id: string;
+  title: string;
+  category: "promo" | "lesson" | "render" | "access";
+  costResource: ResourceCode;
+  costAmount: number;
+  benefitPreview: string;
+  disclaimer: string;
 }

@@ -1,12 +1,14 @@
 import { useMemo, useState } from "react";
 import { assets } from "../config/assets";
+import { deviceGenerators } from "../config/deviceGenerators";
 import { fundingGoals } from "../config/funding";
 import { atlasFirstScanRepos } from "../config/missions";
 import { networkNodes } from "../config/network";
+import { perkShop } from "../config/perks";
 import { products } from "../config/products";
 import { generatorTypes } from "../config/generators";
 import { rewardTiers } from "../config/rewards";
-import { getAtlasRankProgress, getGeneratorRatePerHour, getGeneratorUpgradeCost, type GameState } from "../store/gameStore";
+import { getAtlasRankProgress, getTotalComputeRatePerHour, getGeneratorRatePerHour, getGeneratorUpgradeCost, type GameState } from "../store/gameStore";
 import type { Asset, MissionRepo, RoomObjectConfig } from "../types/game";
 
 interface Props {
@@ -15,6 +17,9 @@ interface Props {
   onClose: () => void;
   onBuyGenerator: () => void;
   onUpgradeGenerator: () => void;
+  onBuyDeviceGenerator: (generatorId: string) => void;
+  onMockSupportMacMini: () => void;
+  onBuyPerkReward: (perkId: string) => void;
   onClaimOffline: () => void;
   onAnswerRepo: (repo: MissionRepo, answer: string) => void;
   onCompleteAtlasMission: () => void;
@@ -28,6 +33,9 @@ export function ObjectBottomSheet({
   onClose,
   onBuyGenerator,
   onUpgradeGenerator,
+  onBuyDeviceGenerator,
+  onMockSupportMacMini,
+  onBuyPerkReward,
   onClaimOffline,
   onAnswerRepo,
   onCompleteAtlasMission,
@@ -53,22 +61,22 @@ export function ObjectBottomSheet({
         </header>
         {asset && <AssetCard assetId={asset.id} />}
         {object.id === "asset-index" && <AssetIndex />}
-        {object.id === "atlas-terminal" && <AtlasMission state={state} onAnswerRepo={onAnswerRepo} onComplete={onCompleteAtlasMission} />}
+        {object.id === "atlas-terminal" && <AtlasMission state={state} onAnswerRepo={onAnswerRepo} onComplete={onCompleteAtlasMission} onBuyPerkReward={onBuyPerkReward} />}
         {object.id === "want2view" && <MockPanel title="Want2View Terminal" metric="Trend Scanner locked" cta="Unlock after Atlas Rank 2" tone="compute">
           <p>Preview the product loop: Trend Scanner will turn Attention into a real Want2View research and a subscription discount.</p>
         </MockPanel>}
         {object.id === "network-terminal" && <NetworkPanel state={state} />}
-        {object.id === "funding-hub" && <FundingPanel />}
+        {object.id === "funding-hub" && <FundingPanel state={state} onMockSupportMacMini={onMockSupportMacMini} />}
         {object.id === "youtube-wall" && <MockPanel title="YouTube Wall" metric="Season 0" cta="Open next episode later" tone="network">
           <p>Real life becomes video; video becomes patch notes; patch notes become community missions.</p>
         </MockPanel>}
-        {object.id === "reward-vault" && <RewardPreview state={state} />}
+        {object.id === "reward-vault" && <RewardPreview state={state} onBuyPerkReward={onBuyPerkReward} />}
         {object.id === "goal" && <MockPanel title="Ecosystem Goal" metric="$0 / $3,000 MRR" cta="View strategy later" tone="funding">
           <p>The first season mission is autonomy: make the ecosystem able to function and grow sustainably.</p>
         </MockPanel>}
         {object.type === "locked" && <LockedPreview object={object} />}
         {object.type === "character" && <CharacterPanel object={object} state={state} />}
-        {object.id === "factory-panel" && <GeneratorPanel state={state} onBuyGenerator={onBuyGenerator} onUpgradeGenerator={onUpgradeGenerator} onClaimOffline={onClaimOffline} onSimulateOffline={onSimulateOffline} />}
+        {object.id === "factory-panel" && <GeneratorPanel state={state} onBuyGenerator={onBuyGenerator} onUpgradeGenerator={onUpgradeGenerator} onBuyDeviceGenerator={onBuyDeviceGenerator} onClaimOffline={onClaimOffline} onSimulateOffline={onSimulateOffline} />}
         {object.id === "profile-panel" && <ProfilePanel state={state} onReset={onReset} />}
         {product && object.id !== "atlas-terminal" && object.id !== "want2view" && (
           <div className={`metric-card tone-${product.color}`}>
@@ -175,7 +183,7 @@ function AssetCard({ assetId }: { assetId: string }) {
   );
 }
 
-function AtlasMission({ state, onAnswerRepo, onComplete }: { state: GameState; onAnswerRepo: (repo: MissionRepo, answer: string) => void; onComplete: () => void }) {
+function AtlasMission({ state, onAnswerRepo, onComplete, onBuyPerkReward }: { state: GameState; onAnswerRepo: (repo: MissionRepo, answer: string) => void; onComplete: () => void; onBuyPerkReward: (perkId: string) => void }) {
   const answered = Object.keys(state.atlasMission.answers).length;
   const claimed = state.atlasMission.status === "claimed";
   const ready = state.atlasMission.status === "ready";
@@ -212,7 +220,7 @@ function AtlasMission({ state, onAnswerRepo, onComplete }: { state: GameState; o
       <button className="primary-cta" onClick={onComplete} disabled={claimed || (!ready && !claimed)}>
         {claimed ? "Atlas Fragment Preview Unlocked" : ready ? "Run First Scan · 30 Compute" : `Answer ${3 - answered} more`}
       </button>
-      {claimed && <RewardPreview state={state} />}
+      {claimed && <RewardPreview state={state} onBuyPerkReward={onBuyPerkReward} />}
       <ContributionHistory state={state} />
     </div>
   );
@@ -237,17 +245,18 @@ function AtlasRankCard({ state }: { state: GameState }) {
   );
 }
 
-function GeneratorPanel({ state, onBuyGenerator, onUpgradeGenerator, onClaimOffline, onSimulateOffline }: { state: GameState; onBuyGenerator: () => void; onUpgradeGenerator: () => void; onClaimOffline: () => void; onSimulateOffline: () => void }) {
+function GeneratorPanel({ state, onBuyGenerator, onUpgradeGenerator, onBuyDeviceGenerator, onClaimOffline, onSimulateOffline }: { state: GameState; onBuyGenerator: () => void; onUpgradeGenerator: () => void; onBuyDeviceGenerator: (generatorId: string) => void; onClaimOffline: () => void; onSimulateOffline: () => void }) {
   const generator = generatorTypes[0];
   const level = state.generatorLevel;
   const rate = getGeneratorRatePerHour(level || 1);
+  const totalRate = getTotalComputeRatePerHour(state);
   const upgradeCost = getGeneratorUpgradeCost(level);
   return (
     <div className="generator-panel">
       <div className="metric-card tone-compute">
         <strong>{generator.name}</strong>
-        <span>{state.generatorPurchased ? `Level ${level} · Online` : `${generator.costCompute} Compute`}</span>
-        <p>{generator.description}</p>
+        <span>{state.generatorPurchased ? `Level ${level} · ${totalRate}/hr total` : `${generator.costCompute} Compute`}</span>
+        <p>{generator.description} Add device generators below to build an idle tycoon stack.</p>
       </div>
       <div className="stat-grid">
         <div><span>Output</span><strong>{state.generatorPurchased ? rate : generator.ratePerHour}/hr</strong></div>
@@ -264,8 +273,38 @@ function GeneratorPanel({ state, onBuyGenerator, onUpgradeGenerator, onClaimOffl
         </>
       )}
       <button className="ghost-button wide" onClick={onSimulateOffline}>Debug: simulate 1 hour offline</button>
+      <DeviceGeneratorShop state={state} onBuyDeviceGenerator={onBuyDeviceGenerator} />
       <TransactionJournal state={state} />
     </div>
+  );
+}
+
+function DeviceGeneratorShop({ state, onBuyDeviceGenerator }: { state: GameState; onBuyDeviceGenerator: (generatorId: string) => void }) {
+  return (
+    <section className="device-shop">
+      <div>
+        <h3>Device Generator Shop</h3>
+        <p>Buy small game devices that keep producing Compute by themselves.</p>
+      </div>
+      {deviceGenerators.map((generator) => {
+        const owned = state.purchasedDeviceGeneratorIds.includes(generator.id);
+        return (
+          <article className={`device-generator-card tier-${generator.tier}`} key={generator.id}>
+            <div className="device-generator-head">
+              <div>
+                <strong>{generator.name}</strong>
+                <span>{generator.unlock}</span>
+              </div>
+              <b>+{generator.ratePerHour}/hr</b>
+            </div>
+            <p>{generator.description}</p>
+            <button className={owned ? "ghost-button wide" : "primary-cta"} disabled={owned} onClick={() => onBuyDeviceGenerator(generator.id)}>
+              {owned ? "Owned" : `Buy · ${generator.costCompute} Compute`}
+            </button>
+          </article>
+        );
+      })}
+    </section>
   );
 }
 
@@ -312,7 +351,7 @@ function ContributionHistory({ state }: { state: GameState }) {
   );
 }
 
-function RewardPreview({ state }: { state: GameState }) {
+function RewardPreview({ state, onBuyPerkReward }: { state: GameState; onBuyPerkReward: (perkId: string) => void }) {
   const rank = getAtlasRankProgress(state.resources.contribution).rank;
   return (
     <div className="reward-preview">
@@ -328,7 +367,45 @@ function RewardPreview({ state }: { state: GameState }) {
           ))}
         </div>
       </div>
+      <PerkShop state={state} onBuyPerkReward={onBuyPerkReward} />
     </div>
+  );
+}
+
+function PerkShop({ state, onBuyPerkReward }: { state: GameState; onBuyPerkReward: (perkId: string) => void }) {
+  return (
+    <section className="perk-shop">
+      <div className="perk-shop-head">
+        <div>
+          <h3>Perk Shop</h3>
+          <p>Spend mock FBC on game reservations for promos, access and render perks.</p>
+        </div>
+        <b>{Math.floor(state.resources.fbc)} FBC</b>
+      </div>
+      {perkShop.map((perk) => {
+        const owned = state.purchasedPerkRewardIds.includes(perk.id);
+        const affordable = state.resources[perk.costResource] >= perk.costAmount;
+        return (
+          <article className="perk-card" key={perk.id}>
+            <div className="perk-card-head">
+              <div>
+                <strong>{perk.title}</strong>
+                <span>{perk.category} · {perk.benefitPreview}</span>
+              </div>
+              <b>{perk.costAmount} {perk.costResource.toUpperCase()}</b>
+            </div>
+            <p>{perk.disclaimer}</p>
+            <button
+              className={owned ? "ghost-button wide" : "primary-cta"}
+              disabled={owned || !affordable}
+              onClick={() => onBuyPerkReward(perk.id)}
+            >
+              {owned ? "Reserved" : affordable ? "Reserve perk" : `Need ${perk.costAmount - state.resources[perk.costResource]} FBC`}
+            </button>
+          </article>
+        );
+      })}
+    </section>
   );
 }
 
@@ -359,24 +436,25 @@ function NetworkPanel({ state }: { state: GameState }) {
   );
 }
 
-function FundingPanel() {
+function FundingPanel({ state, onMockSupportMacMini }: { state: GameState; onMockSupportMacMini: () => void }) {
   return (
     <div className="system-panel">
       <div className="metric-card tone-funding">
         <strong>Funding Hub</strong>
-        <span>Support strategy · mock only</span>
-        <p>These are contribution and perk previews, not equity, debt, profit share, token claims or guaranteed returns.</p>
+        <span>FBC balance: {Math.floor(state.resources.fbc)} · mock only</span>
+        <p>FBC is a prototype support-credit: 1 FBC mirrors 1 GRAM-style placeholder credit in-game. No real payment, equity, token claim, profit share or guaranteed return.</p>
       </div>
       <div className="system-list">
         {fundingGoals.map((goal) => {
-          const progress = Math.floor((goal.currentUsd / goal.targetUsd) * 100);
+          const currentUsd = goal.id === "mac-mini-render-node" ? state.mockSupportUsd : goal.currentUsd;
+          const progress = Math.min(100, Math.floor((currentUsd / goal.targetUsd) * 100));
           return (
             <article className="system-card" key={goal.id}>
               <div className="system-head">
                 <strong>{goal.title}</strong>
                 <span>{goal.status}</span>
               </div>
-              <b>${goal.currentUsd} / ${goal.targetUsd}</b>
+              <b>${currentUsd} / ${goal.targetUsd}</b>
               <div className="mini-progress" aria-label={`${goal.title} progress ${progress}%`}>
                 <i style={{ width: `${progress}%` }} />
               </div>
@@ -385,6 +463,11 @@ function FundingPanel() {
                 {goal.useOfFunds.map((item) => <span key={item}>{item}</span>)}
               </div>
               <em>{goal.perkPreview}</em>
+              {goal.id === "mac-mini-render-node" && (
+                <button className="primary-cta" disabled={currentUsd >= goal.targetUsd} onClick={onMockSupportMacMini}>
+                  {currentUsd >= goal.targetUsd ? "Mock support registered" : "Mock support $1000 · get 1000 FBC"}
+                </button>
+              )}
             </article>
           );
         })}
@@ -441,6 +524,8 @@ function ProfilePanel({ state, onReset }: { state: GameState; onReset: () => voi
         <div><span>Compute</span><strong>{Math.floor(state.resources.compute)}</strong></div>
         <div><span>Knowledge</span><strong>{Math.floor(state.resources.knowledge)}</strong></div>
         <div><span>Contribution</span><strong>{Math.floor(state.resources.contribution)}</strong></div>
+        <div><span>FBC mock</span><strong>{Math.floor(state.resources.fbc)}</strong></div>
+        <div><span>Support</span><strong>${state.mockSupportUsd}</strong></div>
       </div>
       <AtlasRankCard state={state} />
       <ContributionHistory state={state} />

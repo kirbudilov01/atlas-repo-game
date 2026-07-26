@@ -139,6 +139,9 @@ export default function App() {
         onClose={() => setSelected(null)}
         onBuyGenerator={game.buyComputeGenerator}
         onUpgradeGenerator={game.upgradeComputeGenerator}
+        onBuyDeviceGenerator={game.buyDeviceGenerator}
+        onMockSupportMacMini={game.mockSupportMacMini}
+        onBuyPerkReward={game.buyPerkReward}
         onClaimOffline={game.claimOfflineNow}
         onAnswerRepo={game.answerRepo}
         onCompleteAtlasMission={game.completeAtlasMission}
