@@ -13,7 +13,7 @@ interface Props {
 }
 
 export function RoomScene({ state, selectedId, scanMode, onToggleScan, onObject, onCoreClick }: Props) {
-  const roomMapSrc = `${import.meta.env.BASE_URL}assets/our-room-map.png`;
+  const roomMapSrc = `${import.meta.env.BASE_URL}assets/our-room-game-art.png`;
 
   return (
     <section className="room-scene" aria-label="Our Room">

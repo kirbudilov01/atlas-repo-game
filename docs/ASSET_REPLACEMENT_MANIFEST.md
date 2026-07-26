@@ -5,6 +5,7 @@ The current prototype uses a cropped real room photo plus CSS/SVG-like placehold
 ## Room Map
 
 - Source gameplay map: `public/assets/our-room-map.png`.
+- Current generated gameplay map: `public/assets/our-room-game-art.png`.
 - Figma/art pass should preserve the real geometry: bed foreground, desk/monitors center, Dell laptop right, wall grid upper right, wires and floor zones.
 - Do not replace with a generic cyber lab; the room must stay recognizable as Kirill's real room.
 

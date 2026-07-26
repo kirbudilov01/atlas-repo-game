@@ -174,9 +174,9 @@ button {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 54% 50%;
-  transform: scale(1.01);
-  filter: saturate(1.15) contrast(1.08) brightness(0.72);
+  object-position: 50% 50%;
+  transform: scale(1.005);
+  filter: saturate(1.06) contrast(1.04) brightness(0.82);
   user-select: none;
   pointer-events: none;
 }
@@ -230,18 +230,18 @@ button {
 
 .room-cinematic-grade {
   background:
-    radial-gradient(circle at 50% 40%, rgba(32, 200, 120, 0.12), transparent 22%),
-    radial-gradient(circle at 63% 48%, rgba(139, 92, 246, 0.14), transparent 19%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.08) 42%, rgba(0, 0, 0, 0.34));
+    radial-gradient(circle at 50% 40%, rgba(32, 200, 120, 0.08), transparent 22%),
+    radial-gradient(circle at 63% 48%, rgba(139, 92, 246, 0.09), transparent 19%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.03) 42%, rgba(0, 0, 0, 0.18));
   mix-blend-mode: screen;
-  opacity: 0.9;
+  opacity: 0.72;
 }
 
 .room-game-vignette {
   background:
-    linear-gradient(90deg, rgba(0,0,0,0.46), transparent 18%, transparent 82%, rgba(0,0,0,0.4)),
-    linear-gradient(180deg, rgba(0,0,0,0.4), transparent 25%, transparent 74%, rgba(0,0,0,0.5));
-  box-shadow: inset 0 0 64px rgba(0,0,0,0.62);
+    linear-gradient(90deg, rgba(0,0,0,0.28), transparent 18%, transparent 82%, rgba(0,0,0,0.24)),
+    linear-gradient(180deg, rgba(0,0,0,0.22), transparent 25%, transparent 74%, rgba(0,0,0,0.32));
+  box-shadow: inset 0 0 42px rgba(0,0,0,0.46);
 }
 
 .generator-node {
@@ -277,17 +277,19 @@ button {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 30px;
-  height: 36px;
+  width: 28px;
+  height: 28px;
   transform: translate(-50%, -50%);
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  border-radius: 999px 999px 999px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: 50%;
   background:
-    radial-gradient(circle at 45% 33%, rgba(255,255,255,0.78), transparent 0.18rem),
-    linear-gradient(160deg, rgba(255,255,255,0.18), rgba(8, 10, 15, 0.76));
-  box-shadow: 0 10px 22px rgba(0,0,0,0.34), 0 0 24px currentColor;
-  backdrop-filter: blur(10px);
-  rotate: -45deg;
+    radial-gradient(circle at 38% 32%, rgba(255,255,255,0.82), transparent 3px),
+    radial-gradient(circle, currentColor 0 32%, rgba(8, 10, 15, 0.82) 34% 100%);
+  box-shadow:
+    0 10px 22px rgba(0,0,0,0.36),
+    0 0 18px color-mix(in srgb, currentColor 52%, transparent),
+    inset 0 0 0 5px rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
 }
 
 .accent-atlas { color: rgba(32, 200, 120, 0.84); }
@@ -305,12 +307,15 @@ button {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 11px;
-  height: 11px;
+  width: 46px;
+  height: 46px;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  background: currentColor;
-  box-shadow: 0 0 14px currentColor;
+  border: 1px solid currentColor;
+  background: transparent;
+  opacity: 0.22;
+  box-shadow: 0 0 18px currentColor;
+  animation: hotspot-breathe 2.6s ease-in-out infinite;
 }
 
 .object-label {
@@ -337,7 +342,7 @@ button {
 
 .room-object:hover .object-label,
 .room-object.is-active .object-label,
-.type-character .object-label {
+.scan-mode .type-character .object-label {
   opacity: 1;
   transform: translateX(-50%) translateY(-2px);
 }
@@ -363,14 +368,13 @@ button {
 }
 
 .type-character .object-art {
-  inset: 0;
-  left: 0;
-  top: 0;
-  width: auto;
-  height: auto;
-  transform: none;
-  border-radius: 999px 999px 12px 12px;
-  backdrop-filter: blur(1px);
+  left: 50%;
+  top: 50%;
+  width: 34px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+  border-radius: 18px 18px 9px 9px;
+  backdrop-filter: blur(2px);
 }
 
 .object-kirill .object-art {
@@ -387,10 +391,10 @@ button {
 
 .character-face {
   position: absolute;
-  left: 28%;
-  top: 18%;
-  width: 44%;
-  height: 23%;
+  left: 26%;
+  top: 17%;
+  width: 48%;
+  height: 22%;
   border-radius: 99px;
   background: rgba(244, 240, 232, 0.12);
   box-shadow: 0 15px 0 rgba(244, 240, 232, 0.06);
@@ -424,11 +428,11 @@ button {
 .terminal-lines::before {
   content: "";
   position: absolute;
-  inset: -7px;
+  inset: -15px;
   border: 1px solid currentColor;
   border-radius: inherit;
   opacity: 0.3;
-  animation: hotspot-ping 1.7s ease-out infinite;
+  animation: hotspot-ping 2.1s ease-out infinite;
 }
 
 .lock-line {
@@ -454,29 +458,24 @@ button {
 }
 
 .object-goal-board .object-art::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 10px;
-  height: 10px;
-  transform: translate(-50%, -50%);
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  background: var(--funding);
-  box-shadow: 0 0 0 5px rgba(245, 158, 11, 0.12), 0 0 22px rgba(245, 158, 11, 0.4);
+  border: 1px solid var(--funding);
+  background: transparent;
+  box-shadow: 0 0 0 5px rgba(245, 158, 11, 0.08), 0 0 22px rgba(245, 158, 11, 0.28);
 }
 
 .type-reward .object-art,
 .type-goal .object-art {
-  width: 34px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
 }
 
 .object-mac-mini .object-art {
-  width: 48px;
-  height: 32px;
-  border-radius: 10px;
-  rotate: 0deg;
+  width: 38px;
+  height: 24px;
+  border-radius: 8px;
   background:
     linear-gradient(180deg, rgba(226, 232, 240, 0.9), rgba(88, 101, 122, 0.82)),
     rgba(8, 10, 15, 0.8);
@@ -495,14 +494,17 @@ button {
 }
 
 .object-mac-mini .object-art::after {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   left: auto;
   right: 8px;
   top: auto;
   bottom: 7px;
   transform: none;
   background: var(--funding);
+  border: 0;
+  opacity: 1;
+  animation: none;
 }
 
 .type-locked {
@@ -512,6 +514,11 @@ button {
 @keyframes hotspot-ping {
   from { transform: scale(0.85); opacity: 0.45; }
   to { transform: scale(1.9); opacity: 0; }
+}
+
+@keyframes hotspot-breathe {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.92); opacity: 0.16; }
+  50% { transform: translate(-50%, -50%) scale(1.08); opacity: 0.34; }
 }
 
 .atlas-core {

@@ -26,6 +26,7 @@ Application shell and first retention loop polish in progress. Next work can mov
 - GitHub Pages branch-based deployment setup.
 - Mobile-first Our Room shell.
 - Photo-based Our Room map from the real room reference.
+- GPT/imagegen redrawn Our Room game-art map for local visual testing.
 - Real-room hotspot layer for desk, monitors, Dell laptop, bed, wall grid and floor zones.
 - More game-like room pins, couch clicker placement and bottom dock.
 - Mac mini moved into the empty left room zone as a dedicated render node hotspot.
@@ -151,6 +152,8 @@ Screenshots:
 - `output/playwright/perk-shop-fbc.png`
 - `output/playwright/perk-shop-reserved.png`
 - `output/playwright/github-pages-live-fbc-build.png`
+- `output/playwright/gpt-redrawn-room-preview.png`
+- `output/playwright/gpt-redrawn-room-preview-clean.png`
 
 ## Next Stage
 
