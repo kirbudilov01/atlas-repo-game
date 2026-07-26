@@ -8,6 +8,8 @@ Prototype Mode.
 
 No real payments, TON, FabricBot writes, real partner payouts, real promo codes, real subscription grants, or production integrations are connected.
 
+Live prototype URL: `https://kirbudilov01.github.io/atlas-repo-game/`
+
 ## Current Stage
 
 Application shell polish in progress. Next work can move toward richer animation, retention loops or backend boundary design.
@@ -128,6 +130,7 @@ Screenshots:
 - `output/playwright/full-app-room-scan-toggle.png`
 - `output/playwright/full-app-atlas-nav-after-generator.png`
 - `output/playwright/game-visual-pass-preview.png`
+- `output/playwright/github-pages-live-fixed.png`
 
 ## Next Stage
 
