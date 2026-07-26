@@ -21,7 +21,7 @@ Application shell polish in progress. Next work can move toward richer animation
 ## Completed
 
 - React + TypeScript + Vite app scaffold.
-- GitHub Pages deployment workflow.
+- GitHub Pages branch-based deployment setup.
 - Mobile-first Our Room shell.
 - Photo-based Our Room map from the real room reference.
 - Real-room hotspot layer for desk, monitors, Dell laptop, bed, wall grid and floor zones.
