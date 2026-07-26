@@ -150,6 +150,7 @@ Screenshots:
 - `output/playwright/fbc-support-claimed.png`
 - `output/playwright/perk-shop-fbc.png`
 - `output/playwright/perk-shop-reserved.png`
+- `output/playwright/github-pages-live-fbc-build.png`
 
 ## Next Stage
 
