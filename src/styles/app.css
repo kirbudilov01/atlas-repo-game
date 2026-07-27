@@ -4923,6 +4923,114 @@ code {
   background: linear-gradient(90deg, #f7d35b, #80f28d);
 }
 
+.room-product-story {
+  position: absolute;
+  z-index: 9;
+  left: auto;
+  right: 14px;
+  top: 14px;
+  width: min(214px, calc(100% - 126px));
+  display: grid;
+  gap: 2px;
+  padding: 7px 9px;
+  border: 1px solid rgba(73,183,255,0.2);
+  border-radius: 13px;
+  background:
+    radial-gradient(circle at 90% 20%, rgba(73,183,255,0.18), transparent 5rem),
+    rgba(5,10,13,0.72);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 14px 24px rgba(0,0,0,0.3);
+  pointer-events: none;
+}
+
+.room-product-story span {
+  color: #8df078;
+  font-size: 9px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.room-product-story strong {
+  color: #fff;
+  font-size: 10px;
+  line-height: 1.15;
+}
+
+.product-story-board {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  gap: 10px;
+  min-height: 178px;
+  padding: 12px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 86% 12%, rgba(73,183,255,0.14), transparent 5rem),
+    linear-gradient(180deg, rgba(38,47,49,0.96), rgba(8,13,15,0.98));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.16),
+    0 16px 30px rgba(0,0,0,0.3);
+}
+
+.story-product-grid {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 176px;
+  gap: 9px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.story-product-card {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 8px;
+  min-height: 96px;
+  padding: 10px;
+  border: 1px solid rgba(255,255,255,0.13);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 86% 14%, rgba(255,210,94,0.13), transparent 4rem),
+    linear-gradient(180deg, rgba(24,33,36,0.98), rgba(7,12,14,0.98));
+}
+
+.story-product-card i {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  color: #07210e;
+  background: linear-gradient(180deg, #80f28d, #20c878);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.story-product-card strong,
+.story-product-card span,
+.story-product-card em {
+  display: block;
+}
+
+.story-product-card strong {
+  font-size: 13px;
+}
+
+.story-product-card span {
+  color: #c7d2de;
+  font-size: 10px;
+  line-height: 1.15;
+}
+
+.story-product-card em {
+  margin-top: 5px;
+  color: #f7d35b;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 900;
+}
+
 .onboarding-loop-preview {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

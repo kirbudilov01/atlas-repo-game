@@ -1,4 +1,5 @@
 import { productionChain, seasonEvents } from "../config/idleMeta";
+import { products } from "../config/products";
 import { roomObjects } from "../config/roomObjects";
 import type { GameState } from "../store/gameStore";
 import type { RoomObjectConfig } from "../types/game";
@@ -73,6 +74,10 @@ export function RoomScene({ state, selectedId, scanMode, onToggleScan, onObject,
             <span>{seasonEvents[0].title}</span>
             <strong>{seasonEvents[0].goal}</strong>
             <i><u style={{ width: `${seasonEvents[0].progress}%` }} /></i>
+          </div>
+          <div className="room-product-story">
+            <span>Current products</span>
+            <strong>{products.map((product) => product.name).join(" · ")}</strong>
           </div>
         </div>
         {state.generatorPurchased && <div className="generator-node">Compute Generator L{state.generatorLevel}</div>}

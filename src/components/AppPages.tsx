@@ -58,8 +58,8 @@ function EcosystemPage({ state }: { state: GameState }) {
         <div className="hero-grade" />
         <div>
           <span>FabricBot Ecosystem</span>
-          <h1>Bot Factory</h1>
-          <p>Our products. Our power.</p>
+          <h1>Current Products</h1>
+          <p>AtlasRepo, Want2View, FabricBot and the public YouTube build story.</p>
         </div>
         <div className="factory-diorama" aria-hidden="true">
           <i className="factory-base" />
@@ -70,6 +70,7 @@ function EcosystemPage({ state }: { state: GameState }) {
         </div>
       </header>
       <LoopRail state={state} />
+      <ProductStoryBoard />
       <ProductionChain state={state} />
       <section className="product-launch-grid">
         {products.map((product, index) => (
@@ -125,6 +126,29 @@ function EcosystemPage({ state }: { state: GameState }) {
           <strong>Payment Bot</strong>
           <span>Future access, promo and subscription layer. Mock-only for now.</span>
         </article>
+      </div>
+    </section>
+  );
+}
+
+function ProductStoryBoard() {
+  return (
+    <section className="product-story-board">
+      <div className="section-head">
+        <span>Story entry</span>
+        <strong>Real products become game chapters</strong>
+      </div>
+      <div className="story-product-grid">
+        {products.map((product, index) => (
+          <article className={`story-product-card tone-${product.color}`} key={product.id}>
+            <i>{index + 1}</i>
+            <div>
+              <strong>{product.name}</strong>
+              <span>{product.role}</span>
+              <em>{product.metric}</em>
+            </div>
+          </article>
+        ))}
       </div>
     </section>
   );

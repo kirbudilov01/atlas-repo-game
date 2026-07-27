@@ -7,9 +7,9 @@ interface Props {
 const slides = [
   {
     eyebrow: "Step 1",
-    title: "Founder Room",
-    body: "A real room becomes the center of an AI product tycoon: messy desk, laptops, agents, products and public progress.",
-    tag: "Living base",
+    title: "Our Real Story",
+    body: "This starts from the real room and current products: AtlasRepo, Want2View, FabricBot, payments, video and the public build journey.",
+    tag: "Real ecosystem",
     visual: "bot"
   },
   {

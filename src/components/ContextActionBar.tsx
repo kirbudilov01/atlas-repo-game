@@ -18,7 +18,7 @@ export function ContextActionBar({ state, nextAction, onPrimary }: Props) {
   return (
     <section className="context-bar">
       <div className="quest-copy">
-        <span className="eyebrow">Business roadmap</span>
+        <span className="eyebrow">Story roadmap</span>
         <strong>{nextAction.title}</strong>
         <p>{nextAction.body}</p>
         {state.debugMessage && <em className="debug-note">{state.debugMessage}</em>}
