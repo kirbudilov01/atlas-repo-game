@@ -5704,3 +5704,216 @@ code {
   font-style: normal;
   line-height: 1.25;
 }
+
+.player-room-stage .room-terminal {
+  z-index: 4;
+}
+
+.room-data-route {
+  left: 74px;
+  right: 74px;
+  top: 18px;
+  height: 34px;
+  border-color: rgba(93, 211, 255, 0.18);
+  background:
+    linear-gradient(90deg, rgba(93, 211, 255, 0.1), rgba(128, 242, 141, 0.1)),
+    rgba(5, 10, 11, 0.42);
+}
+
+.room-data-route em {
+  color: rgba(231, 249, 255, 0.72);
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.room-terminal {
+  position: absolute;
+  display: grid;
+  gap: 3px;
+  width: 118px;
+  min-height: 74px;
+  padding: 10px;
+  border: 1px solid rgba(93, 211, 255, 0.26);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 72% 18%, rgba(93, 211, 255, 0.18), transparent 42px),
+    linear-gradient(145deg, rgba(9, 24, 31, 0.86), rgba(5, 9, 12, 0.94));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 14px 24px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(8px);
+}
+
+.room-terminal::before {
+  content: "";
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 20px;
+  height: 14px;
+  border-radius: 5px;
+  background:
+    linear-gradient(90deg, rgba(128, 242, 141, 0.92) 0 38%, transparent 39% 48%, rgba(93, 211, 255, 0.92) 49% 100%);
+  box-shadow: 0 0 14px rgba(93, 211, 255, 0.32);
+}
+
+.room-terminal span,
+.room-terminal strong,
+.room-terminal em {
+  position: relative;
+  z-index: 1;
+}
+
+.room-terminal span {
+  color: rgba(220, 239, 245, 0.66);
+  font-size: 9px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.room-terminal strong {
+  color: #fff;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.room-terminal em {
+  color: rgba(216, 236, 243, 0.7);
+  font-size: 10px;
+  font-style: normal;
+  line-height: 1.18;
+}
+
+.terminal-want2view {
+  left: 18px;
+  top: 74px;
+}
+
+.terminal-atlasrepo {
+  right: 18px;
+  top: 74px;
+}
+
+.my-room-page .mac-mini-card {
+  left: 16px;
+  right: auto;
+  bottom: 134px;
+  width: 136px;
+  min-height: 104px;
+  border-color: rgba(255, 210, 94, 0.34);
+  background:
+    radial-gradient(circle at 50% 24%, rgba(255, 210, 94, 0.24), transparent 48px),
+    linear-gradient(145deg, rgba(42, 33, 18, 0.92), rgba(8, 12, 13, 0.94));
+}
+
+.my-room-page .mac-mini-card::before {
+  opacity: 0.9;
+}
+
+.my-room-page .mac-mini-card strong {
+  max-width: 112px;
+  font-size: 20px;
+  line-height: 1.03;
+}
+
+.my-room-page .mac-mini-card em {
+  max-width: 112px;
+  font-size: 10px;
+  line-height: 1.15;
+}
+
+.my-room-page .render-power-card {
+  right: 14px;
+  bottom: 132px;
+  width: 118px;
+  min-height: 82px;
+}
+
+.my-room-page .room-clicker-object {
+  bottom: 74px;
+}
+
+.my-room-goal-panel {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid rgba(255, 210, 94, 0.2);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 80% 0%, rgba(255, 210, 94, 0.14), transparent 110px),
+    radial-gradient(circle at 16% 10%, rgba(93, 211, 255, 0.12), transparent 120px),
+    linear-gradient(180deg, rgba(25, 31, 30, 0.96), rgba(7, 12, 14, 0.98));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 16px 28px rgba(0, 0, 0, 0.28);
+}
+
+.goal-progress-line {
+  display: grid;
+  gap: 8px;
+}
+
+.goal-progress-line b {
+  color: #fff1c7;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.goal-progress-line i {
+  position: relative;
+  display: block;
+  height: 9px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.goal-progress-line u {
+  position: absolute;
+  inset: 0 auto 0 0;
+  display: block;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #80f28d, #ffd45f);
+}
+
+.goal-step-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.goal-step-grid article {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  column-gap: 9px;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.goal-step-grid span {
+  grid-row: span 2;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 9px;
+  background: linear-gradient(180deg, #80f28d, #20c878);
+  color: #06220f;
+  font-size: 12px;
+  font-weight: 950;
+}
+
+.goal-step-grid strong {
+  color: #fff;
+  font-size: 13px;
+}
+
+.goal-step-grid em {
+  color: rgba(228, 239, 242, 0.68);
+  font-size: 11px;
+  font-style: normal;
+  line-height: 1.25;
+}

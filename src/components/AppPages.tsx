@@ -404,13 +404,22 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator }: { 
         <div className="my-room-grade" />
         <div className="room-wall-panel" />
         <div className="room-floor-plane" />
-        <div className="runner-track">
-          <span className="runner-dot" />
-          <em>auto runner</em>
+        <div className="runner-track room-data-route">
+          <em>open data route</em>
         </div>
         <div className="room-monitor monitor-left"><i /></div>
         <div className="room-monitor monitor-right"><i /></div>
         <div className="player-room-window" />
+        <article className="room-terminal terminal-want2view">
+          <span>Terminal 01</span>
+          <strong>Want2View</strong>
+          <em>video demand feed</em>
+        </article>
+        <article className="room-terminal terminal-atlasrepo">
+          <span>Terminal 02</span>
+          <strong>AtlasRepo</strong>
+          <em>repo intelligence feed</em>
+        </article>
         <button className="room-clicker-object" onClick={onBuild}>
           <span className="tap-rings" />
           <i />
@@ -419,25 +428,17 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator }: { 
         </button>
         <div className="room-sofa" />
         <article className="mac-mini-card">
-          <span>Mac mini</span>
-          <strong>Render Node</strong>
-          <em>Lvl 6</em>
+          <span>UBT render resource</span>
+          <strong>Mac mini</strong>
+          <em>runs project video generation</em>
         </article>
         <article className="render-power-card">
-          <span>Render Power</span>
-          <strong>84%</strong>
+          <span>Current goal</span>
+          <strong>$3000/mo</strong>
         </article>
-        <div className="room-shelf shelf-left">
-          <i />
-          <strong>Desk</strong>
-        </div>
-        <div className="room-shelf shelf-right">
-          <i />
-          <strong>AI bot</strong>
-        </div>
       </div>
       <LoopRail state={state} />
-      <RoomStagePath state={state} />
+      <MyRoomGoalPanel state={state} />
       <div className="stat-grid">
         <div><span>Room points</span><strong>{Math.floor(state.resources.compute)}</strong></div>
         <div><span>Income</span><strong>{totalRate}/hr</strong></div>
@@ -462,6 +463,40 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator }: { 
           );
         })}
       </section>
+    </section>
+  );
+}
+
+function MyRoomGoalPanel({ state }: { state: GameState }) {
+  const projectMrr = state.atlasMission.status === "claimed" ? 120 : 0;
+  const progress = Math.min(100, Math.floor((projectMrr / 3000) * 100));
+  return (
+    <section className="my-room-goal-panel">
+      <div className="section-head">
+        <span>Current goal</span>
+        <strong>$3000/mo project MRR</strong>
+      </div>
+      <div className="goal-progress-line">
+        <b>${projectMrr} / $3000</b>
+        <i><u style={{ width: `${progress}%` }} /></i>
+      </div>
+      <div className="goal-step-grid">
+        <article>
+          <span>1</span>
+          <strong>Collect signals</strong>
+          <em>Want2View + AtlasRepo terminals receive open product data.</em>
+        </article>
+        <article>
+          <span>2</span>
+          <strong>Render strategy</strong>
+          <em>Mac mini turns UBT/video tasks into project content output.</em>
+        </article>
+        <article>
+          <span>3</span>
+          <strong>Show the plan</strong>
+          <em>YouTube/video strategy layer will explain what happens next.</em>
+        </article>
+      </div>
     </section>
   );
 }
