@@ -437,32 +437,41 @@ function NetworkPanel({ state }: { state: GameState }) {
 }
 
 function FundingPanel({ state, onMockSupportMacMini }: { state: GameState; onMockSupportMacMini: () => void }) {
-  const supporters = [
-    { name: "Kirill", role: "Founder fuel", amount: state.mockSupportUsd > 0 ? state.mockSupportUsd : 0 },
-    { name: "Early supporter", role: "Mac mini believer", amount: state.mockSupportUsd > 0 ? 1000 : 0 },
-    { name: "Future partner", role: "Reserved slot", amount: 0 }
-  ];
+  const legacyEntry = state.mockSupportUsd > 0 && state.supportLedger.length === 0
+    ? [{ id: "legacy-support", supporterName: "Early supporter", amountUsd: state.mockSupportUsd, fbcCoins: state.mockSupportUsd, target: "Mac mini render node", note: "Legacy local support entry from prototype state." }]
+    : [];
+  const supporters = [...state.supportLedger, ...legacyEntry];
   return (
     <div className="system-panel">
       <div className="metric-card tone-funding">
         <strong>Participate</strong>
-        <span>FBC balance: {Math.floor(state.resources.fbc)} · Telegram Wallet preview</span>
-        <p>Support is crowdfunding in prototype mode. FBC is a local support-credit only: no real payment, equity, token claim, profit share or guaranteed return.</p>
+        <span>FBC Coins: {Math.floor(state.resources.fbc)} · Build Points: {Math.floor(state.resources.compute)}</span>
+        <p>Build Points are earned through gameplay. FBC Coins come from support/perks and form a public contribution memory; they are not equity, yield, cash redemption or a guaranteed token.</p>
         <button className="primary-cta wallet-cta" onClick={onMockSupportMacMini}>How do you want to participate?</button>
         <button className="ghost-button wide" onClick={onMockSupportMacMini}>Telegram Wallet preview · mock support</button>
       </div>
       <div className="support-ledger">
         <div className="support-ledger-head">
-          <strong>Open Support Ledger</strong>
-          <span>${supporters.reduce((sum, item) => sum + item.amount, 0)}</span>
+          <div>
+            <strong>Public Support Journal</strong>
+            <span>donations → FBC Coins</span>
+          </div>
+          <b>${supporters.reduce((sum, item) => sum + item.amountUsd, 0)}</b>
         </div>
-        {supporters.map((supporter) => (
-          <div className="supporter-row" key={supporter.name}>
+        {supporters.length === 0 ? (
+          <div className="support-empty-row">
+            <strong>No supporter entries yet</strong>
+            <span>Mock support will appear here as a future wallet/journal receipt.</span>
+          </div>
+        ) : supporters.map((supporter) => (
+          <div className="supporter-row journal-row" key={supporter.id}>
+            <i className="supporter-avatar" />
             <div>
-              <strong>{supporter.name}</strong>
-              <span>{supporter.role}</span>
+              <strong>{supporter.supporterName}</strong>
+              <span>${supporter.amountUsd} to {supporter.target}</span>
+              <em>{supporter.note}</em>
             </div>
-            <b>${supporter.amount}</b>
+            <b>+{supporter.fbcCoins} FBC</b>
           </div>
         ))}
       </div>

@@ -12,6 +12,7 @@ export interface GameState {
   resources: Record<ResourceCode, number>;
   transactions: ResourceTransaction[];
   contributionEvents: ContributionEvent[];
+  supportLedger: SupportLedgerEntry[];
   accountLevel: number;
   coreClicks: number;
   combo: number;
@@ -50,6 +51,17 @@ export interface ContributionEvent {
   createdAt: string;
 }
 
+export interface SupportLedgerEntry {
+  id: string;
+  supporterName: string;
+  amountUsd: number;
+  fbcCoins: number;
+  target: string;
+  note: string;
+  createdAt: string;
+  status: "mock" | "pending_wallet" | "confirmed";
+}
+
 const nowIso = () => new Date().toISOString();
 const transactionId = () => `tx_${Date.now()}_${Math.random().toString(16).slice(2)}`;
 const eventId = () => `ce_${Date.now()}_${Math.random().toString(16).slice(2)}`;
@@ -61,6 +73,7 @@ const initialState = (): GameState => ({
   resources: { compute: 0, knowledge: 0, contribution: 0, fbc: 0 },
   transactions: [],
   contributionEvents: [],
+  supportLedger: [],
   accountLevel: 1,
   coreClicks: 0,
   combo: 0,
@@ -91,6 +104,7 @@ function loadState(): GameState {
       ...parsed,
       resources: { ...initial.resources, ...parsed.resources },
       atlasMission: { ...initial.atlasMission, ...parsed.atlasMission },
+      supportLedger: parsed.supportLedger ?? initial.supportLedger,
       purchasedDeviceGeneratorIds: parsed.purchasedDeviceGeneratorIds ?? initial.purchasedDeviceGeneratorIds,
       purchasedPerkRewardIds: parsed.purchasedPerkRewardIds ?? initial.purchasedPerkRewardIds
     };
@@ -169,6 +183,19 @@ function contributionEvent(title: string, amount: number, impact: string): Contr
     amount,
     impact,
     createdAt: nowIso()
+  };
+}
+
+function supportLedgerEntry(amountUsd: number): SupportLedgerEntry {
+  return {
+    id: eventId(),
+    supporterName: "Telegram supporter",
+    amountUsd,
+    fbcCoins: amountUsd,
+    target: "Mac mini render node",
+    note: "Mock wallet support recorded. FBC Coins are support credits only until real utility/emission is designed.",
+    createdAt: nowIso(),
+    status: "mock"
   };
 }
 
@@ -430,10 +457,26 @@ export function useGameStore() {
         return { ...current, debugMessage: "Mac mini support preview is already registered." };
       }
       ok = true;
+      const entry = supportLedgerEntry(1000);
       return {
         ...current,
         mockSupportUsd: current.mockSupportUsd + 1000,
         resources: { ...current.resources, fbc: current.resources.fbc + 1000 },
+        supportLedger: [
+          entry,
+          ...current.supportLedger
+        ].slice(0, 30),
+        contributionEvents: [
+          {
+            id: eventId(),
+            title: "Support Ledger Entry",
+            source: "funding" as const,
+            amount: 1000,
+            impact: `${entry.supporterName} added ${entry.fbcCoins} FBC Coins toward ${entry.target}.`,
+            createdAt: nowIso()
+          },
+          ...current.contributionEvents
+        ].slice(0, 20),
         transactions: [
           tx("fbc", 1000, "mock_mac_mini_support_fbc"),
           ...current.transactions

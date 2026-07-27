@@ -187,13 +187,13 @@ function ParticipatePage({ state, onMockSupportMacMini }: { state: GameState; on
         <i style={{ width: `${runwayProgress}%` }} />
         <p>{runwayGoal.strategy}</p>
       </article>
+      <LatestSupportReceipt state={state} />
       <section className="need-grid">
         <MiniNeed icon="compute" label="AI Compute" value="48%" />
         <MiniNeed icon="feature" label="New Features" value="72%" />
         <MiniNeed icon="marketing" label="Marketing" value="36%" />
         <MiniNeed icon="talent" label="Talent" value="61%" />
       </section>
-      <SeasonEventBoard state={state} />
       <button className="wallet-preview-card" onClick={onMockSupportMacMini}>
         <span>Telegram Wallet preview</span>
         <strong>$1000 support route</strong>
@@ -202,28 +202,25 @@ function ParticipatePage({ state, onMockSupportMacMini }: { state: GameState; on
       <button className="ghost-button wide" onClick={onMockSupportMacMini}>Mock support $1000 · get 1000 FBC</button>
       <section className="support-summary-grid">
         <article>
-          <span>Estimated FBC credit</span>
+          <span>FBC Coins balance</span>
           <strong>{supportCredit} FBC</strong>
         </article>
         <article>
-          <span>Compute applied</span>
-          <strong>{supportCredit * 50}</strong>
+          <span>Build Points</span>
+          <strong>{Math.floor(state.resources.compute)}</strong>
         </article>
       </section>
+      <SupportLedger state={state} />
+      <article className="currency-rules-card">
+        <strong>Two core balances</strong>
+        <p><b>Build Points</b> are earned in-game and spent on generators, rooms and progress. <b>FBC Coins</b> are support credits from donations/perks; later they may connect to ecosystem utility, but they are not equity, yield or a guaranteed token.</p>
+      </article>
       <article className="disclaimer-card">
         <strong>Important disclaimer</strong>
         <p>FBC is a game credit / reservation only. No equity, no profit promise, no guaranteed token and no cash redemption.</p>
       </article>
+      <SeasonEventBoard state={state} />
       <BottleneckBoard state={state} />
-      <section className="support-ledger standalone">
-        <div className="support-ledger-head">
-          <strong>Open Support Ledger</strong>
-          <span>${totalSupport}</span>
-        </div>
-        <Supporter name="Kirill" role="Founder fuel" amount={totalSupport > 0 ? totalSupport : 0} />
-        <Supporter name="Early supporter" role="Mac mini believer" amount={totalSupport > 0 ? 1000 : 0} />
-        <Supporter name="Future partner" role="Reserved slot" amount={0} />
-      </section>
     </section>
   );
 }
@@ -238,16 +235,54 @@ function MiniNeed({ icon, label, value }: { icon: string; label: string; value: 
   );
 }
 
-function Supporter({ name, role, amount }: { name: string; role: string; amount: number }) {
+function LatestSupportReceipt({ state }: { state: GameState }) {
+  const latest = state.supportLedger[0];
   return (
-    <div className="supporter-row">
-      <i className="supporter-avatar" />
+    <article className="latest-support-receipt">
       <div>
-        <strong>{name}</strong>
-        <span>{role}</span>
+        <span>Latest support</span>
+        <strong>{latest ? latest.supporterName : "Waiting for first supporter"}</strong>
       </div>
-      <b>${amount}</b>
-    </div>
+      <div>
+        <span>{latest ? latest.target : "Donation journal"}</span>
+        <b>{latest ? `+$${latest.amountUsd} · ${latest.fbcCoins} FBC` : "0 FBC"}</b>
+      </div>
+    </article>
+  );
+}
+
+function SupportLedger({ state }: { state: GameState }) {
+  const legacyEntry = state.mockSupportUsd > 0 && state.supportLedger.length === 0
+    ? [{ id: "legacy-support", supporterName: "Early supporter", amountUsd: state.mockSupportUsd, fbcCoins: state.mockSupportUsd, target: "Mac mini render node", note: "Legacy local support entry from prototype state.", status: "mock" as const }]
+    : [];
+  const rows = [...state.supportLedger, ...legacyEntry];
+  return (
+    <section className="support-ledger standalone support-journal">
+      <div className="support-ledger-head">
+        <div>
+          <strong>Public Support Journal</strong>
+          <span>donations → FBC Coins → ecosystem history</span>
+        </div>
+        <b>${state.mockSupportUsd}</b>
+      </div>
+      {rows.length === 0 ? (
+        <div className="support-empty-row">
+          <strong>No supporter entries yet</strong>
+          <span>Tap the wallet preview to add a mock donation and show how a real supporter would appear here.</span>
+        </div>
+      ) : rows.map((entry) => (
+        <div className="supporter-row journal-row" key={entry.id}>
+          <i className="supporter-avatar" />
+          <div>
+            <strong>{entry.supporterName}</strong>
+            <span>${entry.amountUsd} to {entry.target}</span>
+            <em>{entry.note}</em>
+          </div>
+          <b>+{entry.fbcCoins} FBC</b>
+        </div>
+      ))}
+      <p className="support-journal-note">This journal is the public memory of support. It can later be connected to real wallet receipts and ecosystem utility after legal/product rules are ready.</p>
+    </section>
   );
 }
 

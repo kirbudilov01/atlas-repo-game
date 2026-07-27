@@ -2488,6 +2488,131 @@ button {
   font-size: 11px;
 }
 
+.supporter-row em,
+.support-journal-note {
+  color: #aab6c2;
+  font-size: 10px;
+  font-style: normal;
+  line-height: 1.25;
+}
+
+.currency-rules-card,
+.support-empty-row {
+  display: grid;
+  gap: 7px;
+  padding: 12px;
+  border: 1px solid rgba(73,183,255,0.18);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(73,183,255,0.14), transparent 4.5rem),
+    linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.025)),
+    rgba(8, 14, 18, 0.9);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 12px 22px rgba(0,0,0,0.22);
+}
+
+.currency-rules-card strong,
+.support-empty-row strong {
+  color: #fff;
+  font-size: 14px;
+}
+
+.currency-rules-card p,
+.support-empty-row span {
+  margin: 0;
+  color: #cbd7df;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.currency-rules-card b {
+  color: #f7d35b;
+}
+
+.support-journal {
+  gap: 10px;
+}
+
+.support-journal .support-ledger-head,
+.support-ledger .support-ledger-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.support-ledger-head div {
+  display: grid;
+  gap: 2px;
+}
+
+.support-ledger-head b {
+  color: #80f28d;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 15px;
+}
+
+.journal-row {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) auto;
+  align-items: center;
+  border-color: rgba(245,158,11,0.2);
+  background:
+    radial-gradient(circle at 88% 18%, rgba(245,158,11,0.14), transparent 4rem),
+    linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.025)),
+    rgba(12, 15, 16, 0.92);
+}
+
+.journal-row b {
+  color: #f7d35b;
+  text-align: right;
+}
+
+.support-journal-note {
+  margin: 0;
+  padding: 0 2px;
+}
+
+.latest-support-receipt {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 11px 12px;
+  border: 1px solid rgba(245,158,11,0.24);
+  border-radius: 15px;
+  background:
+    radial-gradient(circle at 90% 18%, rgba(245,158,11,0.2), transparent 4.6rem),
+    linear-gradient(180deg, rgba(255,255,255,0.11), rgba(255,255,255,0.025)),
+    rgba(15, 16, 12, 0.94);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.14), 0 14px 24px rgba(0,0,0,0.28);
+}
+
+.latest-support-receipt span,
+.latest-support-receipt strong,
+.latest-support-receipt b {
+  display: block;
+}
+
+.latest-support-receipt span {
+  color: #98a4b3;
+  font-size: 9px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.latest-support-receipt strong {
+  margin-top: 2px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.latest-support-receipt b {
+  color: #f7d35b;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  text-align: right;
+}
+
 .system-card {
   display: grid;
   gap: 8px;
@@ -5029,6 +5154,26 @@ code {
   font-size: 9px;
   font-style: normal;
   font-weight: 900;
+}
+
+.participate-page .season-event-board {
+  min-height: 218px;
+}
+
+.participate-page .event-row {
+  padding: 8px;
+}
+
+.participate-page .support-summary-grid {
+  order: 1;
+}
+
+.participate-page .support-journal {
+  order: 2;
+}
+
+.participate-page .currency-rules-card {
+  order: 3;
 }
 
 .onboarding-loop-preview {
