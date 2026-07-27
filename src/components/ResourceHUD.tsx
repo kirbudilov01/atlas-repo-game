@@ -17,7 +17,7 @@ export function ResourceHUD({ state }: Props) {
       </div>
       <div className="resource-strip">
         <div className="resource-pill funding"><span>MRR</span><strong>${mrr}</strong></div>
-        <div className="resource-pill network"><span>Users</span><strong>{users}</strong></div>
+        <div className="resource-pill network"><span>USR</span><strong>{users}</strong></div>
         <div className="resource-pill compute"><span>BP</span><strong>{Math.floor(state.resources.compute)}</strong></div>
         <div className="resource-pill fbc"><span>FBC</span><strong>{Math.floor(state.resources.fbc)}</strong></div>
       </div>
