@@ -7101,3 +7101,211 @@ code {
   min-height: 64px;
   padding: 10px;
 }
+
+.room-scene {
+  padding: 6px 8px;
+}
+
+.room-backdrop {
+  min-height: 435px;
+  border-radius: 20px;
+  border-color: rgba(255, 210, 94, 0.18);
+  background:
+    radial-gradient(circle at 50% 52%, rgba(245, 158, 11, 0.08), transparent 150px),
+    #050505;
+}
+
+.room-photo-game {
+  object-fit: cover;
+  object-position: 50% 50%;
+  transform: scale(1);
+  filter: saturate(1.05) contrast(1.04) brightness(0.8);
+}
+
+.room-game-vignette {
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.24), transparent 16%, transparent 84%, rgba(0, 0, 0, 0.2)),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.16), transparent 34%, rgba(0, 0, 0, 0.42));
+  box-shadow: inset 0 0 38px rgba(0, 0, 0, 0.42);
+}
+
+.room-location-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 22;
+  pointer-events: none;
+}
+
+.room-hotspot,
+.room-donate-cta {
+  position: absolute;
+  pointer-events: auto;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  grid-template-rows: auto auto auto;
+  align-items: center;
+  gap: 2px 8px;
+  min-width: 136px;
+  max-width: 176px;
+  min-height: 66px;
+  padding: 9px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  color: #f8fbf0;
+  text-align: left;
+  background:
+    radial-gradient(circle at 18% 24%, rgba(255, 255, 255, 0.13), transparent 36px),
+    linear-gradient(145deg, rgba(10, 22, 24, 0.84), rgba(4, 8, 10, 0.72));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -14px 20px rgba(0, 0, 0, 0.18),
+    0 14px 24px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+}
+
+.room-hotspot i {
+  grid-row: 1 / 4;
+  width: 30px;
+  height: 30px;
+  border-radius: 11px;
+  background-image: url("/atlas-repo-game/assets/game/game-icon-sheet-v1.png");
+  background-repeat: no-repeat;
+  background-size: 300% 300%;
+  box-shadow:
+    0 8px 14px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 224, 136, 0.2);
+}
+
+.room-hotspot span,
+.room-hotspot strong,
+.room-hotspot em,
+.room-donate-cta span,
+.room-donate-cta strong,
+.room-donate-cta em {
+  grid-column: 2;
+  min-width: 0;
+}
+
+.room-hotspot span,
+.room-donate-cta span {
+  color: #9fe8ff;
+  font-size: 8px;
+  font-weight: 950;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.room-hotspot strong,
+.room-donate-cta strong {
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.04;
+}
+
+.room-hotspot em,
+.room-donate-cta em {
+  color: rgba(238, 246, 239, 0.72);
+  font-size: 9px;
+  font-style: normal;
+  line-height: 1.1;
+}
+
+.hotspot-want2view {
+  left: 9%;
+  top: 31%;
+  max-width: 154px;
+  border-color: rgba(93, 211, 255, 0.28);
+}
+
+.hotspot-want2view i {
+  background-position: 100% 50%;
+}
+
+.hotspot-atlasrepo {
+  left: auto;
+  right: 5%;
+  top: 31%;
+  max-width: 154px;
+  border-color: rgba(128, 242, 141, 0.28);
+}
+
+.hotspot-atlasrepo i {
+  background-position: 50% 50%;
+}
+
+.mac-mini-hotspot {
+  left: 4%;
+  top: 58%;
+  max-width: 164px;
+  border-color: rgba(255, 210, 94, 0.3);
+}
+
+.mac-mini-hotspot i {
+  background-position: 0% 50%;
+}
+
+.couch-support-hotspot {
+  left: 38%;
+  top: 56%;
+  max-width: 174px;
+  border-color: rgba(255, 210, 94, 0.28);
+}
+
+.couch-support-hotspot i {
+  background-position: 100% 100%;
+}
+
+.room-donate-cta {
+  left: 50%;
+  bottom: 14px;
+  grid-template-columns: minmax(0, 1fr);
+  width: min(82%, 310px);
+  max-width: none;
+  min-height: 60px;
+  transform: translateX(-50%);
+  border-color: rgba(128, 242, 141, 0.28);
+  background:
+    radial-gradient(circle at 8% 18%, rgba(128, 242, 141, 0.16), transparent 54px),
+    linear-gradient(145deg, rgba(14, 34, 25, 0.88), rgba(5, 9, 10, 0.86));
+}
+
+.room-donate-cta span,
+.room-donate-cta strong,
+.room-donate-cta em {
+  grid-column: 1;
+}
+
+.room-object.object-kirill {
+  left: 40% !important;
+  top: 64% !important;
+}
+
+.room-object.object-black-box {
+  left: 62% !important;
+  top: 63% !important;
+}
+
+@media (max-width: 370px) {
+  .room-backdrop {
+    min-height: 420px;
+  }
+
+  .room-hotspot {
+    min-width: 126px;
+    max-width: 158px;
+    padding: 8px;
+  }
+
+  .hotspot-want2view {
+    left: 7%;
+  }
+
+  .hotspot-atlasrepo {
+    right: 5%;
+  }
+
+  .couch-support-hotspot {
+    left: 36%;
+  }
+}

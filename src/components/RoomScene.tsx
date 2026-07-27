@@ -18,52 +18,12 @@ interface Props {
 export function RoomScene({ state, selectedId, scanMode, onToggleScan, onObject, onNavigate, onCoreClick }: Props) {
   const realRoomSrc = `${import.meta.env.BASE_URL}assets/our-room-map.png`;
   const gameRoomSrc = `${import.meta.env.BASE_URL}assets/game/our-room-game-bg-v1.png`;
+  const want2viewObject = roomObjects.find((object) => object.id === "want2view");
+  const atlasObject = roomObjects.find((object) => object.id === "atlas-terminal");
   const macMiniObject = roomObjects.find((object) => object.id === "mac-mini");
   const autonomyMrr = Math.min(3000, state.atlasMission.status === "claimed" ? 120 : 0);
   const mapObjects = roomObjects.filter((object) => ["kirill", "black-box"].includes(object.id));
-
-  const locations = [
-    {
-      id: "ecosystem",
-      title: "Ecosystem",
-      subtitle: "Products and projects",
-      meta: "AtlasRepo · Want2View",
-      className: "location-ecosystem",
-      onClick: () => onNavigate("ecosystem")
-    },
-    {
-      id: "support",
-      title: "Support Roadmap",
-      subtitle: `$${autonomyMrr} / $3000 MRR`,
-      meta: "Runway and donations",
-      className: "location-support",
-      onClick: () => onNavigate("participate")
-    },
-    {
-      id: "room",
-      title: "My Room",
-      subtitle: `${Math.floor(state.resources.compute)} BP · ${state.accountLevel} lvl`,
-      meta: "Clicker and upgrades",
-      className: "location-room",
-      onClick: () => onNavigate("my-room")
-    },
-    {
-      id: "market",
-      title: "Market",
-      subtitle: "Promos and access",
-      meta: "Spend BP later",
-      className: "location-market",
-      onClick: () => onNavigate("market")
-    },
-    {
-      id: "render",
-      title: "Mac mini Render",
-      subtitle: state.mockSupportUsd >= 1000 ? "Funded" : "$1000 target",
-      meta: "UBT/video engine",
-      className: "location-render",
-      onClick: () => macMiniObject && onObject(macMiniObject)
-    }
-  ];
+  const supportTotal = state.mockSupportUsd;
 
   return (
     <section className="room-scene" aria-label="Our Room">
@@ -73,21 +33,39 @@ export function RoomScene({ state, selectedId, scanMode, onToggleScan, onObject,
         <div className="room-cinematic-grade" />
         <div className="room-game-vignette" />
         <button className="room-map-caption" onClick={onToggleScan}>
-          <span>Our Room Map</span>
-          <strong>{scanMode ? "Photo check" : "Choose location"}</strong>
+          <span>Our Room</span>
+          <strong>{scanMode ? "Photo check" : "Live build room"}</strong>
         </button>
         <div className="room-location-layer" aria-hidden={scanMode}>
-          <div className="map-route-line" />
-          <div className="map-location-grid">
-            {locations.map((location, index) => (
-              <button className={`map-location-card ${location.className}`} style={{ "--i": index } as CSSProperties} onClick={location.onClick} key={location.id}>
-                <i />
-                <span>{location.subtitle}</span>
-                <strong>{location.title}</strong>
-                <em>{location.meta}</em>
-              </button>
-            ))}
-          </div>
+          <button className="room-hotspot laptop-hotspot hotspot-want2view" style={{ "--i": 0 } as CSSProperties} onClick={() => want2viewObject && onObject(want2viewObject)}>
+            <i />
+            <span>Want2View metrics</span>
+            <strong>Video demand</strong>
+            <em>views · trends · creator signals</em>
+          </button>
+          <button className="room-hotspot laptop-hotspot hotspot-atlasrepo" style={{ "--i": 1 } as CSSProperties} onClick={() => atlasObject && onObject(atlasObject)}>
+            <i />
+            <span>AtlasRepo metrics</span>
+            <strong>Repo intelligence</strong>
+            <em>scans · lessons · research</em>
+          </button>
+          <button className="room-hotspot mac-mini-hotspot" style={{ "--i": 2 } as CSSProperties} onClick={() => macMiniObject && onObject(macMiniObject)}>
+            <i />
+            <span>Main hardware goal</span>
+            <strong>Mac mini</strong>
+            <em>{state.mockSupportUsd >= 1000 ? "funded" : "$1000 for render/video generation"}</em>
+          </button>
+          <button className="room-hotspot couch-support-hotspot" style={{ "--i": 3 } as CSSProperties} onClick={() => onNavigate("participate")}>
+            <i />
+            <span>Voluntary support</span>
+            <strong>$300/mo services</strong>
+            <em>FBC memory, not investment</em>
+          </button>
+          <button className="room-donate-cta" onClick={() => onNavigate("participate")}>
+            <span>${supportTotal} supported</span>
+            <strong>Donate for tools</strong>
+            <em>We remember supporters, no investment promise</em>
+          </button>
         </div>
         {state.generatorPurchased && <div className="generator-node">Compute Generator L{state.generatorLevel}</div>}
         {mapObjects.map((object) => (
