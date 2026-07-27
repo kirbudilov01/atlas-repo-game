@@ -14,6 +14,12 @@ interface Props {
 
 export function RoomScene({ state, selectedId, scanMode, onToggleScan, onObject, onCoreClick }: Props) {
   const roomMapSrc = `${import.meta.env.BASE_URL}assets/our-room-map.png`;
+  const ecosystemObject = roomObjects.find((object) => object.id === "asset-index");
+  const supportObject = roomObjects.find((object) => object.id === "funding-hub");
+  const myRoomObject = roomObjects.find((object) => object.id === "my-room-door");
+  const macMiniObject = roomObjects.find((object) => object.id === "mac-mini");
+  const mrr = state.atlasMission.status === "claimed" ? 120 : 0;
+  const runway = Math.min(3000, state.mockSupportUsd);
 
   return (
     <section className="room-scene" aria-label="Our Room">
@@ -25,6 +31,35 @@ export function RoomScene({ state, selectedId, scanMode, onToggleScan, onObject,
           <span>Our Room</span>
           <strong>{scanMode ? "Scan mode" : "Live map"}</strong>
         </button>
+        <div className="room-business-layer" aria-hidden={scanMode}>
+          <button className="room-portal portal-ecosystem" onClick={() => ecosystemObject && onObject(ecosystemObject)}>
+            <span>FabricBot</span>
+            <strong>Ecosystem</strong>
+            <em>AtlasRepo · Want2View</em>
+          </button>
+          <button className="room-portal portal-my-room" onClick={() => myRoomObject && onObject(myRoomObject)}>
+            <span>Player</span>
+            <strong>My Room</strong>
+            <em>Unlock upgrades later</em>
+          </button>
+          <div className="room-kpi-strip">
+            <button className="room-kpi-card" onClick={() => supportObject && onObject(supportObject)}>
+              <span>Runway</span>
+              <strong>${runway} / $3k</strong>
+              <i style={{ width: `${Math.min(100, Math.floor((runway / 3000) * 100))}%` }} />
+            </button>
+            <button className="room-kpi-card is-main" onClick={() => supportObject && onObject(supportObject)}>
+              <span>Season Goal</span>
+              <strong>${mrr} / $30k MRR</strong>
+              <i style={{ width: `${Math.min(100, Math.floor((mrr / 30000) * 100))}%` }} />
+            </button>
+            <button className="room-kpi-card" onClick={() => macMiniObject && onObject(macMiniObject)}>
+              <span>Render Node</span>
+              <strong>Mac mini</strong>
+              <em>{state.mockSupportUsd >= 1000 ? "funded" : "$1k target"}</em>
+            </button>
+          </div>
+        </div>
         {state.generatorPurchased && <div className="generator-node">Compute Generator L{state.generatorLevel}</div>}
         {roomObjects.map((object) => (
           <RoomObject
