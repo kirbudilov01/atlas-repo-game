@@ -5749,12 +5749,11 @@ code {
   position: absolute;
   right: 10px;
   top: 10px;
-  width: 20px;
-  height: 14px;
-  border-radius: 5px;
-  background:
-    linear-gradient(90deg, rgba(128, 242, 141, 0.92) 0 38%, transparent 39% 48%, rgba(93, 211, 255, 0.92) 49% 100%);
-  box-shadow: 0 0 14px rgba(93, 211, 255, 0.32);
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: #80f28d;
+  box-shadow: 0 0 16px rgba(128, 242, 141, 0.46);
 }
 
 .room-terminal span,
@@ -5807,7 +5806,7 @@ code {
 }
 
 .my-room-page .mac-mini-card::before {
-  opacity: 0.9;
+  display: none;
 }
 
 .my-room-page .mac-mini-card strong {
@@ -5833,6 +5832,42 @@ code {
   bottom: 74px;
 }
 
+.my-room-tabs {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  gap: 7px;
+  overflow-x: auto;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+    rgba(7, 12, 14, 0.82);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.my-room-tabs button {
+  min-width: 78px;
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(237, 245, 238, 0.74);
+  font-size: 11px;
+  font-weight: 950;
+}
+
+.my-room-tabs button.is-active {
+  border-color: rgba(128, 242, 141, 0.45);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(128, 242, 141, 0.28), transparent 44px),
+    linear-gradient(180deg, rgba(42, 141, 79, 0.72), rgba(10, 36, 23, 0.94));
+  color: #fff;
+  box-shadow: 0 0 18px rgba(32, 200, 120, 0.18);
+}
+
 .my-room-goal-panel {
   position: relative;
   overflow: hidden;
@@ -5848,6 +5883,15 @@ code {
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.14),
     0 16px 28px rgba(0, 0, 0, 0.28);
+}
+
+.my-room-goal-panel.is-compact .goal-step-grid {
+  display: none;
+}
+
+.my-room-goal-panel.is-compact {
+  gap: 10px;
+  padding: 12px;
 }
 
 .goal-progress-line {
@@ -6176,4 +6220,21 @@ code {
   .product-action-grid {
     grid-auto-columns: 150px;
   }
+}
+
+.my-room-page .my-room-tabs {
+  min-height: 58px;
+  align-items: center;
+  margin: 0;
+  padding: 8px;
+}
+
+.my-room-page .my-room-tabs button {
+  display: grid;
+  place-items: center;
+  min-width: 82px;
+  height: 40px;
+  min-height: 40px;
+  white-space: nowrap;
+  line-height: 1;
 }

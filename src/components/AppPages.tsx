@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import { useState, type CSSProperties } from "react";
 import { deviceGenerators } from "../config/deviceGenerators";
 import { fundingGoals } from "../config/funding";
 import { activeTasks, agentRoster, bottleneckTracks, collectionSets, productionChain, roomStages, seasonEvents } from "../config/idleMeta";
@@ -424,6 +424,7 @@ function SupportLedger({ state }: { state: GameState }) {
 function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onBuyProductAction, onBuyPerkReward, onClaimSocialQuest }: { state: GameState; onBuild: () => void; onBuyGenerator: () => void; onBuyDeviceGenerator: (generatorId: string) => void; onBuyProductAction: (actionId: string, costCompute: number, title: string) => void; onBuyPerkReward: (perkId: string) => void; onClaimSocialQuest: (questId: string, rewardCompute: number, title: string) => void }) {
   const totalRate = getTotalComputeRatePerHour(state);
   const myRoomBg = `${import.meta.env.BASE_URL}assets/game/my-room-game-bg-v1.png`;
+  const [section, setSection] = useState<"room" | "upgrades" | "quests" | "products" | "strategy">("room");
 
   return (
     <section className="app-page my-room-page">
@@ -431,6 +432,17 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onBu
         <div className="room-badge">My Room</div>
         <div className="room-currency-pill"><span>FBC</span><strong>{Math.floor(state.resources.fbc)}</strong></div>
       </header>
+      <nav className="my-room-tabs" aria-label="My Room sections">
+        {[
+          ["room", "Room"],
+          ["upgrades", "Upgrades"],
+          ["quests", "Quests"],
+          ["products", "Products"],
+          ["strategy", "Strategy"]
+        ].map(([id, label]) => (
+          <button className={section === id ? "is-active" : ""} onClick={() => setSection(id as typeof section)} key={id}>{label}</button>
+        ))}
+      </nav>
       <div className="player-room-stage">
         <img className="my-room-bg" src={myRoomBg} alt="" draggable={false} />
         <div className="my-room-grade" />
@@ -469,19 +481,28 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onBu
           <strong>$3000/mo</strong>
         </article>
       </div>
-      <LoopRail state={state} />
-      <MyRoomGoalPanel state={state} />
       <div className="stat-grid">
         <div><span>Room points</span><strong>{Math.floor(state.resources.compute)}</strong></div>
         <div><span>Income</span><strong>{totalRate}/hr</strong></div>
         <div><span>Level</span><strong>{state.accountLevel}</strong></div>
         <div><span>FBC</span><strong>{Math.floor(state.resources.fbc)}</strong></div>
       </div>
-      <IdleUpgradePanel state={state} onBuyGenerator={onBuyGenerator} onBuyDeviceGenerator={onBuyDeviceGenerator} />
-      <SocialQuestPanel state={state} onClaimSocialQuest={onClaimSocialQuest} />
-      <ProductSpendPanel state={state} onBuyProductAction={onBuyProductAction} onBuyPerkReward={onBuyPerkReward} />
-      <AgentBench />
-      <TaskDeck />
+      {section === "room" && (
+        <>
+          <LoopRail state={state} />
+          <MyRoomGoalPanel state={state} compact />
+        </>
+      )}
+      {section === "upgrades" && <IdleUpgradePanel state={state} onBuyGenerator={onBuyGenerator} onBuyDeviceGenerator={onBuyDeviceGenerator} />}
+      {section === "quests" && <SocialQuestPanel state={state} onClaimSocialQuest={onClaimSocialQuest} />}
+      {section === "products" && <ProductSpendPanel state={state} onBuyProductAction={onBuyProductAction} onBuyPerkReward={onBuyPerkReward} />}
+      {section === "strategy" && (
+        <>
+          <MyRoomGoalPanel state={state} />
+          <AgentBench />
+          <TaskDeck />
+        </>
+      )}
     </section>
   );
 }
@@ -578,11 +599,11 @@ function ProductSpendPanel({ state, onBuyProductAction, onBuyPerkReward }: { sta
   );
 }
 
-function MyRoomGoalPanel({ state }: { state: GameState }) {
+function MyRoomGoalPanel({ state, compact = false }: { state: GameState; compact?: boolean }) {
   const projectMrr = state.atlasMission.status === "claimed" ? 120 : 0;
   const progress = Math.min(100, Math.floor((projectMrr / 3000) * 100));
   return (
-    <section className="my-room-goal-panel">
+    <section className={`my-room-goal-panel ${compact ? "is-compact" : ""}`}>
       <div className="section-head">
         <span>Current goal</span>
         <strong>$3000/mo project MRR</strong>
