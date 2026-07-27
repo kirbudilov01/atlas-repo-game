@@ -6,45 +6,51 @@ interface Props {
 
 const slides = [
   {
-    eyebrow: "Step 1",
-    title: "Our Real Story",
-    body: "This starts from the real room and current products: AtlasRepo, Want2View, FabricBot, payments, video and the public build journey.",
-    tag: "Real ecosystem",
+    eyebrow: "Welcome",
+    title: "Atlas Repo Game",
+    body: "A public idle game about building a real ecosystem from one room, real products and a transparent founder journey.",
+    note: "You are not entering a random clicker. You are entering the control room of FabricBot, AtlasRepo, Want2View and future experiments.",
+    tag: "Our ecosystem",
     visual: "bot"
   },
   {
-    eyebrow: "Step 2",
-    title: "Production Chain",
-    body: "Collect ideas, research, prototype, launch, grow distribution and push project MRR. Every reward opens the next loop.",
-    tag: "Idea to launch",
+    eyebrow: "What it is",
+    title: "Life as a Tycoon",
+    body: "Tap, earn BP, buy room upgrades, unlock terminals, reserve product perks and help projects move toward real revenue.",
+    note: "The game layer is simple on purpose: it gives people a playful way to understand what is being built.",
+    tag: "Idle tycoon",
     visual: "factory"
   },
   {
-    eyebrow: "Step 3",
-    title: "Agents & Bottlenecks",
-    body: "Upgrade rooms, assign agents, clear bottlenecks and choose whether to push compute, attention, trust or autonomy.",
-    tag: "Idle strategy",
+    eyebrow: "For you",
+    title: "What You Can Get",
+    body: "Earn BP, reserve promos, unlock previews, get access drops and participate in the growth of products you may actually use.",
+    note: "Some rewards are prototype-only today. The goal is to turn the useful ones into real product mechanics over time.",
+    tag: "Perks & access",
     visual: "room"
   },
   {
-    eyebrow: "Step 4",
-    title: "Season Events",
-    body: "Launch Sprints, Autonomy Sprints and Content Raids give the ecosystem a calendar of reasons to return.",
-    tag: "LiveOps",
+    eyebrow: "Author",
+    title: "Built by Kirill",
+    body: "This is Kirill's public build room: products, videos, lessons, experiments, supporters and decisions become game updates.",
+    note: "The story matters because the project is meant to be watched, played and improved in public.",
+    tag: "Founder story",
     visual: "heart"
   },
   {
-    eyebrow: "Step 5",
-    title: "Collections & Status",
-    body: "Founder cards, agent blueprints, room items and badges create long-term identity, utility and visible history.",
-    tag: "Legacy sets",
+    eyebrow: "Direction",
+    title: "Where We Are Going",
+    body: "First target: products reach $3k/month. Then growth, partner projects, community slots, wallet receipts and maybe TON mechanics later.",
+    note: "No empty token promises. First the ecosystem has to become useful, understandable and alive.",
+    tag: "Roadmap",
     visual: "coin"
   },
   {
-    eyebrow: "Step 6",
-    title: "Safe Game Credits",
-    body: "FBC is a prototype support credit for perks and access previews: no equity, no profit promise, no guaranteed token.",
-    tag: "Fair economy",
+    eyebrow: "Start",
+    title: "Begin in the Room",
+    body: "Start by tapping the core, collecting BP, buying the first auto clicker and opening the room sections: upgrades, quests, products and strategy.",
+    note: "FBC is only a support credit for now: no equity, no profit promise, no guaranteed token and no cash redemption.",
+    tag: "Start playing",
     visual: "coin"
   }
 ];
@@ -78,6 +84,7 @@ export function Onboarding({ onDone }: Props) {
             <span className="eyebrow">{slide.eyebrow}</span>
             <h1>{slide.title}</h1>
             <p>{slide.body}</p>
+            <em>{slide.note}</em>
             <strong>{slide.tag}</strong>
             <div className="onboarding-loop-preview" aria-hidden="true">
               <span>Collect</span>

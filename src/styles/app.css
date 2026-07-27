@@ -6295,6 +6295,24 @@ code {
     linear-gradient(145deg, rgba(14, 24, 30, 0.94), rgba(7, 11, 14, 0.98));
 }
 
+.onboarding-slide > em {
+  display: block;
+  padding: 10px 11px;
+  border: 1px solid rgba(255, 210, 94, 0.18);
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 92% 0%, rgba(255, 210, 94, 0.12), transparent 72px),
+    rgba(255, 255, 255, 0.045);
+  color: rgba(242, 247, 238, 0.76);
+  font-size: 12px;
+  font-style: normal;
+  line-height: 1.35;
+}
+
+.onboarding-slide .eyebrow {
+  color: #8bf28f;
+}
+
 .market-page .market-icon {
   display: none;
 }
