@@ -431,39 +431,25 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onBu
         <div className="player-room-stage">
           <img className="my-room-bg" src={myRoomBg} alt="" draggable={false} />
           <div className="my-room-grade" />
-          <div className="room-wall-panel" />
-          <div className="room-floor-plane" />
-          <div className="runner-track room-data-route">
-            <em>open data route</em>
-          </div>
-          <div className="room-monitor monitor-left"><i /></div>
-          <div className="room-monitor monitor-right"><i /></div>
-          <div className="player-room-window" />
-          <article className="room-terminal terminal-want2view">
-            <span>Terminal 01</span>
+          <article className="notebook-status-card status-want2view">
+            <span>Laptop 01</span>
             <strong>Want2View</strong>
-            <em>video demand feed</em>
+            <em>Video demand feed · standby</em>
           </article>
-          <article className="room-terminal terminal-atlasrepo">
-            <span>Terminal 02</span>
+          <article className="notebook-status-card status-atlasrepo">
+            <span>Laptop 02</span>
             <strong>AtlasRepo</strong>
-            <em>repo intelligence feed</em>
+            <em>Repo intelligence feed · ready</em>
           </article>
           <button className="room-clicker-object" onClick={onBuild}>
-            <span className="tap-rings" />
-            <i />
-            <b>Build</b>
-            <span>+ room points</span>
+            <span className="sofa-clicker-icon" aria-hidden="true" />
+            <b>Tap Sofa</b>
+            <span>+1 room point</span>
           </button>
-          <div className="room-sofa" />
           <article className="mac-mini-card">
-            <span>UBT render resource</span>
+            <span>Render node</span>
             <strong>Mac mini</strong>
-            <em>runs project video generation</em>
-          </article>
-          <article className="render-power-card">
-            <span>Current goal</span>
-            <strong>$3000/mo</strong>
+            <em>$1000 target · UBT/video engine</em>
           </article>
         </div>
       )}
@@ -473,12 +459,6 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onBu
         <div><span>Level</span><strong>{state.accountLevel}</strong></div>
         <div><span>FBC</span><strong>{Math.floor(state.resources.fbc)}</strong></div>
       </div>
-      {section === "room" && (
-        <>
-          <LoopRail state={state} />
-          <MyRoomGoalPanel state={state} compact />
-        </>
-      )}
       {section === "upgrades" && <IdleUpgradePanel state={state} onBuyGenerator={onBuyGenerator} onBuyDeviceGenerator={onBuyDeviceGenerator} />}
       {section === "quests" && <SocialQuestPanel state={state} onClaimSocialQuest={onClaimSocialQuest} />}
       {section === "products" && <ProductSpendPanel state={state} onBuyProductAction={onBuyProductAction} onBuyPerkReward={onBuyPerkReward} />}
