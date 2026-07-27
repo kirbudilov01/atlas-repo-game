@@ -20,11 +20,13 @@ interface Props {
   onClaimSocialQuest: (questId: string, rewardCompute: number, title: string) => void;
 }
 
-const marketExtras = [
-  { id: "beta-access", title: "Beta Access", category: "access", cost: 250, body: "Early access badge for new ecosystem features." },
-  { id: "promo-boost", title: "Promo Boost", category: "promo", cost: 300, body: "Feature your project in a future FabricBot promo slot." },
-  { id: "ai-tool-pack", title: "AI Tool Pack", category: "tools", cost: 600, body: "Reserve a bundle of future AI workflow helpers." },
-  { id: "community-slot", title: "Community Project Slot", category: "community", cost: 900, body: "Apply to add a moderated project into the ecosystem." }
+const marketBpOffers = [
+  { id: "atlasrepo-discount-5", title: "AtlasRepo 5% Discount", category: "promo", costCompute: 90, body: "Reserve a small AtlasRepo promo code from your BP balance." },
+  { id: "want2view-discount-5", title: "Want2View 5% Discount", category: "promo", costCompute: 90, body: "Reserve a Want2View starter promo for future fulfillment." },
+  { id: "atlasrepo-discount-10", title: "AtlasRepo 10% Discount", category: "access", costCompute: 180, body: "Higher tier promo reservation for AtlasRepo access." },
+  { id: "want2view-discount-10", title: "Want2View 10% Discount", category: "access", costCompute: 180, body: "Higher tier promo reservation for Want2View access." },
+  { id: "ecosystem-application", title: "Connect Your Project", category: "community", costCompute: 240, body: "Open an ecosystem application slot so your project can be reviewed later." },
+  { id: "partner-promo-pack", title: "Partner Promo Pack", category: "tools", costCompute: 320, body: "Reserve a future bundle for promo codes, access rules and partner placement." }
 ];
 
 const autonomyRoadmap = [
@@ -106,7 +108,7 @@ export function AppPages({ view, state, onBuild, onBuyGenerator, onBuyDeviceGene
   if (view === "ecosystem") return <EcosystemPage state={state} />;
   if (view === "participate") return <ParticipatePage state={state} onMockSupportMacMini={onMockSupportMacMini} />;
   if (view === "my-room") return <MyRoomPage state={state} onBuild={onBuild} onBuyGenerator={onBuyGenerator} onBuyDeviceGenerator={onBuyDeviceGenerator} onBuyProductAction={onBuyProductAction} onBuyPerkReward={onBuyPerkReward} onClaimSocialQuest={onClaimSocialQuest} />;
-  return <MarketPage state={state} onBuyPerkReward={onBuyPerkReward} />;
+  return <MarketPage state={state} onBuyProductAction={onBuyProductAction} />;
 }
 
 function getBottleneckValue(state: GameState, id: string, base: number) {
@@ -633,7 +635,7 @@ function MyRoomGoalPanel({ state, compact = false }: { state: GameState; compact
   );
 }
 
-function MarketPage({ state, onBuyPerkReward }: { state: GameState; onBuyPerkReward: (perkId: string) => void }) {
+function MarketPage({ state, onBuyProductAction }: { state: GameState; onBuyProductAction: (actionId: string, costCompute: number, title: string) => void }) {
   const heroSrc = `${import.meta.env.BASE_URL}assets/game/market-rewards-hero-v1.png`;
 
   return (
@@ -643,57 +645,50 @@ function MarketPage({ state, onBuyPerkReward }: { state: GameState; onBuyPerkRew
         <div className="hero-grade" />
         <div>
           <span>Market</span>
-          <h1>Perks from the FabricBot Ecosystem</h1>
-          <p>Boost your support mission. Unlock, earn and reserve rewards.</p>
+          <h1>Promo Market</h1>
+          <p>Spend BP on internal promos, discounts and ecosystem application slots. FBC utility comes later.</p>
         </div>
         <div className="reward-box" aria-hidden="true"><i /></div>
       </header>
-      <LoopRail state={state} />
-      <div className="market-balance">
+      <div className="market-balance bp-market-balance">
         <i />
         <div>
-          <span>Available FBC</span>
-          <strong>{Math.floor(state.resources.fbc)}</strong>
+          <span>Spendable BP</span>
+          <strong>{Math.floor(state.resources.compute)}</strong>
         </div>
       </div>
       <div className="market-tabs" aria-hidden="true">
-        <span>All</span>
         <span>Promos</span>
-        <span>Access</span>
-        <span>Tools</span>
+        <span>AtlasRepo</span>
+        <span>Want2View</span>
+        <span>Partners</span>
       </div>
-      <CollectionShelf />
       <section className="market-grid">
-        {perkShop.map((perk, index) => {
-          const owned = state.purchasedPerkRewardIds.includes(perk.id);
-          const affordable = state.resources[perk.costResource] >= perk.costAmount;
+        {marketBpOffers.map((offer, index) => {
+          const owned = state.purchasedProductActionIds.includes(offer.id);
+          const affordable = state.resources.compute >= offer.costCompute;
           return (
-            <article className={`market-card market-card-${index}`} style={{ "--i": index } as CSSProperties} key={perk.id}>
+            <article className={`market-card market-card-${index}`} style={{ "--i": index } as CSSProperties} key={offer.id}>
               <i className="market-card-glow" />
-              <div className={`market-icon category-${perk.category}`} />
-              <strong>{perk.title}</strong>
-              <span>{perk.benefitPreview}</span>
-              <em>{perk.category}</em>
-              <button disabled={owned || !affordable} onClick={() => onBuyPerkReward(perk.id)}>
-                <span>{owned ? "Reserved" : `${perk.costAmount} FBC`}</span>
+              <div className={`market-icon category-${offer.category}`} />
+              <strong>{offer.title}</strong>
+              <span>{offer.body}</span>
+              <em>{offer.category}</em>
+              <button disabled={owned || !affordable} onClick={() => onBuyProductAction(offer.id, offer.costCompute, offer.title)}>
+                <span>{owned ? "Reserved" : `${offer.costCompute} BP`}</span>
               </button>
             </article>
           );
         })}
-        {marketExtras.map((perk, index) => (
-          <article className={`market-card market-extra-${index}`} style={{ "--i": index + 4 } as CSSProperties} key={perk.id}>
-            <i className="market-card-glow" />
-            <div className={`market-icon category-${perk.category}`} />
-            <strong>{perk.title}</strong>
-            <span>{perk.body}</span>
-            <em>{perk.category}</em>
-            <button disabled><span>{perk.cost} FBC</span></button>
-          </article>
-        ))}
       </section>
-      <article className="page-card add-project-card">
-        <strong>Add your project later</strong>
-        <span>Future partners will be able to add projects into the ecosystem after moderation.</span>
+      <article className="fbc-future-card">
+        <strong>FBC layer is reserved</strong>
+        <span>FBC is support memory for now. Real FBC utility, token logic or wallet mechanics will be designed later after product/legal rules are ready.</span>
+        <b>{Math.floor(state.resources.fbc)} FBC</b>
+      </article>
+      <article className="page-card add-project-card ecosystem-application-card">
+        <strong>Applications become the ecosystem map</strong>
+        <span>Later this turns into forms, partner profiles and project integration queues. For now BP reserves intent and keeps the mechanic unified.</span>
       </article>
       <SeasonEventBoard state={state} compact />
     </section>
