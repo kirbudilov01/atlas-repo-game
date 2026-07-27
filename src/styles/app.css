@@ -3890,3 +3890,609 @@ code {
     linear-gradient(180deg, rgba(32,200,120,0.08), rgba(255,255,255,0.02)),
     rgba(6, 20, 17, 0.76);
 }
+
+.support-hero .hero-bg {
+  object-position: 52% 50%;
+}
+
+.support-hero .hero-grade {
+  background:
+    radial-gradient(circle at 62% 42%, rgba(32,200,120,0.08), rgba(0,0,0,0.32) 45%, rgba(0,0,0,0.58)),
+    linear-gradient(90deg, rgba(5, 18, 15, 0.86), rgba(5, 18, 15, 0.38) 60%, rgba(5, 18, 15, 0.22));
+}
+
+.support-hero .support-heart {
+  opacity: 0;
+}
+
+.supporter-row {
+  grid-template-columns: 38px minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.supporter-avatar {
+  display: block;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 38% 26%, rgba(255,255,255,0.75), transparent 5px),
+    linear-gradient(135deg, #f7d35b, #49b7ff);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.26), 0 0 18px rgba(73,183,255,0.18);
+}
+
+.context-bar {
+  border-top-color: rgba(255, 210, 94, 0.2);
+  border-bottom-color: rgba(255,255,255,0.08);
+  background:
+    radial-gradient(circle at 82% 30%, rgba(139,92,246,0.16), transparent 7rem),
+    linear-gradient(180deg, rgba(18, 24, 30, 0.98), rgba(5, 8, 12, 0.99));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.quest-copy strong {
+  font-size: 16px;
+}
+
+.quest-steps span {
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.025)),
+    rgba(255,255,255,0.035);
+}
+
+.quest-steps .is-done {
+  color: #07240e;
+  border-color: rgba(128,242,141,0.45);
+  background: linear-gradient(180deg, #8df078, #25b964);
+}
+
+.room-map-caption,
+.room-portal,
+.room-kpi-card,
+.mac-mini-card,
+.render-power-card {
+  border-radius: 14px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.18),
+    inset 0 -16px 24px rgba(0,0,0,0.18),
+    0 16px 28px rgba(0,0,0,0.36);
+}
+
+.room-portal {
+  transform: translateZ(0);
+}
+
+.room-portal:hover,
+.room-kpi-card:hover,
+.room-map-caption:hover {
+  filter: brightness(1.08) saturate(1.08);
+}
+
+.room-kpi-card i {
+  height: 7px;
+  background: linear-gradient(90deg, #80f28d, #f7d35b);
+  box-shadow: 0 0 14px rgba(128,242,141,0.25);
+}
+
+/* Unified game-art pass: make every tab feel like the same idle tycoon build. */
+.app-shell {
+  background:
+    radial-gradient(circle at 16% 8%, rgba(32,200,120,0.12), transparent 8rem),
+    radial-gradient(circle at 86% 0%, rgba(245,158,11,0.12), transparent 9rem),
+    linear-gradient(180deg, #080d11, #05070a 72%, #020304);
+}
+
+.app-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(180deg, transparent, black 8%, black 84%, transparent);
+  opacity: 0.55;
+  z-index: 0;
+}
+
+.app-page,
+.room-map-wrap,
+.context-bar,
+.bottom-nav,
+.top-hud {
+  position: relative;
+  z-index: 1;
+}
+
+.top-hud {
+  border-bottom: 1px solid rgba(255, 210, 94, 0.12);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,210,94,0.09), transparent 10rem),
+    linear-gradient(180deg, rgba(10,14,18,0.96), rgba(4,6,8,0.82));
+  box-shadow: 0 14px 30px rgba(0,0,0,0.34);
+}
+
+.season-chip,
+.resource-pill,
+.level-pill {
+  min-height: 34px;
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 50% 4%, rgba(255,255,255,0.18), transparent 2.2rem),
+    linear-gradient(180deg, rgba(48,58,62,0.98), rgba(13,18,21,0.98));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.2),
+    inset 0 -10px 18px rgba(0,0,0,0.3),
+    0 10px 18px rgba(0,0,0,0.28);
+}
+
+.resource-pill strong,
+.level-pill strong,
+.season-chip strong {
+  text-shadow: 0 0 14px currentColor;
+}
+
+.bottom-nav {
+  padding: 10px 9px max(10px, env(safe-area-inset-bottom));
+  gap: 7px;
+  border-top: 1px solid rgba(255,210,94,0.2);
+  background:
+    radial-gradient(circle at 50% -5%, rgba(245,158,11,0.2), transparent 8rem),
+    linear-gradient(180deg, rgba(28,31,29,0.98), rgba(4,6,8,0.99));
+  box-shadow:
+    0 -18px 34px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.bottom-nav button {
+  position: relative;
+  overflow: hidden;
+  min-height: 68px;
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 50% 12%, rgba(255,255,255,0.14), transparent 2.8rem),
+    linear-gradient(180deg, rgba(55,64,66,0.96), rgba(13,18,19,0.98));
+  transform: translateZ(0);
+}
+
+.bottom-nav button::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: 13px;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255,255,255,0.12), transparent 36%);
+}
+
+.bottom-nav .is-current {
+  color: #f7d35b;
+  transform: translateY(-3px);
+  border-color: rgba(255,210,94,0.58);
+  background:
+    radial-gradient(circle at 50% 12%, rgba(255,210,94,0.38), transparent 3.2rem),
+    linear-gradient(180deg, rgba(133,91,12,0.98), rgba(32,22,8,0.98));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.24),
+    inset 0 -16px 22px rgba(0,0,0,0.26),
+    0 0 28px rgba(245,158,11,0.34),
+    0 14px 22px rgba(0,0,0,0.44);
+}
+
+.bottom-nav .is-current::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 5px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, #f7d35b, transparent);
+  box-shadow: 0 0 12px rgba(247,211,91,0.5);
+}
+
+.nav-glyph {
+  width: 36px;
+  height: 34px;
+  border-radius: 12px;
+}
+
+.app-page {
+  gap: 13px;
+  background:
+    radial-gradient(circle at 50% 2%, rgba(32,200,120,0.1), transparent 14rem),
+    radial-gradient(circle at 0% 45%, rgba(139,92,246,0.08), transparent 12rem),
+    linear-gradient(180deg, rgba(8, 13, 16, 0.98), rgba(4, 6, 8, 0.99));
+}
+
+.game-hero,
+.player-room-stage,
+.ecosystem-map,
+.runway-card,
+.wallet-preview-card,
+.support-ledger.standalone,
+.market-balance,
+.page-card,
+.ecosystem-level-card {
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.17);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.18),
+    inset 0 -22px 34px rgba(0,0,0,0.18),
+    0 18px 34px rgba(0,0,0,0.34);
+}
+
+.game-hero::after,
+.player-room-stage::after,
+.ecosystem-map::after,
+.runway-card::after,
+.market-card::after,
+.room-upgrade-card::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.18), transparent 24%, transparent 76%, rgba(255,210,94,0.08));
+  opacity: 0.72;
+}
+
+.game-hero {
+  min-height: 212px;
+}
+
+.ecosystem-hero {
+  min-height: 246px;
+}
+
+.support-hero {
+  min-height: 198px;
+}
+
+.support-hero .hero-bg {
+  filter: saturate(1.18) contrast(1.1) brightness(0.72);
+}
+
+.support-hero .hero-grade {
+  background:
+    radial-gradient(circle at 70% 35%, rgba(32,200,120,0.02), rgba(0,0,0,0.36) 42%, rgba(0,0,0,0.64)),
+    linear-gradient(90deg, rgba(4, 16, 13, 0.92), rgba(4, 16, 13, 0.42) 58%, rgba(4, 16, 13, 0.18));
+}
+
+.game-hero h1 {
+  max-width: 245px;
+  font-size: 30px;
+  letter-spacing: 0;
+  text-shadow: 0 3px 0 rgba(0,0,0,0.34), 0 0 22px rgba(255,255,255,0.12);
+}
+
+.game-hero span,
+.runway-card span,
+.market-balance span {
+  letter-spacing: 0.04em;
+}
+
+.launch-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 112px;
+  border-radius: 16px;
+  animation: card-breathe 4.2s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * -0.45s);
+}
+
+.launch-card::before,
+.market-card::before,
+.room-upgrade-card::before {
+  content: "";
+  position: absolute;
+  inset: auto -20% -45% -20%;
+  height: 84px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255,210,94,0.2), transparent 67%);
+  pointer-events: none;
+}
+
+.launch-icon {
+  position: relative;
+}
+
+.upgrade-icon,
+.market-icon {
+  position: relative;
+  overflow: hidden;
+}
+
+.launch-icon::after,
+.upgrade-icon::after,
+.market-icon::after {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border-radius: 8px;
+  border: 2px solid rgba(255,255,255,0.26);
+  transform: rotate(45deg);
+}
+
+.ecosystem-map {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 52%, rgba(32,200,120,0.16), transparent 9rem),
+    linear-gradient(180deg, rgba(13, 23, 25, 0.98), rgba(4, 8, 10, 0.98));
+}
+
+.ecosystem-node,
+.ecosystem-core {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.18),
+    0 16px 28px rgba(0,0,0,0.38),
+    0 0 20px rgba(32,200,120,0.12);
+}
+
+.need-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 92px;
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 50% 8%, rgba(255,255,255,0.16), transparent 2.4rem),
+    linear-gradient(180deg, rgba(38,48,50,0.96), rgba(10,15,17,0.98));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.16),
+    0 12px 20px rgba(0,0,0,0.28);
+}
+
+.need-card::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 8px;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #80f28d, #f7d35b);
+  opacity: 0.45;
+}
+
+.runway-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 154px;
+  align-content: start;
+  padding: 14px;
+  background:
+    radial-gradient(circle at 86% 18%, rgba(73,183,255,0.18), transparent 5rem),
+    linear-gradient(180deg, rgba(35,46,48,0.98), rgba(10,17,19,0.98));
+}
+
+.runway-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.runway-card .runway-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 64px;
+  align-items: center;
+  gap: 12px;
+  min-height: 66px;
+}
+
+.runway-card .runway-top strong {
+  display: block;
+  margin-top: 5px;
+  color: #fff;
+  font-size: 26px;
+  line-height: 1.05;
+  text-shadow: 0 0 18px rgba(255,255,255,0.14);
+}
+
+.runway-card > i {
+  width: auto;
+  max-width: 100%;
+}
+
+.runway-card p {
+  display: block;
+  margin: 0;
+  color: #cbd7df;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.runway-ring {
+  background:
+    conic-gradient(#80f28d var(--progress), rgba(255,255,255,0.1) 0),
+    linear-gradient(180deg, #1c262b, #070b0d);
+  box-shadow:
+    inset 0 0 0 8px rgba(5,8,10,0.82),
+    0 0 22px rgba(128,242,141,0.14);
+}
+
+.wallet-preview-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 126px;
+  text-align: left;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(255,255,255,0.18), transparent 4rem),
+    radial-gradient(circle at 86% 18%, rgba(73,183,255,0.38), transparent 5rem),
+    linear-gradient(135deg, rgba(42,95,112,0.96), rgba(8,20,27,0.98));
+}
+
+.wallet-preview-card::after {
+  content: "";
+  position: absolute;
+  right: -20px;
+  bottom: -28px;
+  width: 118px;
+  height: 118px;
+  border-radius: 32px;
+  transform: rotate(-14deg);
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255,255,255,0.52), transparent 10px),
+    linear-gradient(135deg, #f7d35b, #f59e0b);
+  box-shadow: 0 0 34px rgba(245,158,11,0.36);
+}
+
+.supporter-row {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) auto;
+}
+
+.player-room-stage {
+  overflow: hidden;
+  border-color: rgba(255,210,94,0.2);
+}
+
+.room-clicker-object {
+  animation: clicker-pulse 1.8s ease-in-out infinite;
+}
+
+.stat-grid div {
+  min-height: 72px;
+  border-radius: 15px;
+  background:
+    radial-gradient(circle at 78% 20%, rgba(73,183,255,0.12), transparent 3.8rem),
+    linear-gradient(180deg, rgba(42,50,52,0.96), rgba(11,16,18,0.98));
+}
+
+.room-upgrade-grid,
+.market-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.room-upgrade-card,
+.market-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 226px;
+  align-content: start;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 50% 3%, rgba(255,255,255,0.14), transparent 3.8rem),
+    linear-gradient(180deg, rgba(38,47,49,0.98), rgba(10,15,17,0.98));
+}
+
+.room-upgrade-card.is-owned {
+  border-color: rgba(128,242,141,0.36);
+}
+
+.upgrade-aura,
+.market-card-glow {
+  position: absolute;
+  inset: -40px -30px auto auto;
+  width: 98px;
+  height: 98px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255,210,94,0.28), transparent 68%);
+  pointer-events: none;
+}
+
+.room-upgrade-card .upgrade-icon,
+.market-card .market-icon {
+  width: 58px;
+  height: 58px;
+  margin-bottom: 3px;
+}
+
+.room-upgrade-card strong,
+.market-card strong {
+  position: relative;
+  z-index: 1;
+  font-size: 13px;
+  line-height: 1.12;
+}
+
+.room-upgrade-card span,
+.room-upgrade-card em,
+.market-card span,
+.market-card em {
+  position: relative;
+  z-index: 1;
+}
+
+.market-card em {
+  justify-self: start;
+  padding: 4px 7px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  color: #f7d35b;
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.market-balance {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  align-items: center;
+  min-height: 74px;
+  padding: 10px 12px;
+  background:
+    radial-gradient(circle at 20% 25%, rgba(128,242,141,0.16), transparent 4.5rem),
+    linear-gradient(180deg, rgba(36,47,43,0.98), rgba(8,14,12,0.98));
+}
+
+.market-balance i {
+  width: 44px;
+  height: 44px;
+  border-radius: 15px;
+  background:
+    radial-gradient(circle at 38% 26%, rgba(255,255,255,0.8), transparent 7px),
+    linear-gradient(135deg, #80f28d, #20c878);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.28),
+    0 0 22px rgba(32,200,120,0.24);
+}
+
+.market-balance strong {
+  font-size: 28px;
+  color: #80f28d;
+  text-shadow: 0 0 18px rgba(128,242,141,0.3);
+}
+
+.market-tabs {
+  padding: 2px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.04);
+}
+
+.market-tabs span {
+  border-radius: 12px;
+}
+
+.market-card::after,
+.room-upgrade-card::after {
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255,255,255,0.18), transparent 2rem),
+    linear-gradient(180deg, rgba(255,255,255,0.1), transparent 42%);
+  opacity: 0.34;
+}
+
+.market-card::before,
+.market-card::after {
+  display: none;
+}
+
+.add-project-card {
+  min-height: 94px;
+  background:
+    radial-gradient(circle at 86% 30%, rgba(32,200,120,0.16), transparent 4.8rem),
+    linear-gradient(180deg, rgba(40,49,44,0.98), rgba(10,15,13,0.98));
+}
+
+@keyframes clicker-pulse {
+  0%, 100% { transform: translateZ(0) scale(1); }
+  50% { transform: translateZ(0) scale(1.035); }
+}
+
+@keyframes card-breathe {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.08); }
+}

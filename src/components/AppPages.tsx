@@ -54,7 +54,7 @@ function EcosystemPage() {
       </header>
       <section className="product-launch-grid">
         {products.map((product, index) => (
-            <article className={`launch-card launch-${product.color}`} key={product.id}>
+            <article className={`launch-card launch-${product.color}`} style={{ "--i": index } as CSSProperties} key={product.id}>
               <i className="launch-icon" />
               <div>
                 <strong>{product.name}</strong>
@@ -110,6 +110,7 @@ function EcosystemPage() {
 }
 
 function ParticipatePage({ state, onMockSupportMacMini }: { state: GameState; onMockSupportMacMini: () => void }) {
+  const heroSrc = `${import.meta.env.BASE_URL}assets/game/support-runway-hero-v1.png`;
   const totalSupport = state.mockSupportUsd;
   const runwayGoal = fundingGoals[0];
   const runwayProgress = Math.min(100, Math.floor((totalSupport / runwayGoal.targetUsd) * 100));
@@ -118,6 +119,8 @@ function ParticipatePage({ state, onMockSupportMacMini }: { state: GameState; on
   return (
     <section className="app-page participate-page">
       <header className="game-hero support-hero">
+        <img className="hero-bg" src={heroSrc} alt="" draggable={false} />
+        <div className="hero-grade" />
         <div>
           <span>Participate & Support</span>
           <h1>Ecosystem Runway</h1>
@@ -190,6 +193,7 @@ function MiniNeed({ icon, label, value }: { icon: string; label: string; value: 
 function Supporter({ name, role, amount }: { name: string; role: string; amount: number }) {
   return (
     <div className="supporter-row">
+      <i className="supporter-avatar" />
       <div>
         <strong>{name}</strong>
         <span>{role}</span>
@@ -257,7 +261,8 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator }: { 
         {deviceGenerators.map((item) => {
           const owned = state.purchasedDeviceGeneratorIds.includes(item.id);
           return (
-            <article className="room-upgrade-card" key={item.id}>
+            <article className={`room-upgrade-card tier-card-${item.tier} ${owned ? "is-owned" : ""}`} key={item.id}>
+              <i className="upgrade-aura" />
               <div className={`upgrade-icon tier-${item.tier}`} />
               <strong>{item.name}</strong>
               <span>+{item.ratePerHour}/hr</span>
@@ -287,8 +292,11 @@ function MarketPage({ state, onBuyPerkReward }: { state: GameState; onBuyPerkRew
         <div className="reward-box" aria-hidden="true"><i /></div>
       </header>
       <div className="market-balance">
-        <span>Available FBC</span>
-        <strong>{Math.floor(state.resources.fbc)}</strong>
+        <i />
+        <div>
+          <span>Available FBC</span>
+          <strong>{Math.floor(state.resources.fbc)}</strong>
+        </div>
       </div>
       <div className="market-tabs" aria-hidden="true">
         <span>All</span>
@@ -301,10 +309,12 @@ function MarketPage({ state, onBuyPerkReward }: { state: GameState; onBuyPerkRew
           const owned = state.purchasedPerkRewardIds.includes(perk.id);
           const affordable = state.resources[perk.costResource] >= perk.costAmount;
           return (
-            <article className={`market-card market-card-${index}`} key={perk.id}>
+            <article className={`market-card market-card-${index}`} style={{ "--i": index } as CSSProperties} key={perk.id}>
+              <i className="market-card-glow" />
               <div className={`market-icon category-${perk.category}`} />
               <strong>{perk.title}</strong>
               <span>{perk.benefitPreview}</span>
+              <em>{perk.category}</em>
               <button disabled={owned || !affordable} onClick={() => onBuyPerkReward(perk.id)}>
                 <span>{owned ? "Reserved" : `${perk.costAmount} FBC`}</span>
               </button>
@@ -312,10 +322,12 @@ function MarketPage({ state, onBuyPerkReward }: { state: GameState; onBuyPerkRew
           );
         })}
         {marketExtras.map((perk, index) => (
-          <article className={`market-card market-extra-${index}`} key={perk.id}>
+          <article className={`market-card market-extra-${index}`} style={{ "--i": index + 4 } as CSSProperties} key={perk.id}>
+            <i className="market-card-glow" />
             <div className={`market-icon category-${perk.category}`} />
             <strong>{perk.title}</strong>
             <span>{perk.body}</span>
+            <em>{perk.category}</em>
             <button disabled><span>{perk.cost} FBC</span></button>
           </article>
         ))}
