@@ -16,6 +16,7 @@ interface Props {
   onBuyDeviceGenerator: (generatorId: string) => void;
   onMockSupportMacMini: () => void;
   onBuyPerkReward: (perkId: string) => void;
+  onBuyProductAction: (actionId: string, costCompute: number, title: string) => void;
 }
 
 const marketExtras = [
@@ -70,10 +71,34 @@ const roadmapNeeds = [
   }
 ];
 
-export function AppPages({ view, state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onMockSupportMacMini, onBuyPerkReward }: Props) {
+const productRoomActions = [
+  {
+    id: "atlasrepo-scan-ticket",
+    product: "AtlasRepo",
+    title: "Repo Scan Ticket",
+    costCompute: 80,
+    detail: "Spend BP to reserve a repo analysis inside AtlasRepo."
+  },
+  {
+    id: "want2view-promo-signal",
+    product: "Want2View",
+    title: "Promo Signal",
+    costCompute: 120,
+    detail: "Turn room points into a future trend/promo insight."
+  },
+  {
+    id: "fabricbot-promo-code",
+    product: "FabricBot",
+    title: "Promo Code Draft",
+    costCompute: 160,
+    detail: "Prepare a product discount/access rule for later fulfillment."
+  }
+];
+
+export function AppPages({ view, state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onMockSupportMacMini, onBuyPerkReward, onBuyProductAction }: Props) {
   if (view === "ecosystem") return <EcosystemPage state={state} />;
   if (view === "participate") return <ParticipatePage state={state} onMockSupportMacMini={onMockSupportMacMini} />;
-  if (view === "my-room") return <MyRoomPage state={state} onBuild={onBuild} onBuyGenerator={onBuyGenerator} onBuyDeviceGenerator={onBuyDeviceGenerator} />;
+  if (view === "my-room") return <MyRoomPage state={state} onBuild={onBuild} onBuyGenerator={onBuyGenerator} onBuyDeviceGenerator={onBuyDeviceGenerator} onBuyProductAction={onBuyProductAction} onBuyPerkReward={onBuyPerkReward} />;
   return <MarketPage state={state} onBuyPerkReward={onBuyPerkReward} />;
 }
 
@@ -389,7 +414,7 @@ function SupportLedger({ state }: { state: GameState }) {
   );
 }
 
-function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator }: { state: GameState; onBuild: () => void; onBuyGenerator: () => void; onBuyDeviceGenerator: (generatorId: string) => void }) {
+function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onBuyProductAction, onBuyPerkReward }: { state: GameState; onBuild: () => void; onBuyGenerator: () => void; onBuyDeviceGenerator: (generatorId: string) => void; onBuyProductAction: (actionId: string, costCompute: number, title: string) => void; onBuyPerkReward: (perkId: string) => void }) {
   const totalRate = getTotalComputeRatePerHour(state);
   const myRoomBg = `${import.meta.env.BASE_URL}assets/game/my-room-game-bg-v1.png`;
 
@@ -445,6 +470,7 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator }: { 
         <div><span>Level</span><strong>{state.accountLevel}</strong></div>
         <div><span>FBC</span><strong>{Math.floor(state.resources.fbc)}</strong></div>
       </div>
+      <ProductSpendPanel state={state} onBuyProductAction={onBuyProductAction} onBuyPerkReward={onBuyPerkReward} />
       <AgentBench />
       <TaskDeck />
       {!state.generatorPurchased && <button className="primary-cta" onClick={onBuyGenerator}>Buy first room generator · 25</button>}
@@ -463,6 +489,46 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator }: { 
           );
         })}
       </section>
+    </section>
+  );
+}
+
+function ProductSpendPanel({ state, onBuyProductAction, onBuyPerkReward }: { state: GameState; onBuyProductAction: (actionId: string, costCompute: number, title: string) => void; onBuyPerkReward: (perkId: string) => void }) {
+  return (
+    <section className="product-spend-panel">
+      <div className="section-head">
+        <span>Spend room points</span>
+        <strong>Inside our products</strong>
+      </div>
+      <div className="product-action-grid">
+        {productRoomActions.map((action) => {
+          const owned = state.purchasedProductActionIds.includes(action.id);
+          const affordable = state.resources.compute >= action.costCompute;
+          return (
+            <article className="product-action-card" key={action.id}>
+              <span>{action.product}</span>
+              <strong>{action.title}</strong>
+              <em>{action.detail}</em>
+              <button disabled={owned || !affordable} onClick={() => onBuyProductAction(action.id, action.costCompute, action.title)}>
+                {owned ? "Reserved" : `${action.costCompute} BP`}
+              </button>
+            </article>
+          );
+        })}
+      </div>
+      <div className="product-perk-row">
+        {perkShop.slice(0, 2).map((perk) => {
+          const owned = state.purchasedPerkRewardIds.includes(perk.id);
+          const affordable = state.resources.fbc >= perk.costAmount;
+          return (
+            <button className="product-perk-chip" disabled={owned || !affordable} onClick={() => onBuyPerkReward(perk.id)} key={perk.id}>
+              <span>{perk.category}</span>
+              <strong>{perk.title}</strong>
+              <em>{owned ? "Reserved" : `${perk.costAmount} FBC`}</em>
+            </button>
+          );
+        })}
+      </div>
     </section>
   );
 }

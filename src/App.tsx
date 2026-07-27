@@ -113,6 +113,7 @@ export default function App() {
           onBuyDeviceGenerator={game.buyDeviceGenerator}
           onMockSupportMacMini={game.mockSupportMacMini}
           onBuyPerkReward={game.buyPerkReward}
+          onBuyProductAction={game.buyProductAction}
         />
       )}
       <BottomNavigation

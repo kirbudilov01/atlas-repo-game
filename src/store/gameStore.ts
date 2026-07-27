@@ -20,6 +20,7 @@ export interface GameState {
   generatorLevel: number;
   purchasedDeviceGeneratorIds: string[];
   purchasedPerkRewardIds: string[];
+  purchasedProductActionIds: string[];
   mockSupportUsd: number;
   generatorPurchasedAt?: string;
   lastSavedAt: string;
@@ -81,6 +82,7 @@ const initialState = (): GameState => ({
   generatorLevel: 0,
   purchasedDeviceGeneratorIds: [],
   purchasedPerkRewardIds: [],
+  purchasedProductActionIds: [],
   mockSupportUsd: 0,
   lastSavedAt: nowIso(),
   lastOfflineClaimAt: nowIso(),
@@ -106,7 +108,8 @@ function loadState(): GameState {
       atlasMission: { ...initial.atlasMission, ...parsed.atlasMission },
       supportLedger: parsed.supportLedger ?? initial.supportLedger,
       purchasedDeviceGeneratorIds: parsed.purchasedDeviceGeneratorIds ?? initial.purchasedDeviceGeneratorIds,
-      purchasedPerkRewardIds: parsed.purchasedPerkRewardIds ?? initial.purchasedPerkRewardIds
+      purchasedPerkRewardIds: parsed.purchasedPerkRewardIds ?? initial.purchasedPerkRewardIds,
+      purchasedProductActionIds: parsed.purchasedProductActionIds ?? initial.purchasedProductActionIds
     };
   } catch {
     return initialState();
@@ -516,6 +519,37 @@ export function useGameStore() {
     return ok;
   }
 
+  function buyProductAction(actionId: string, costCompute: number, title: string): boolean {
+    let ok = false;
+    setState((current) => {
+      if (current.purchasedProductActionIds.includes(actionId)) {
+        return { ...current, debugMessage: `${title} is already reserved inside My Room.` };
+      }
+      if (current.resources.compute < costCompute) {
+        return { ...current, debugMessage: `Need ${costCompute - current.resources.compute} more BP for ${title}.` };
+      }
+      ok = true;
+      return {
+        ...current,
+        purchasedProductActionIds: [...current.purchasedProductActionIds, actionId],
+        resources: { ...current.resources, compute: current.resources.compute - costCompute },
+        transactions: [
+          tx("compute", -costCompute, `product_action_${actionId}`),
+          ...current.transactions
+        ].slice(0, 30),
+        contributionEvents: [
+          {
+            ...contributionEvent(title, 1, "Product action reserved from My Room points."),
+            source: "reward" as const
+          },
+          ...current.contributionEvents
+        ].slice(0, 24),
+        debugMessage: `${title} reserved. Prototype action: this will connect to product integrations later.`
+      };
+    });
+    return ok;
+  }
+
   function resetProgress() {
     localStorage.removeItem(STORAGE_KEY);
     setState(initialState());
@@ -531,6 +565,7 @@ export function useGameStore() {
     buyDeviceGenerator,
     mockSupportMacMini,
     buyPerkReward,
+    buyProductAction,
     claimOfflineNow,
     answerRepo,
     completeAtlasMission,
