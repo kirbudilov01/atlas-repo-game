@@ -7,6 +7,7 @@ import { products } from "../config/products";
 import { getTotalComputeRatePerHour, type GameState } from "../store/gameStore";
 
 export type AppView = "ecosystem" | "participate" | "our-room" | "my-room" | "market";
+type GameIconName = "bp" | "autoclicker" | "storage" | "macmini" | "atlas" | "want2view" | "invite" | "partner" | "fbc";
 
 interface Props {
   view: Exclude<AppView, "our-room">;
@@ -20,13 +21,13 @@ interface Props {
   onClaimSocialQuest: (questId: string, rewardCompute: number, title: string) => void;
 }
 
-const marketBpOffers = [
-  { id: "atlasrepo-discount-5", title: "AtlasRepo 5% Discount", category: "promo", costCompute: 90, body: "Reserve a small AtlasRepo promo code from your BP balance." },
-  { id: "want2view-discount-5", title: "Want2View 5% Discount", category: "promo", costCompute: 90, body: "Reserve a Want2View starter promo for future fulfillment." },
-  { id: "atlasrepo-discount-10", title: "AtlasRepo 10% Discount", category: "access", costCompute: 180, body: "Higher tier promo reservation for AtlasRepo access." },
-  { id: "want2view-discount-10", title: "Want2View 10% Discount", category: "access", costCompute: 180, body: "Higher tier promo reservation for Want2View access." },
-  { id: "ecosystem-application", title: "Connect Your Project", category: "community", costCompute: 240, body: "Open an ecosystem application slot so your project can be reviewed later." },
-  { id: "partner-promo-pack", title: "Partner Promo Pack", category: "tools", costCompute: 320, body: "Reserve a future bundle for promo codes, access rules and partner placement." }
+const marketBpOffers: Array<{ id: string; title: string; category: string; costCompute: number; body: string; icon: GameIconName }> = [
+  { id: "atlasrepo-discount-5", title: "AtlasRepo 5% Discount", category: "promo", costCompute: 90, body: "Reserve a small AtlasRepo promo code from your BP balance.", icon: "atlas" },
+  { id: "want2view-discount-5", title: "Want2View 5% Discount", category: "promo", costCompute: 90, body: "Reserve a Want2View starter promo for future fulfillment.", icon: "want2view" },
+  { id: "atlasrepo-discount-10", title: "AtlasRepo 10% Discount", category: "access", costCompute: 180, body: "Higher tier promo reservation for AtlasRepo access.", icon: "atlas" },
+  { id: "want2view-discount-10", title: "Want2View 10% Discount", category: "access", costCompute: 180, body: "Higher tier promo reservation for Want2View access.", icon: "want2view" },
+  { id: "ecosystem-application", title: "Connect Your Project", category: "community", costCompute: 240, body: "Open an ecosystem application slot so your project can be reviewed later.", icon: "partner" },
+  { id: "partner-promo-pack", title: "Partner Promo Pack", category: "tools", costCompute: 320, body: "Reserve a future bundle for promo codes, access rules and partner placement.", icon: "invite" }
 ];
 
 const autonomyRoadmap = [
@@ -74,35 +75,48 @@ const roadmapNeeds = [
   }
 ];
 
-const productRoomActions = [
+const productRoomActions: Array<{ id: string; product: string; title: string; costCompute: number; detail: string; icon: GameIconName }> = [
   {
     id: "atlasrepo-scan-ticket",
     product: "AtlasRepo",
     title: "Repo Scan Ticket",
     costCompute: 80,
-    detail: "Spend BP to reserve a repo analysis inside AtlasRepo."
+    detail: "Spend BP to reserve a repo analysis inside AtlasRepo.",
+    icon: "atlas"
   },
   {
     id: "want2view-promo-signal",
     product: "Want2View",
     title: "Promo Signal",
     costCompute: 120,
-    detail: "Turn room points into a future trend/promo insight."
+    detail: "Turn room points into a future trend/promo insight.",
+    icon: "want2view"
   },
   {
     id: "fabricbot-promo-code",
     product: "FabricBot",
     title: "Promo Code Draft",
     costCompute: 160,
-    detail: "Prepare a product discount/access rule for later fulfillment."
+    detail: "Prepare a product discount/access rule for later fulfillment.",
+    icon: "bp"
   }
 ];
 
 const socialQuests = [
-  { id: "tell-story", title: "Tell about us", rewardCompute: 60, detail: "Share the ecosystem story in chat, channel or social feed." },
-  { id: "invite-friend", title: "Invite a friend", rewardCompute: 90, detail: "Bring someone who may use AtlasRepo, Want2View or FabricBot." },
-  { id: "connect-service", title: "Bring a project", rewardCompute: 140, detail: "Suggest a product/service that can join the ecosystem later." }
+  { id: "tell-story", title: "Tell about us", rewardCompute: 60, detail: "Share the ecosystem story in chat, channel or social feed.", icon: "invite" },
+  { id: "invite-friend", title: "Invite a friend", rewardCompute: 90, detail: "Bring someone who may use AtlasRepo, Want2View or FabricBot.", icon: "invite" },
+  { id: "connect-service", title: "Bring a project", rewardCompute: 140, detail: "Suggest a product/service that can join the ecosystem later.", icon: "partner" }
 ];
+
+const deviceGeneratorIconById: Record<string, GameIconName> = {
+  "phone-render-bot": "autoclicker",
+  "macbook-social-kit": "storage",
+  "mac-mini-render-node": "macmini"
+};
+
+function GameCardIcon({ icon }: { icon: GameIconName }) {
+  return <i className={`game-card-icon icon-${icon}`} aria-hidden="true" />;
+}
 
 export function AppPages({ view, state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onMockSupportMacMini, onBuyPerkReward, onBuyProductAction, onClaimSocialQuest }: Props) {
   if (view === "ecosystem") return <EcosystemPage state={state} />;
@@ -445,44 +459,46 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onBu
           <button className={section === id ? "is-active" : ""} onClick={() => setSection(id as typeof section)} key={id}>{label}</button>
         ))}
       </nav>
-      <div className="player-room-stage">
-        <img className="my-room-bg" src={myRoomBg} alt="" draggable={false} />
-        <div className="my-room-grade" />
-        <div className="room-wall-panel" />
-        <div className="room-floor-plane" />
-        <div className="runner-track room-data-route">
-          <em>open data route</em>
+      {section === "room" && (
+        <div className="player-room-stage">
+          <img className="my-room-bg" src={myRoomBg} alt="" draggable={false} />
+          <div className="my-room-grade" />
+          <div className="room-wall-panel" />
+          <div className="room-floor-plane" />
+          <div className="runner-track room-data-route">
+            <em>open data route</em>
+          </div>
+          <div className="room-monitor monitor-left"><i /></div>
+          <div className="room-monitor monitor-right"><i /></div>
+          <div className="player-room-window" />
+          <article className="room-terminal terminal-want2view">
+            <span>Terminal 01</span>
+            <strong>Want2View</strong>
+            <em>video demand feed</em>
+          </article>
+          <article className="room-terminal terminal-atlasrepo">
+            <span>Terminal 02</span>
+            <strong>AtlasRepo</strong>
+            <em>repo intelligence feed</em>
+          </article>
+          <button className="room-clicker-object" onClick={onBuild}>
+            <span className="tap-rings" />
+            <i />
+            <b>Build</b>
+            <span>+ room points</span>
+          </button>
+          <div className="room-sofa" />
+          <article className="mac-mini-card">
+            <span>UBT render resource</span>
+            <strong>Mac mini</strong>
+            <em>runs project video generation</em>
+          </article>
+          <article className="render-power-card">
+            <span>Current goal</span>
+            <strong>$3000/mo</strong>
+          </article>
         </div>
-        <div className="room-monitor monitor-left"><i /></div>
-        <div className="room-monitor monitor-right"><i /></div>
-        <div className="player-room-window" />
-        <article className="room-terminal terminal-want2view">
-          <span>Terminal 01</span>
-          <strong>Want2View</strong>
-          <em>video demand feed</em>
-        </article>
-        <article className="room-terminal terminal-atlasrepo">
-          <span>Terminal 02</span>
-          <strong>AtlasRepo</strong>
-          <em>repo intelligence feed</em>
-        </article>
-        <button className="room-clicker-object" onClick={onBuild}>
-          <span className="tap-rings" />
-          <i />
-          <b>Build</b>
-          <span>+ room points</span>
-        </button>
-        <div className="room-sofa" />
-        <article className="mac-mini-card">
-          <span>UBT render resource</span>
-          <strong>Mac mini</strong>
-          <em>runs project video generation</em>
-        </article>
-        <article className="render-power-card">
-          <span>Current goal</span>
-          <strong>$3000/mo</strong>
-        </article>
-      </div>
+      )}
       <div className="stat-grid">
         <div><span>Room points</span><strong>{Math.floor(state.resources.compute)}</strong></div>
         <div><span>Income</span><strong>{totalRate}/hr</strong></div>
@@ -518,6 +534,7 @@ function IdleUpgradePanel({ state, onBuyGenerator, onBuyDeviceGenerator }: { sta
       </div>
       <div className="idle-upgrade-row">
         <button className={`idle-upgrade-card ${state.generatorPurchased ? "is-owned" : ""}`} disabled={state.generatorPurchased || state.resources.compute < 25} onClick={onBuyGenerator}>
+          <GameCardIcon icon="autoclicker" />
           <span>Core</span>
           <strong>Auto Clicker</strong>
           <em>{state.generatorPurchased ? `Lvl ${state.generatorLevel} online` : "25 BP · starts passive clicks"}</em>
@@ -527,6 +544,7 @@ function IdleUpgradePanel({ state, onBuyGenerator, onBuyDeviceGenerator }: { sta
           const affordable = state.resources.compute >= item.costCompute;
           return (
             <button className={`idle-upgrade-card tier-${item.tier} ${owned ? "is-owned" : ""}`} disabled={owned || !affordable} onClick={() => onBuyDeviceGenerator(item.id)} key={item.id}>
+              <GameCardIcon icon={deviceGeneratorIconById[item.id] ?? "storage"} />
               <span>{item.tier}</span>
               <strong>{item.name}</strong>
               <em>{owned ? `+${item.ratePerHour}/hr active` : `${item.costCompute} BP · +${item.ratePerHour}/hr`}</em>
@@ -550,6 +568,7 @@ function SocialQuestPanel({ state, onClaimSocialQuest }: { state: GameState; onC
           const claimed = state.claimedSocialQuestIds.includes(quest.id);
           return (
             <button className={claimed ? "is-claimed" : ""} disabled={claimed} onClick={() => onClaimSocialQuest(quest.id, quest.rewardCompute, quest.title)} key={quest.id}>
+              <GameCardIcon icon={quest.icon as GameIconName} />
               <span>+{quest.rewardCompute} BP</span>
               <strong>{quest.title}</strong>
               <em>{claimed ? "Reward claimed" : quest.detail}</em>
@@ -574,6 +593,7 @@ function ProductSpendPanel({ state, onBuyProductAction, onBuyPerkReward }: { sta
           const affordable = state.resources.compute >= action.costCompute;
           return (
             <article className="product-action-card" key={action.id}>
+              <GameCardIcon icon={action.icon} />
               <span>{action.product}</span>
               <strong>{action.title}</strong>
               <em>{action.detail}</em>
@@ -671,6 +691,7 @@ function MarketPage({ state, onBuyProductAction }: { state: GameState; onBuyProd
             <article className={`market-card market-card-${index}`} style={{ "--i": index } as CSSProperties} key={offer.id}>
               <i className="market-card-glow" />
               <div className={`market-icon category-${offer.category}`} />
+              <GameCardIcon icon={offer.icon} />
               <strong>{offer.title}</strong>
               <span>{offer.body}</span>
               <em>{offer.category}</em>

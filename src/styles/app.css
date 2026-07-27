@@ -6321,3 +6321,234 @@ code {
   min-height: 164px;
   align-content: space-between;
 }
+
+.game-card-icon {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  border-radius: 15px;
+  background-image: url("/atlas-repo-game/assets/game/game-icon-sheet-v1.png");
+  background-repeat: no-repeat;
+  background-size: 300% 300%;
+  box-shadow:
+    0 12px 20px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(255, 224, 136, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.icon-bp { background-position: 0% 0%; }
+.icon-autoclicker { background-position: 50% 0%; }
+.icon-storage { background-position: 100% 0%; }
+.icon-macmini { background-position: 0% 50%; }
+.icon-atlas { background-position: 50% 50%; }
+.icon-want2view { background-position: 100% 50%; }
+.icon-invite { background-position: 0% 100%; }
+.icon-partner { background-position: 50% 100%; }
+.icon-fbc { background-position: 100% 100%; }
+
+.product-action-card::before,
+.idle-upgrade-card::before,
+.social-quest-list button::before,
+.market-card::before {
+  display: none;
+}
+
+.idle-upgrade-card {
+  grid-template-columns: 52px minmax(0, 1fr);
+  grid-template-rows: auto auto 1fr;
+  align-items: start;
+  min-height: 132px;
+  padding: 12px;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 213, 103, 0.16), transparent 78px),
+    radial-gradient(circle at 88% 88%, rgba(83, 217, 144, 0.12), transparent 76px),
+    linear-gradient(145deg, rgba(30, 42, 36, 0.96), rgba(8, 13, 15, 0.98));
+}
+
+.idle-upgrade-row {
+  min-height: 138px;
+  align-items: stretch;
+}
+
+.idle-upgrade-card .game-card-icon {
+  grid-row: 1 / 4;
+  align-self: center;
+}
+
+.idle-upgrade-card span,
+.idle-upgrade-card strong,
+.idle-upgrade-card em {
+  grid-column: 2;
+}
+
+.social-quest-list button {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  grid-template-rows: auto auto auto;
+  align-items: center;
+  min-height: 92px;
+  padding: 12px;
+  background:
+    radial-gradient(circle at 16% 18%, rgba(93, 211, 255, 0.14), transparent 78px),
+    linear-gradient(145deg, rgba(24, 34, 43, 0.96), rgba(7, 11, 15, 0.98));
+}
+
+.social-quest-list .game-card-icon {
+  grid-row: 1 / 4;
+}
+
+.social-quest-list span,
+.social-quest-list strong,
+.social-quest-list em {
+  grid-column: 2;
+}
+
+.product-action-card {
+  grid-template-columns: 52px minmax(0, 1fr);
+  grid-template-rows: auto auto 1fr auto;
+  min-height: 168px;
+  padding: 12px;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(116, 239, 151, 0.14), transparent 82px),
+    linear-gradient(145deg, rgba(25, 35, 30, 0.96), rgba(8, 13, 15, 0.98));
+}
+
+.product-action-grid {
+  min-height: 172px;
+}
+
+.product-action-card .game-card-icon {
+  grid-row: 1 / 5;
+  align-self: start;
+}
+
+.product-action-card span,
+.product-action-card strong,
+.product-action-card em,
+.product-action-card button {
+  grid-column: 2;
+}
+
+.market-page .market-card {
+  grid-template-columns: 56px minmax(0, 1fr);
+  grid-template-rows: auto auto auto auto;
+  align-items: start;
+  min-height: 176px;
+  padding: 12px;
+  background:
+    radial-gradient(circle at 17% 14%, rgba(255, 211, 102, 0.16), transparent 88px),
+    radial-gradient(circle at 92% 96%, rgba(88, 222, 145, 0.12), transparent 96px),
+    linear-gradient(145deg, rgba(26, 36, 34, 0.96), rgba(7, 12, 15, 0.985));
+}
+
+.market-page .market-card .game-card-icon {
+  grid-row: 1 / 5;
+}
+
+.market-page .market-card strong,
+.market-page .market-card span,
+.market-page .market-card em,
+.market-page .market-card button {
+  grid-column: 2;
+}
+
+.market-page .market-card strong {
+  margin-top: 1px;
+}
+
+.market-page .market-card button {
+  justify-self: stretch;
+}
+
+@media (max-width: 370px) {
+  .game-card-icon {
+    width: 44px;
+    height: 44px;
+    flex-basis: 44px;
+  }
+
+  .idle-upgrade-card,
+  .product-action-card,
+  .social-quest-list button,
+  .market-page .market-card {
+    grid-template-columns: 48px minmax(0, 1fr);
+  }
+}
+
+.my-room-page .my-room-tabs {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  justify-content: start;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.my-room-page .my-room-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.my-room-page .my-room-tabs button {
+  min-width: 74px;
+  padding-inline: 12px;
+  white-space: nowrap;
+}
+
+.bottom-nav .nav-glyph {
+  width: 31px;
+  height: 31px;
+  border-radius: 11px;
+  background-image: url("/atlas-repo-game/assets/game/game-icon-sheet-v1.png");
+  background-repeat: no-repeat;
+  background-size: 300% 300%;
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(255, 224, 136, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.bottom-nav .nav-glyph::before,
+.bottom-nav .nav-glyph::after,
+.bottom-nav .nav-glyph i {
+  display: none;
+}
+
+.bottom-nav .nav-factory { background-position: 50% 50%; }
+.bottom-nav .nav-network { background-position: 0% 100%; }
+.bottom-nav .nav-room { background-position: 0% 50%; }
+.bottom-nav .nav-profile { background-position: 50% 0%; }
+.bottom-nav .nav-market { background-position: 0% 0%; }
+
+.bottom-nav button.is-current .nav-glyph {
+  background-image: url("/atlas-repo-game/assets/game/game-icon-sheet-v1.png");
+  background-repeat: no-repeat;
+  background-size: 300% 300%;
+  filter: saturate(1.12) brightness(1.08);
+  box-shadow:
+    0 0 0 1px rgba(139, 242, 143, 0.45),
+    0 10px 20px rgba(24, 185, 96, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.bottom-nav button.is-current .nav-factory { background-position: 50% 50%; }
+.bottom-nav button.is-current .nav-network { background-position: 0% 100%; }
+.bottom-nav button.is-current .nav-room { background-position: 0% 50%; }
+.bottom-nav button.is-current .nav-profile { background-position: 50% 0%; }
+.bottom-nav button.is-current .nav-market { background-position: 0% 0%; }
+
+.bp-market-balance > i {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background-image: url("/atlas-repo-game/assets/game/game-icon-sheet-v1.png");
+  background-repeat: no-repeat;
+  background-size: 300% 300%;
+  background-position: 0% 0%;
+  box-shadow:
+    0 14px 24px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 224, 136, 0.28);
+}
