@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { deviceGenerators } from "../config/deviceGenerators";
 import { fundingGoals } from "../config/funding";
+import { activeTasks, agentRoster, bottleneckTracks, collectionSets, productionChain, roomStages, seasonEvents } from "../config/idleMeta";
 import { perkShop } from "../config/perks";
 import { products } from "../config/products";
 import { getTotalComputeRatePerHour, type GameState } from "../store/gameStore";
@@ -25,13 +26,29 @@ const marketExtras = [
 ];
 
 export function AppPages({ view, state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onMockSupportMacMini, onBuyPerkReward }: Props) {
-  if (view === "ecosystem") return <EcosystemPage />;
+  if (view === "ecosystem") return <EcosystemPage state={state} />;
   if (view === "participate") return <ParticipatePage state={state} onMockSupportMacMini={onMockSupportMacMini} />;
   if (view === "my-room") return <MyRoomPage state={state} onBuild={onBuild} onBuyGenerator={onBuyGenerator} onBuyDeviceGenerator={onBuyDeviceGenerator} />;
   return <MarketPage state={state} onBuyPerkReward={onBuyPerkReward} />;
 }
 
-function EcosystemPage() {
+function getBottleneckValue(state: GameState, id: string, base: number) {
+  if (id === "compute") return Math.min(96, base + state.generatorLevel * 12 + state.purchasedDeviceGeneratorIds.length * 10 + Math.floor(state.resources.compute / 80));
+  if (id === "attention") return Math.min(92, base + (state.atlasMission.status === "claimed" ? 20 : 0) + state.accountLevel * 3);
+  if (id === "trust") return Math.min(94, base + state.resources.contribution * 4 + (state.mockSupportUsd > 0 ? 10 : 0));
+  return Math.min(90, base + Math.floor((state.mockSupportUsd / 3000) * 70));
+}
+
+function getLoopProgress(state: GameState) {
+  return [
+    { id: "collect", label: "Collect", value: Math.min(100, state.coreClicks * 4), detail: `${Math.floor(state.resources.compute)} pts` },
+    { id: "upgrade", label: "Upgrade", value: state.generatorPurchased ? 72 + state.generatorLevel * 4 : Math.min(100, state.resources.compute * 4), detail: state.generatorPurchased ? `L${state.generatorLevel} generator` : "25 pts gate" },
+    { id: "assign", label: "Assign", value: state.atlasMission.status === "claimed" ? 100 : Object.keys(state.atlasMission.answers).length * 33, detail: "agents/tasks" },
+    { id: "event", label: "Event", value: Math.min(100, Math.floor((state.mockSupportUsd / 3000) * 100) + (state.atlasMission.status === "claimed" ? 12 : 0)), detail: "season goal" }
+  ];
+}
+
+function EcosystemPage({ state }: { state: GameState }) {
   const heroSrc = `${import.meta.env.BASE_URL}assets/game/ecosystem-factory-hero-v1.png`;
 
   return (
@@ -52,6 +69,8 @@ function EcosystemPage() {
           <i className="factory-park park-b" />
         </div>
       </header>
+      <LoopRail state={state} />
+      <ProductionChain state={state} />
       <section className="product-launch-grid">
         {products.map((product, index) => (
             <article className={`launch-card launch-${product.color}`} style={{ "--i": index } as CSSProperties} key={product.id}>
@@ -74,6 +93,7 @@ function EcosystemPage() {
         </div>
         <i><b /></i>
       </article>
+      <BottleneckBoard state={state} />
       <div className="ecosystem-map compact-map">
         <div className="map-grid" />
         <div className="ecosystem-road road-a" />
@@ -95,6 +115,7 @@ function EcosystemPage() {
           </article>
         ))}
       </div>
+      <AgentBench compact />
       <div className="page-card-grid">
         <article className="page-card">
           <strong>SaaS Factory</strong>
@@ -128,6 +149,7 @@ function ParticipatePage({ state, onMockSupportMacMini }: { state: GameState; on
         </div>
         <div className="support-heart" aria-hidden="true"><i /></div>
       </header>
+      <LoopRail state={state} />
       <article className="runway-card">
         <div className="runway-top">
           <div>
@@ -147,6 +169,7 @@ function ParticipatePage({ state, onMockSupportMacMini }: { state: GameState; on
         <MiniNeed icon="marketing" label="Marketing" value="36%" />
         <MiniNeed icon="talent" label="Talent" value="61%" />
       </section>
+      <SeasonEventBoard state={state} />
       <button className="wallet-preview-card" onClick={onMockSupportMacMini}>
         <span>Telegram Wallet preview</span>
         <strong>$1000 support route</strong>
@@ -167,6 +190,7 @@ function ParticipatePage({ state, onMockSupportMacMini }: { state: GameState; on
         <strong>Important disclaimer</strong>
         <p>FBC is a game credit / reservation only. No equity, no profit promise, no guaranteed token and no cash redemption.</p>
       </article>
+      <BottleneckBoard state={state} />
       <section className="support-ledger standalone">
         <div className="support-ledger-head">
           <strong>Open Support Ledger</strong>
@@ -250,12 +274,16 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator }: { 
           <strong>AI bot</strong>
         </div>
       </div>
+      <LoopRail state={state} />
+      <RoomStagePath state={state} />
       <div className="stat-grid">
         <div><span>Room points</span><strong>{Math.floor(state.resources.compute)}</strong></div>
         <div><span>Income</span><strong>{totalRate}/hr</strong></div>
         <div><span>Level</span><strong>{state.accountLevel}</strong></div>
         <div><span>FBC</span><strong>{Math.floor(state.resources.fbc)}</strong></div>
       </div>
+      <AgentBench />
+      <TaskDeck />
       {!state.generatorPurchased && <button className="primary-cta" onClick={onBuyGenerator}>Buy first room generator · 25</button>}
       <section className="room-upgrade-grid">
         {deviceGenerators.map((item) => {
@@ -291,6 +319,7 @@ function MarketPage({ state, onBuyPerkReward }: { state: GameState; onBuyPerkRew
         </div>
         <div className="reward-box" aria-hidden="true"><i /></div>
       </header>
+      <LoopRail state={state} />
       <div className="market-balance">
         <i />
         <div>
@@ -304,6 +333,7 @@ function MarketPage({ state, onBuyPerkReward }: { state: GameState; onBuyPerkRew
         <span>Access</span>
         <span>Tools</span>
       </div>
+      <CollectionShelf />
       <section className="market-grid">
         {perkShop.map((perk, index) => {
           const owned = state.purchasedPerkRewardIds.includes(perk.id);
@@ -336,6 +366,180 @@ function MarketPage({ state, onBuyPerkReward }: { state: GameState; onBuyPerkRew
         <strong>Add your project later</strong>
         <span>Future partners will be able to add projects into the ecosystem after moderation.</span>
       </article>
+      <SeasonEventBoard state={state} compact />
+    </section>
+  );
+}
+
+function LoopRail({ state }: { state: GameState }) {
+  return (
+    <section className="loop-rail" aria-label="Idle tycoon loop">
+      {getLoopProgress(state).map((step, index) => (
+        <article className={`loop-step loop-${step.id}`} key={step.id}>
+          <i>{index + 1}</i>
+          <div>
+            <strong>{step.label}</strong>
+            <span>{step.detail}</span>
+          </div>
+          <b><u style={{ width: `${step.value}%` }} /></b>
+        </article>
+      ))}
+    </section>
+  );
+}
+
+function ProductionChain({ state }: { state: GameState }) {
+  const unlocked = state.generatorPurchased ? 3 : Math.min(2, Math.floor(state.resources.compute / 15));
+  return (
+    <section className="production-chain">
+      <div className="section-head">
+        <span>Production chain</span>
+        <strong>Idea → launch → runway</strong>
+      </div>
+      <div className="chain-track">
+        {productionChain.map((step, index) => (
+          <article className={`chain-node tone-${step.tone} ${index <= unlocked ? "is-live" : ""}`} key={step.id}>
+            <i />
+            <strong>{step.label}</strong>
+            <span>{step.detail}</span>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function BottleneckBoard({ state }: { state: GameState }) {
+  return (
+    <section className="bottleneck-board">
+      <div className="section-head">
+        <span>Strategy board</span>
+        <strong>Current bottlenecks</strong>
+      </div>
+      {bottleneckTracks.map((track) => {
+        const value = getBottleneckValue(state, track.id, track.base);
+        return (
+          <article className={`bottleneck-row tone-${track.color}`} key={track.id}>
+            <div>
+              <strong>{track.label}</strong>
+              <span>{track.source}</span>
+            </div>
+            <b>{value}%</b>
+            <i><u style={{ width: `${value}%` }} /></i>
+          </article>
+        );
+      })}
+    </section>
+  );
+}
+
+function AgentBench({ compact = false }: { compact?: boolean }) {
+  return (
+    <section className={`agent-bench ${compact ? "is-compact" : ""}`}>
+      <div className="section-head">
+        <span>AFK layer</span>
+        <strong>Agent bench</strong>
+      </div>
+      <div className="agent-grid">
+        {agentRoster.map((agent) => (
+          <article className={`agent-card tone-${agent.color}`} key={agent.id}>
+            <i />
+            <strong>{agent.name}</strong>
+            <span>{agent.rarity} · {agent.station}</span>
+            <em>{agent.bonus}</em>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function TaskDeck() {
+  return (
+    <section className="task-deck">
+      <div className="section-head">
+        <span>Expeditions</span>
+        <strong>Assign next task</strong>
+      </div>
+      {activeTasks.map((task) => (
+        <article className="task-card" key={task.id}>
+          <i />
+          <div>
+            <strong>{task.title}</strong>
+            <span>{task.requires} · {task.time}</span>
+          </div>
+          <b>{task.reward}</b>
+        </article>
+      ))}
+    </section>
+  );
+}
+
+function SeasonEventBoard({ state, compact = false }: { state: GameState; compact?: boolean }) {
+  return (
+    <section className={`season-event-board ${compact ? "is-compact" : ""}`}>
+      <div className="section-head">
+        <span>LiveOps</span>
+        <strong>Season 0 events</strong>
+      </div>
+      {seasonEvents.map((event) => {
+        const value = event.id === "funding-sprint" ? Math.min(100, Math.floor((state.mockSupportUsd / 3000) * 100)) : event.progress;
+        return (
+          <article className="event-row" key={event.id}>
+            <div>
+              <strong>{event.title}</strong>
+              <span>{event.goal}</span>
+            </div>
+            <b>{event.reward}</b>
+            <i><u style={{ width: `${value}%` }} /></i>
+          </article>
+        );
+      })}
+    </section>
+  );
+}
+
+function CollectionShelf() {
+  return (
+    <section className="collection-shelf">
+      <div className="section-head">
+        <span>Collections</span>
+        <strong>Long-term sets</strong>
+      </div>
+      <div className="collection-grid">
+        {collectionSets.map((set) => {
+          const progress = Math.floor((set.owned / set.total) * 100);
+          return (
+            <article className="collection-card" key={set.id}>
+              <i />
+              <strong>{set.title}</strong>
+              <span>{set.owned}/{set.total} · {set.reward}</span>
+              <b><u style={{ width: `${progress}%` }} /></b>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+function RoomStagePath({ state }: { state: GameState }) {
+  const compute = state.resources.compute + state.purchasedDeviceGeneratorIds.length * 120 + state.generatorLevel * 80;
+  return (
+    <section className="room-stage-path">
+      <div className="section-head">
+        <span>Base progression</span>
+        <strong>Room evolution</strong>
+      </div>
+      <div className="stage-track">
+        {roomStages.map((stage) => (
+          <article className={compute >= stage.threshold ? "is-live" : ""} key={stage.id}>
+            <i />
+            <strong>{stage.title}</strong>
+            <span>{stage.threshold} pts</span>
+          </article>
+        ))}
+      </div>
     </section>
   );
 }

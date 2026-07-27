@@ -1,3 +1,4 @@
+import { productionChain, seasonEvents } from "../config/idleMeta";
 import { roomObjects } from "../config/roomObjects";
 import type { GameState } from "../store/gameStore";
 import type { RoomObjectConfig } from "../types/game";
@@ -34,6 +35,13 @@ export function RoomScene({ state, selectedId, scanMode, onToggleScan, onObject,
           <strong>{scanMode ? "Scan mode" : "Live map"}</strong>
         </button>
         <div className="room-business-layer" aria-hidden={scanMode}>
+          <div className="room-chain-overlay">
+            {productionChain.slice(0, 4).map((step, index) => (
+              <span className={state.generatorPurchased || index < 2 ? "is-live" : ""} key={step.id}>
+                {step.label}
+              </span>
+            ))}
+          </div>
           <button className="room-portal portal-ecosystem" onClick={() => ecosystemObject && onObject(ecosystemObject)}>
             <span>FabricBot</span>
             <strong>Ecosystem</strong>
@@ -60,6 +68,11 @@ export function RoomScene({ state, selectedId, scanMode, onToggleScan, onObject,
               <strong>Mac mini</strong>
               <em>{state.mockSupportUsd >= 1000 ? "funded" : "$1k target"}</em>
             </button>
+          </div>
+          <div className="room-event-overlay">
+            <span>{seasonEvents[0].title}</span>
+            <strong>{seasonEvents[0].goal}</strong>
+            <i><u style={{ width: `${seasonEvents[0].progress}%` }} /></i>
           </div>
         </div>
         {state.generatorPurchased && <div className="generator-node">Compute Generator L{state.generatorLevel}</div>}

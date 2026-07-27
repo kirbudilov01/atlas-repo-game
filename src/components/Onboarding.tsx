@@ -7,37 +7,44 @@ interface Props {
 const slides = [
   {
     eyebrow: "Step 1",
-    title: "FabricBot Ecosystem",
-    body: "A real room becomes a business game: AtlasRepo, Want2View, FabricBot and future products grow from one place.",
-    tag: "Our ecosystem",
+    title: "Founder Room",
+    body: "A real room becomes the center of an AI product tycoon: messy desk, laptops, agents, products and public progress.",
+    tag: "Living base",
     visual: "bot"
   },
   {
     eyebrow: "Step 2",
-    title: "Launch SaaS",
-    body: "Tap, earn room points, open tools and turn ideas into small products with visible progress.",
-    tag: "Build products",
+    title: "Production Chain",
+    body: "Collect ideas, research, prototype, launch, grow distribution and push runway. Every reward opens the next loop.",
+    tag: "Idea to launch",
     visual: "factory"
   },
   {
     eyebrow: "Step 3",
-    title: "Support The System",
-    body: "Funding is shown as crowdfunding/support in prototype mode. No token, equity or return promises.",
-    tag: "Participate",
-    visual: "heart"
-  },
-  {
-    eyebrow: "Step 4",
-    title: "Unlock My Room",
-    body: "Players get a personal room later: upgrades, items, levels and their own virtual points.",
-    tag: "Personal tycoon",
+    title: "Agents & Bottlenecks",
+    body: "Upgrade rooms, assign agents, clear bottlenecks and choose whether to push compute, attention, trust or runway.",
+    tag: "Idle strategy",
     visual: "room"
   },
   {
+    eyebrow: "Step 4",
+    title: "Season Events",
+    body: "Launch Sprints, Funding Sprints and Content Raids give the ecosystem a calendar of reasons to return.",
+    tag: "LiveOps",
+    visual: "heart"
+  },
+  {
     eyebrow: "Step 5",
-    title: "Earn Game Credits",
-    body: "Credits can reserve prototype perks: lessons, promos, tools, render priority and access previews.",
-    tag: "Market perks",
+    title: "Collections & Status",
+    body: "Founder cards, agent blueprints, room items and badges create long-term identity, utility and visible history.",
+    tag: "Legacy sets",
+    visual: "coin"
+  },
+  {
+    eyebrow: "Step 6",
+    title: "Safe Game Credits",
+    body: "FBC is a prototype support credit for perks and access previews: no equity, no profit promise, no guaranteed token.",
+    tag: "Fair economy",
     visual: "coin"
   }
 ];
@@ -72,6 +79,12 @@ export function Onboarding({ onDone }: Props) {
             <h1>{slide.title}</h1>
             <p>{slide.body}</p>
             <strong>{slide.tag}</strong>
+            <div className="onboarding-loop-preview" aria-hidden="true">
+              <span>Collect</span>
+              <span>Upgrade</span>
+              <span>Assign</span>
+              <span>Event</span>
+            </div>
           </article>
         </div>
         <div className="onboarding-progress" aria-label="Onboarding progress">
