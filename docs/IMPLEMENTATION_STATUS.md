@@ -27,6 +27,10 @@ Application shell and first retention loop polish in progress. Next work can mov
 - Mobile-first Our Room shell.
 - Photo-based Our Room map from the real room reference.
 - GPT/imagegen redrawn Our Room game-art map for local visual testing.
+- Real photo restored as the main Our Room background; generated art remains a reference, not the core room.
+- Business-game HUD: MRR, Users, Compute and FBC.
+- Five-tab bottom navigation: Ecosystem, Support, Room, My Room, Market.
+- Six-step animated onboarding carousel.
 - Real-room hotspot layer for desk, monitors, Dell laptop, bed, wall grid and floor zones.
 - More game-like room pins, couch clicker placement and bottom dock.
 - Mac mini moved into the empty left room zone as a dedicated render node hotspot.
@@ -67,6 +71,7 @@ Application shell and first retention loop polish in progress. Next work can mov
 - Data-driven Network Terminal strategy cards.
 - Data-driven Funding Hub support-goal cards.
 - Mock Mac mini crowdfunding button: $1000 support preview adds 1000 local FBC and fills the Mac mini goal.
+- Telegram Wallet preview button in Participate; still mock-only and not connected to real payments.
 - FBC mock support-credit resource.
 - Reward Vault tiers.
 - Perk Shop reservations using local FBC for lesson, promo and render-priority previews.
@@ -154,6 +159,9 @@ Screenshots:
 - `output/playwright/github-pages-live-fbc-build.png`
 - `output/playwright/gpt-redrawn-room-preview.png`
 - `output/playwright/gpt-redrawn-room-preview-clean.png`
+- `output/playwright/business-onboarding-carousel-final.png`
+- `output/playwright/real-room-business-shell.png`
+- `output/playwright/participate-telegram-wallet-preview.png`
 
 ## Next Stage
 

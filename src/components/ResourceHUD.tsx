@@ -5,6 +5,8 @@ interface Props {
 }
 
 export function ResourceHUD({ state }: Props) {
+  const mrr = state.atlasMission.status === "claimed" ? 120 : 0;
+  const users = state.contributionEvents.length + state.purchasedPerkRewardIds.length;
   return (
     <header className="hud">
       <div className="hud-left">
@@ -14,10 +16,10 @@ export function ResourceHUD({ state }: Props) {
         </div>
       </div>
       <div className="resource-strip">
+        <div className="resource-pill funding"><span>MRR</span><strong>${mrr}</strong></div>
+        <div className="resource-pill network"><span>Users</span><strong>{users}</strong></div>
         <div className="resource-pill compute"><span>Compute</span><strong>{Math.floor(state.resources.compute)}</strong></div>
-        <div className="resource-pill knowledge"><span>Knowledge</span><strong>{Math.floor(state.resources.knowledge)}</strong></div>
-        <div className="resource-pill contribution"><span>Contrib</span><strong>{Math.floor(state.resources.contribution)}</strong></div>
-        <div className="level-pill"><span>Lv</span><strong>{state.accountLevel}</strong></div>
+        <div className="resource-pill fbc"><span>FBC</span><strong>{Math.floor(state.resources.fbc)}</strong></div>
       </div>
     </header>
   );

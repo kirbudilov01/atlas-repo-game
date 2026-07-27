@@ -197,17 +197,17 @@ export function useGameStore() {
   const nextAction = useMemo(() => {
     if (!state.generatorPurchased && state.resources.compute < 25) {
       return {
-        title: "Power up the room",
-        body: `Click Atlas Core ${Math.max(0, 25 - state.resources.compute)} more times to buy the first generator.`,
-        cta: "Generate Compute",
+        title: "Build the ecosystem",
+        body: `Tap the room ${Math.max(0, 25 - state.resources.compute)} more times to open your first business generator.`,
+        cta: "Build Ecosystem",
         target: "core" as const
       };
     }
     if (!state.generatorPurchased) {
       return {
-        title: "Build first node",
-        body: "Buy Compute Generator to start passive production.",
-        cta: "Buy Generator",
+        title: "Open your room",
+        body: "Buy the first generator and start earning idle room points.",
+        cta: "Open My Room",
         target: "factory" as const
       };
     }
@@ -221,9 +221,9 @@ export function useGameStore() {
       };
     }
     return {
-      title: "View future benefit",
-      body: "Atlas Fragment preview unlocked. Real rewards stay prototype-only.",
-      cta: "Reward Vault",
+      title: "Spend your game credits",
+      body: "Atlas Fragment preview unlocked. Market perks stay prototype-only.",
+      cta: "Open Market",
       target: "reward" as const
     };
   }, [state]);

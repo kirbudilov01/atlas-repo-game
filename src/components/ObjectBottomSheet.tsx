@@ -101,15 +101,15 @@ function AssetIndex() {
   return (
     <div className="asset-index">
       <div className="metric-card tone-funding">
-        <strong>Uncountable Assets</strong>
-        <span>{filtered.length} visible assets · {plannedCount} need attention</span>
-        <p>Hardware, knowledge, content, subscriptions and community signals are all modeled as assets. Real payouts and investment logic remain locked.</p>
+        <strong>FabricBot Ecosystem</strong>
+        <span>AtlasRepo · Want2View · FabricBot · Payment Bot</span>
+        <p>The ecosystem is packaged as a business idle game: projects become buildings, tools become upgrades, and support becomes visible progress.</p>
       </div>
       <div className="stat-grid">
         <div><span>Utility</span><strong>{totalUtility}</strong></div>
-        <div><span>Monthly burn</span><strong>${monthlyBurn}</strong></div>
+        <div><span>Runway cost</span><strong>${monthlyBurn}</strong></div>
         <div><span>Catalog</span><strong>{assets.length}</strong></div>
-        <div><span>Mode</span><strong>mock</strong></div>
+        <div><span>Goal</span><strong>$30k MRR</strong></div>
       </div>
       <div className="category-filter">
         {categories.map((item) => (
@@ -437,12 +437,34 @@ function NetworkPanel({ state }: { state: GameState }) {
 }
 
 function FundingPanel({ state, onMockSupportMacMini }: { state: GameState; onMockSupportMacMini: () => void }) {
+  const supporters = [
+    { name: "Kirill", role: "Founder fuel", amount: state.mockSupportUsd > 0 ? state.mockSupportUsd : 0 },
+    { name: "Early supporter", role: "Mac mini believer", amount: state.mockSupportUsd > 0 ? 1000 : 0 },
+    { name: "Future partner", role: "Reserved slot", amount: 0 }
+  ];
   return (
     <div className="system-panel">
       <div className="metric-card tone-funding">
-        <strong>Funding Hub</strong>
-        <span>FBC balance: {Math.floor(state.resources.fbc)} · mock only</span>
-        <p>FBC is a prototype support-credit: 1 FBC mirrors 1 GRAM-style placeholder credit in-game. No real payment, equity, token claim, profit share or guaranteed return.</p>
+        <strong>Participate</strong>
+        <span>FBC balance: {Math.floor(state.resources.fbc)} · Telegram Wallet preview</span>
+        <p>Support is crowdfunding in prototype mode. FBC is a local support-credit only: no real payment, equity, token claim, profit share or guaranteed return.</p>
+        <button className="primary-cta wallet-cta" onClick={onMockSupportMacMini}>How do you want to participate?</button>
+        <button className="ghost-button wide" onClick={onMockSupportMacMini}>Telegram Wallet preview · mock support</button>
+      </div>
+      <div className="support-ledger">
+        <div className="support-ledger-head">
+          <strong>Open Support Ledger</strong>
+          <span>${supporters.reduce((sum, item) => sum + item.amount, 0)}</span>
+        </div>
+        {supporters.map((supporter) => (
+          <div className="supporter-row" key={supporter.name}>
+            <div>
+              <strong>{supporter.name}</strong>
+              <span>{supporter.role}</span>
+            </div>
+            <b>${supporter.amount}</b>
+          </div>
+        ))}
       </div>
       <div className="system-list">
         {fundingGoals.map((goal) => {

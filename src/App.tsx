@@ -10,11 +10,37 @@ import type { RoomObjectConfig } from "./types/game";
 import "./styles/app.css";
 
 const virtualObjects: Record<string, RoomObjectConfig> = {
-  factory: {
+  ecosystem: {
+    id: "asset-index",
+    type: "terminal",
+    label: "FabricBot Ecosystem",
+    subtitle: "AtlasRepo · Want2View · Payment Bot",
+    visualId: "asset-index",
+    x: 0,
+    y: 0,
+    w: 0,
+    h: 0,
+    z: 0,
+    accent: "atlas"
+  },
+  participate: {
+    id: "funding-hub",
+    type: "terminal",
+    label: "Participate",
+    subtitle: "Support runway",
+    visualId: "funding-hub",
+    x: 0,
+    y: 0,
+    w: 0,
+    h: 0,
+    z: 0,
+    accent: "funding"
+  },
+  myRoom: {
     id: "factory-panel",
     type: "generator",
-    label: "Factory",
-    subtitle: "Personal generator",
+    label: "My Room",
+    subtitle: "Personal clicker",
     visualId: "factory",
     x: 0,
     y: 0,
@@ -23,18 +49,18 @@ const virtualObjects: Record<string, RoomObjectConfig> = {
     z: 0,
     accent: "compute"
   },
-  profile: {
-    id: "profile-panel",
-    type: "terminal",
-    label: "Operator ID",
-    subtitle: "Profile and debug",
-    visualId: "profile",
+  market: {
+    id: "reward-vault",
+    type: "reward",
+    label: "Market",
+    subtitle: "Perks and access",
+    visualId: "reward-vault",
     x: 0,
     y: 0,
     w: 0,
     h: 0,
     z: 0,
-    accent: "atlas"
+    accent: "funding"
   },
 };
 
@@ -106,7 +132,7 @@ export default function App() {
       return;
     }
     if (game.nextAction.target === "factory") {
-      setSelected(virtualObjects.factory);
+      setSelected(virtualObjects.myRoom);
       return;
     }
     if (game.nextAction.target === "atlas") {
@@ -128,10 +154,12 @@ export default function App() {
       <RoomScene state={game.state} selectedId={selectedId} scanMode={scanMode} onToggleScan={() => setScanMode((value) => !value)} onObject={setSelected} onCoreClick={handleCoreClick} />
       <ContextActionBar state={game.state} nextAction={game.nextAction} onPrimary={handlePrimary} />
       <BottomNavigation
-        onFactory={() => setSelected(virtualObjects.factory)}
-        onAtlas={openAtlas}
-        onNetwork={openNetwork}
-        onProfile={() => setSelected(virtualObjects.profile)}
+        current={selected?.id === "asset-index" ? "ecosystem" : selected?.id === "funding-hub" ? "participate" : selected?.id === "factory-panel" ? "my-room" : selected?.id === "reward-vault" ? "market" : "our-room"}
+        onEcosystem={() => setSelected(virtualObjects.ecosystem)}
+        onParticipate={() => setSelected(virtualObjects.participate)}
+        onOurRoom={() => setSelected(null)}
+        onMyRoom={() => setSelected(virtualObjects.myRoom)}
+        onMarket={() => setSelected(virtualObjects.market)}
       />
       <ObjectBottomSheet
         object={selected}

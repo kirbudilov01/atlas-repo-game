@@ -18,11 +18,11 @@ export function ContextActionBar({ state, nextAction, onPrimary }: Props) {
   return (
     <section className="context-bar">
       <div className="quest-copy">
-        <span className="eyebrow">Next action</span>
+        <span className="eyebrow">Business roadmap</span>
         <strong>{nextAction.title}</strong>
         <p>{nextAction.body}</p>
         {state.debugMessage && <em className="debug-note">{state.debugMessage}</em>}
-        <div className="quest-steps" aria-label="Season 0 progress">
+        <div className="quest-steps" aria-label="Season 0 business progress">
           {steps.map((step) => <span key={step.id} className={step.done ? "is-done" : ""}>{step.label}</span>)}
         </div>
       </div>
