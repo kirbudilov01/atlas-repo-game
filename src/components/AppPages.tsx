@@ -243,7 +243,7 @@ function ParticipatePage({ state, onMockSupportMacMini }: { state: GameState; on
       <article className="runway-card autonomy-roadmap-card">
         <div className="runway-top">
           <div>
-            <span>Project revenue target</span>
+            <span>Current target</span>
             <strong>${projectMrr} / ${runwayGoal.targetUsd} MRR</strong>
           </div>
           <div className="runway-ring" style={{ "--progress": `${autonomyProgress}%` } as CSSProperties}>
@@ -251,39 +251,37 @@ function ParticipatePage({ state, onMockSupportMacMini }: { state: GameState; on
           </div>
         </div>
         <i style={{ width: `${autonomyProgress}%` }} />
-        <p>Stage 1 is not "collect $3k in donations". The goal is to make FabricBot, AtlasRepo, Want2View and future products generate enough MRR for calm, focused building.</p>
+        <p>Goal: make products generate enough monthly revenue for calm building. Donations help tools and runway, but product revenue remains the main KPI.</p>
       </article>
-      <RoadmapNeedsPanel />
-      <RoadmapMilestones currentMrr={projectMrr} />
-      <LatestSupportReceipt state={state} />
-      <LoopRail state={state} />
-      <section className="need-grid">
-        <MiniNeed icon="compute" label="AI Compute" value="48%" />
-        <MiniNeed icon="feature" label="New Features" value="72%" />
-        <MiniNeed icon="marketing" label="Marketing" value="36%" />
-        <MiniNeed icon="talent" label="Talent" value="61%" />
+      <section className="support-focus-grid">
+        <article>
+          <GameCardIcon icon="macmini" />
+          <span>Main tool</span>
+          <strong>Mac mini for render</strong>
+          <em>$1000 target for video generation, editing and service content.</em>
+        </article>
+        <article>
+          <GameCardIcon icon="fbc" />
+          <span>Monthly tools</span>
+          <strong>$300/mo services</strong>
+          <em>Subscriptions and infrastructure that keep the ecosystem moving.</em>
+        </article>
       </section>
+      <LatestSupportReceipt state={state} />
       <section className="support-summary-grid">
         <article>
-          <span>FBC Coins balance</span>
+          <span>Support memory</span>
           <strong>{supportCredit} FBC</strong>
         </article>
         <article>
-          <span>Build Points</span>
+          <span>Build points</span>
           <strong>{Math.floor(state.resources.compute)}</strong>
         </article>
       </section>
-      <SupportLedger state={state} />
       <article className="currency-rules-card">
-        <strong>Roadmap economy</strong>
-        <p><b>Project MRR</b> is the roadmap KPI. <b>Build Points</b> are earned in-game and spent on generators, rooms and progress. <b>FBC Coins</b> are support credits from donations/perks; later they may connect to ecosystem utility, but they are not equity, yield or a guaranteed token.</p>
+        <strong>Support, not investment</strong>
+        <p>FBC is a public memory / game credit for voluntary support. No equity, no profit promise, no guaranteed token and no cash redemption.</p>
       </article>
-      <article className="disclaimer-card">
-        <strong>Important disclaimer</strong>
-        <p>FBC is a game credit / reservation only. No equity, no profit promise, no guaranteed token and no cash redemption.</p>
-      </article>
-      <SeasonEventBoard state={state} />
-      <BottleneckBoard state={state} />
     </section>
   );
 }
