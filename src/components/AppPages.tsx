@@ -21,12 +21,17 @@ interface Props {
 }
 
 const marketBpOffers: Array<{ id: string; title: string; category: string; costCompute: number; body: string; icon: GameIconName }> = [
-  { id: "atlasrepo-discount-5", title: "AtlasRepo 5% Discount", category: "promo", costCompute: 90, body: "Reserve a small AtlasRepo promo code from your BP balance.", icon: "atlas" },
-  { id: "want2view-discount-5", title: "Want2View 5% Discount", category: "promo", costCompute: 90, body: "Reserve a Want2View starter promo for future fulfillment.", icon: "want2view" },
-  { id: "atlasrepo-discount-10", title: "AtlasRepo 10% Discount", category: "access", costCompute: 180, body: "Higher tier promo reservation for AtlasRepo access.", icon: "atlas" },
-  { id: "want2view-discount-10", title: "Want2View 10% Discount", category: "access", costCompute: 180, body: "Higher tier promo reservation for Want2View access.", icon: "want2view" },
-  { id: "ecosystem-application", title: "Connect Your Project", category: "community", costCompute: 240, body: "Open an ecosystem application slot so your project can be reviewed later.", icon: "partner" },
-  { id: "partner-promo-pack", title: "Partner Promo Pack", category: "tools", costCompute: 320, body: "Reserve a future bundle for promo codes, access rules and partner placement.", icon: "invite" }
+  { id: "promo-code-pool", title: "Buy Promo Code", category: "promos", costCompute: 90, body: "Reserve a future promo code for one of our services. Exact product and value will be assigned later.", icon: "atlas" },
+  { id: "subscription-trial-queue", title: "Free Subscription Queue", category: "access", costCompute: 180, body: "Join the queue for a real trial. Unlock requires 14 days in the game and 3 invited people.", icon: "want2view" },
+  { id: "cost-price-month", title: "Cost-Price Month", category: "access", costCompute: 260, body: "A future option to try a service near product cost for one month if the economics work.", icon: "bp" },
+  { id: "partner-access-slot", title: "Partner Access Slot", category: "community", costCompute: 320, body: "Reserve intent for partner/community access after rules, forms and limits are ready.", icon: "partner" }
+];
+
+const marketDevelopmentNotes = [
+  "Promo codes will be generic first, then matched to available services.",
+  "Free subscriptions should unlock only after 14 days of activity and 3 invited users.",
+  "Cost-price monthly access may appear if the product can handle it safely.",
+  "Every real benefit needs limits, anti-abuse checks and clear fulfillment rules."
 ];
 
 const autonomyRoadmap = [
@@ -600,7 +605,7 @@ function MarketPage({ state, onBuyProductAction }: { state: GameState; onBuyProd
         <div>
           <span>Market</span>
           <h1>Promo Market</h1>
-          <p>Spend BP on internal promos, discounts and ecosystem application slots. FBC utility comes later.</p>
+          <p>Spend BP on promo reservations, trial queues and future access rules. Real benefits unlock only after clear conditions.</p>
         </div>
         <div className="reward-box" aria-hidden="true"><i /></div>
       </header>
@@ -612,10 +617,10 @@ function MarketPage({ state, onBuyProductAction }: { state: GameState; onBuyProd
         </div>
       </div>
       <div className="market-tabs" aria-hidden="true">
-        <span>Promos</span>
-        <span>AtlasRepo</span>
-        <span>Want2View</span>
-        <span>Partners</span>
+        <span>Promo codes</span>
+        <span>Free subs</span>
+        <span>Cost-price</span>
+        <span>Rules</span>
       </div>
       <section className="market-grid">
         {marketBpOffers.map((offer, index) => {
@@ -637,15 +642,14 @@ function MarketPage({ state, onBuyProductAction }: { state: GameState; onBuyProd
         })}
       </section>
       <article className="fbc-future-card">
-        <strong>FBC layer is reserved</strong>
-        <span>FBC is support memory for now. Real FBC utility, token logic or wallet mechanics will be designed later after product/legal rules are ready.</span>
-        <b>{Math.floor(state.resources.fbc)} FBC</b>
+        <strong>Access rule draft</strong>
+        <span>First real free subscription should require at least 14 days in the ecosystem, 3 invited people and a final availability check. BP reserves intent, not instant access.</span>
+        <b>14d + 3 invites</b>
       </article>
       <article className="page-card add-project-card ecosystem-application-card">
-        <strong>Applications become the ecosystem map</strong>
-        <span>Later this turns into forms, partner profiles and project integration queues. For now BP reserves intent and keeps the mechanic unified.</span>
+        <strong>In development</strong>
+        <span>{marketDevelopmentNotes.join(" ")}</span>
       </article>
-      <SeasonEventBoard state={state} compact />
     </section>
   );
 }
