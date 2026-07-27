@@ -2910,6 +2910,44 @@ code {
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.14), 0 16px 34px rgba(0,0,0,0.34);
 }
 
+.game-hero > *:not(.hero-bg):not(.hero-grade) {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-bg,
+.hero-grade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-bg {
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  filter: saturate(1.08) contrast(1.04) brightness(0.82);
+}
+
+.hero-grade {
+  z-index: 1;
+  background:
+    radial-gradient(circle at 76% 28%, rgba(0,0,0,0), rgba(0,0,0,0.22) 38%, rgba(0,0,0,0.55) 100%),
+    linear-gradient(90deg, rgba(5, 14, 17, 0.82), rgba(5, 14, 17, 0.28) 58%, rgba(5, 14, 17, 0.54));
+}
+
+.ecosystem-hero,
+.market-hero {
+  min-height: 228px;
+}
+
+.ecosystem-hero .factory-diorama,
+.market-hero .reward-box {
+  opacity: 0;
+}
+
 .game-hero span {
   color: #a8f0bb;
   font-size: 10px;
@@ -3084,6 +3122,61 @@ code {
   min-height: 270px;
 }
 
+.ecosystem-level-card {
+  min-height: 92px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 106px;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid rgba(255, 210, 94, 0.22);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 86% 44%, rgba(245,158,11,0.18), transparent 4.5rem),
+    linear-gradient(180deg, rgba(255,255,255,0.11), rgba(255,255,255,0.025)),
+    rgba(9, 18, 18, 0.92);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 13px 28px rgba(0,0,0,0.26);
+}
+
+.ecosystem-level-card span,
+.support-summary-grid span,
+.disclaimer-card strong {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.ecosystem-level-card strong {
+  display: block;
+  margin-top: 3px;
+  font-size: 25px;
+}
+
+.ecosystem-level-card em {
+  color: #b8ff7a;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.ecosystem-level-card i {
+  position: relative;
+  height: 13px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.1);
+  overflow: hidden;
+}
+
+.ecosystem-level-card b {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 68%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #80f28d, #f7d35b);
+  box-shadow: 0 0 18px rgba(128,242,141,0.28);
+}
+
 .need-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -3167,6 +3260,44 @@ code {
 
 .support-heart i::before { left: -30px; top: 0; }
 .support-heart i::after { left: 0; top: -30px; }
+
+.support-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.support-summary-grid article,
+.disclaimer-card {
+  display: grid;
+  gap: 6px;
+  padding: 11px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.025)),
+    rgba(12, 18, 20, 0.92);
+}
+
+.support-summary-grid strong {
+  color: #8df078;
+  font-size: 18px;
+}
+
+.disclaimer-card {
+  border-color: rgba(245, 158, 11, 0.28);
+  background:
+    radial-gradient(circle at 94% 12%, rgba(245,158,11,0.18), transparent 4rem),
+    linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.025)),
+    rgba(22, 16, 8, 0.88);
+}
+
+.disclaimer-card p {
+  margin: 0;
+  color: #d5dde7;
+  font-size: 11px;
+  line-height: 1.35;
+}
 
 .room-title-bar {
   display: grid;
@@ -3276,6 +3407,16 @@ code {
     linear-gradient(180deg, #172645, #111922);
 }
 
+.market-hero .hero-bg {
+  object-position: 55% 50%;
+}
+
+.market-hero .hero-grade {
+  background:
+    linear-gradient(90deg, rgba(13, 23, 43, 0.88), rgba(13, 23, 43, 0.5) 58%, rgba(13, 23, 43, 0.18)),
+    linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.42));
+}
+
 .reward-box {
   width: 112px;
   height: 112px;
@@ -3319,6 +3460,20 @@ code {
   color: #062b16;
   background: linear-gradient(180deg, #80f28d, #20c878);
 }
+
+.category-access,
+.category-community {
+  background: linear-gradient(135deg, rgba(139,92,246,0.84), rgba(32,200,120,0.34));
+}
+
+.category-tools {
+  background: linear-gradient(135deg, rgba(73,183,255,0.84), rgba(245,158,11,0.34));
+}
+
+.market-extra-0 { border-color: rgba(139,92,246,0.24); }
+.market-extra-1 { border-color: rgba(73,183,255,0.24); }
+.market-extra-2 { border-color: rgba(245,158,11,0.24); }
+.market-extra-3 { border-color: rgba(32,200,120,0.24); }
 
 .room-photo-game {
   opacity: 1;

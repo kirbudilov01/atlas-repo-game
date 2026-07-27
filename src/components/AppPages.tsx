@@ -17,6 +17,13 @@ interface Props {
   onBuyPerkReward: (perkId: string) => void;
 }
 
+const marketExtras = [
+  { id: "beta-access", title: "Beta Access", category: "access", cost: 250, body: "Early access badge for new ecosystem features." },
+  { id: "promo-boost", title: "Promo Boost", category: "promo", cost: 300, body: "Feature your project in a future FabricBot promo slot." },
+  { id: "ai-tool-pack", title: "AI Tool Pack", category: "tools", cost: 600, body: "Reserve a bundle of future AI workflow helpers." },
+  { id: "community-slot", title: "Community Project Slot", category: "community", cost: 900, body: "Apply to add a moderated project into the ecosystem." }
+];
+
 export function AppPages({ view, state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onMockSupportMacMini, onBuyPerkReward }: Props) {
   if (view === "ecosystem") return <EcosystemPage />;
   if (view === "participate") return <ParticipatePage state={state} onMockSupportMacMini={onMockSupportMacMini} />;
@@ -25,9 +32,13 @@ export function AppPages({ view, state, onBuild, onBuyGenerator, onBuyDeviceGene
 }
 
 function EcosystemPage() {
+  const heroSrc = `${import.meta.env.BASE_URL}assets/game/ecosystem-factory-hero-v1.png`;
+
   return (
     <section className="app-page ecosystem-page">
       <header className="game-hero ecosystem-hero">
+        <img className="hero-bg" src={heroSrc} alt="" draggable={false} />
+        <div className="hero-grade" />
         <div>
           <span>FabricBot Ecosystem</span>
           <h1>Bot Factory</h1>
@@ -54,6 +65,14 @@ function EcosystemPage() {
           </article>
         ))}
       </section>
+      <article className="ecosystem-level-card">
+        <div>
+          <span>Ecosystem Level</span>
+          <strong>Lv. 12</strong>
+          <em>2,450 / 3,600 XP</em>
+        </div>
+        <i><b /></i>
+      </article>
       <div className="ecosystem-map compact-map">
         <div className="map-grid" />
         <div className="ecosystem-road road-a" />
@@ -93,6 +112,7 @@ function ParticipatePage({ state, onMockSupportMacMini }: { state: GameState; on
   const totalSupport = state.mockSupportUsd;
   const runwayGoal = fundingGoals[0];
   const runwayProgress = Math.min(100, Math.floor((totalSupport / runwayGoal.targetUsd) * 100));
+  const supportCredit = totalSupport;
 
   return (
     <section className="app-page participate-page">
@@ -129,6 +149,20 @@ function ParticipatePage({ state, onMockSupportMacMini }: { state: GameState; on
         <em>Mock only · records FBC credit</em>
       </button>
       <button className="ghost-button wide" onClick={onMockSupportMacMini}>Mock support $1000 · get 1000 FBC</button>
+      <section className="support-summary-grid">
+        <article>
+          <span>Estimated FBC credit</span>
+          <strong>{supportCredit} FBC</strong>
+        </article>
+        <article>
+          <span>Compute applied</span>
+          <strong>{supportCredit * 50}</strong>
+        </article>
+      </section>
+      <article className="disclaimer-card">
+        <strong>Important disclaimer</strong>
+        <p>FBC is a game credit / reservation only. No equity, no profit promise, no guaranteed token and no cash redemption.</p>
+      </article>
       <section className="support-ledger standalone">
         <div className="support-ledger-head">
           <strong>Open Support Ledger</strong>
@@ -237,9 +271,13 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator }: { 
 }
 
 function MarketPage({ state, onBuyPerkReward }: { state: GameState; onBuyPerkReward: (perkId: string) => void }) {
+  const heroSrc = `${import.meta.env.BASE_URL}assets/game/market-rewards-hero-v1.png`;
+
   return (
     <section className="app-page market-page">
       <header className="game-hero market-hero">
+        <img className="hero-bg" src={heroSrc} alt="" draggable={false} />
+        <div className="hero-grade" />
         <div>
           <span>Market</span>
           <h1>Perks from the FabricBot Ecosystem</h1>
@@ -272,6 +310,14 @@ function MarketPage({ state, onBuyPerkReward }: { state: GameState; onBuyPerkRew
             </article>
           );
         })}
+        {marketExtras.map((perk, index) => (
+          <article className={`market-card market-extra-${index}`} key={perk.id}>
+            <div className={`market-icon category-${perk.category}`} />
+            <strong>{perk.title}</strong>
+            <span>{perk.body}</span>
+            <button disabled>{perk.cost} FBC</button>
+          </article>
+        ))}
       </section>
       <article className="page-card add-project-card">
         <strong>Add your project later</strong>
