@@ -4,14 +4,14 @@ export const productionChain = [
   { id: "prototype", label: "Prototype", detail: "build module", tone: "network" },
   { id: "launch", label: "Launch", detail: "ship update", tone: "funding" },
   { id: "distribution", label: "Distribution", detail: "grow reach", tone: "network" },
-  { id: "runway", label: "Runway", detail: "fund autonomy", tone: "funding" }
+  { id: "autonomy", label: "Autonomy", detail: "grow MRR", tone: "funding" }
 ];
 
 export const bottleneckTracks = [
   { id: "compute", label: "Compute", source: "automation speed", base: 18, color: "compute" },
   { id: "attention", label: "Attention", source: "content and referrals", base: 24, color: "network" },
   { id: "trust", label: "Trust", source: "proof and quality", base: 20, color: "atlas" },
-  { id: "runway", label: "Runway", source: "support and access", base: 10, color: "funding" }
+  { id: "autonomy", label: "Autonomy", source: "project MRR path", base: 10, color: "funding" }
 ];
 
 export const agentRoster = [
@@ -29,7 +29,7 @@ export const activeTasks = [
 
 export const seasonEvents = [
   { id: "launch-sprint", title: "Launch Sprint", goal: "Ship 1 product module", progress: 32, reward: "Blueprint shards" },
-  { id: "funding-sprint", title: "Funding Sprint", goal: "Reach $3k runway", progress: 0, reward: "Founder wall" },
+  { id: "funding-sprint", title: "Autonomy Sprint", goal: "Reach $3k project MRR", progress: 0, reward: "Founder wall" },
   { id: "content-raid", title: "Content Raid", goal: "Grow distribution", progress: 18, reward: "Reach multiplier" }
 ];
 

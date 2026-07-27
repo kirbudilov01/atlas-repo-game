@@ -25,6 +25,30 @@ const marketExtras = [
   { id: "community-slot", title: "Community Project Slot", category: "community", cost: 900, body: "Apply to add a moderated project into the ecosystem." }
 ];
 
+const autonomyRoadmap = [
+  {
+    id: "calm-build",
+    title: "$3k/mo founder autonomy",
+    goal: 3000,
+    label: "Stage 1",
+    body: "Projects cover Kirill's basic operating runway, tools and calm build time."
+  },
+  {
+    id: "growth-loop",
+    title: "$10k/mo growth loop",
+    goal: 10000,
+    label: "Stage 2",
+    body: "Marketing, distribution tests, contractors and stronger product launches."
+  },
+  {
+    id: "ecosystem-team",
+    title: "$30k/mo ecosystem team",
+    goal: 30000,
+    label: "Stage 3",
+    body: "Stable team, content/media engine and a bigger product pipeline."
+  }
+];
+
 export function AppPages({ view, state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onMockSupportMacMini, onBuyPerkReward }: Props) {
   if (view === "ecosystem") return <EcosystemPage state={state} />;
   if (view === "participate") return <ParticipatePage state={state} onMockSupportMacMini={onMockSupportMacMini} />;
@@ -36,7 +60,7 @@ function getBottleneckValue(state: GameState, id: string, base: number) {
   if (id === "compute") return Math.min(96, base + state.generatorLevel * 12 + state.purchasedDeviceGeneratorIds.length * 10 + Math.floor(state.resources.compute / 80));
   if (id === "attention") return Math.min(92, base + (state.atlasMission.status === "claimed" ? 20 : 0) + state.accountLevel * 3);
   if (id === "trust") return Math.min(94, base + state.resources.contribution * 4 + (state.mockSupportUsd > 0 ? 10 : 0));
-  return Math.min(90, base + Math.floor((state.mockSupportUsd / 3000) * 70));
+  return Math.min(90, base + (state.atlasMission.status === "claimed" ? 14 : 0) + state.accountLevel * 2);
 }
 
 function getLoopProgress(state: GameState) {
@@ -158,7 +182,8 @@ function ParticipatePage({ state, onMockSupportMacMini }: { state: GameState; on
   const heroSrc = `${import.meta.env.BASE_URL}assets/game/support-runway-hero-v1.png`;
   const totalSupport = state.mockSupportUsd;
   const runwayGoal = fundingGoals[0];
-  const runwayProgress = Math.min(100, Math.floor((totalSupport / runwayGoal.targetUsd) * 100));
+  const projectMrr = state.atlasMission.status === "claimed" ? 120 : 0;
+  const autonomyProgress = Math.min(100, Math.floor((projectMrr / runwayGoal.targetUsd) * 100));
   const supportCredit = totalSupport;
 
   return (
@@ -168,25 +193,26 @@ function ParticipatePage({ state, onMockSupportMacMini }: { state: GameState; on
         <div className="hero-grade" />
         <div>
           <span>Participate & Support</span>
-          <h1>Ecosystem Runway</h1>
-          <p>Keeping the mission alive and building for the future.</p>
+          <h1>Autonomy Roadmap</h1>
+          <p>First target: projects reach $3k/month so Kirill can build calmly. Support helps the path; product revenue is the main KPI.</p>
         </div>
         <div className="support-heart" aria-hidden="true"><i /></div>
       </header>
       <LoopRail state={state} />
-      <article className="runway-card">
+      <article className="runway-card autonomy-roadmap-card">
         <div className="runway-top">
           <div>
-            <span>Current runway</span>
-            <strong>${totalSupport} / ${runwayGoal.targetUsd}</strong>
+            <span>Project revenue target</span>
+            <strong>${projectMrr} / ${runwayGoal.targetUsd} MRR</strong>
           </div>
-          <div className="runway-ring" style={{ "--progress": `${runwayProgress}%` } as CSSProperties}>
-            <b>{runwayProgress}%</b>
+          <div className="runway-ring" style={{ "--progress": `${autonomyProgress}%` } as CSSProperties}>
+            <b>{autonomyProgress}%</b>
           </div>
         </div>
-        <i style={{ width: `${runwayProgress}%` }} />
-        <p>{runwayGoal.strategy}</p>
+        <i style={{ width: `${autonomyProgress}%` }} />
+        <p>Stage 1 is not "collect $3k in donations". The goal is to make FabricBot, AtlasRepo, Want2View and future products generate enough MRR for calm, focused building.</p>
       </article>
+      <RoadmapMilestones currentMrr={projectMrr} />
       <LatestSupportReceipt state={state} />
       <section className="need-grid">
         <MiniNeed icon="compute" label="AI Compute" value="48%" />
@@ -195,9 +221,9 @@ function ParticipatePage({ state, onMockSupportMacMini }: { state: GameState; on
         <MiniNeed icon="talent" label="Talent" value="61%" />
       </section>
       <button className="wallet-preview-card" onClick={onMockSupportMacMini}>
-        <span>Telegram Wallet preview</span>
+        <span>Support the roadmap</span>
         <strong>$1000 support route</strong>
-        <em>Mock only · records FBC credit</em>
+        <em>Mock Telegram Wallet · records FBC support credit</em>
       </button>
       <button className="ghost-button wide" onClick={onMockSupportMacMini}>Mock support $1000 · get 1000 FBC</button>
       <section className="support-summary-grid">
@@ -212,8 +238,8 @@ function ParticipatePage({ state, onMockSupportMacMini }: { state: GameState; on
       </section>
       <SupportLedger state={state} />
       <article className="currency-rules-card">
-        <strong>Two core balances</strong>
-        <p><b>Build Points</b> are earned in-game and spent on generators, rooms and progress. <b>FBC Coins</b> are support credits from donations/perks; later they may connect to ecosystem utility, but they are not equity, yield or a guaranteed token.</p>
+        <strong>Roadmap economy</strong>
+        <p><b>Project MRR</b> is the roadmap KPI. <b>Build Points</b> are earned in-game and spent on generators, rooms and progress. <b>FBC Coins</b> are support credits from donations/perks; later they may connect to ecosystem utility, but they are not equity, yield or a guaranteed token.</p>
       </article>
       <article className="disclaimer-card">
         <strong>Important disclaimer</strong>
@@ -221,6 +247,27 @@ function ParticipatePage({ state, onMockSupportMacMini }: { state: GameState; on
       </article>
       <SeasonEventBoard state={state} />
       <BottleneckBoard state={state} />
+    </section>
+  );
+}
+
+function RoadmapMilestones({ currentMrr }: { currentMrr: number }) {
+  return (
+    <section className="roadmap-milestone-grid">
+      {autonomyRoadmap.map((stage) => {
+        const progress = Math.min(100, Math.floor((currentMrr / stage.goal) * 100));
+        return (
+          <article className="roadmap-milestone-card" key={stage.id}>
+            <div>
+              <span>{stage.label}</span>
+              <b>{progress}%</b>
+            </div>
+            <strong>{stage.title}</strong>
+            <i><em style={{ width: `${progress}%` }} /></i>
+            <p>{stage.body}</p>
+          </article>
+        );
+      })}
     </section>
   );
 }
@@ -453,7 +500,7 @@ function ProductionChain({ state }: { state: GameState }) {
     <section className="production-chain">
       <div className="section-head">
         <span>Production chain</span>
-        <strong>Idea → launch → runway</strong>
+        <strong>Idea → launch → autonomy</strong>
       </div>
       <div className="chain-track">
         {productionChain.map((step, index) => (

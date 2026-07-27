@@ -22,7 +22,7 @@ export function RoomScene({ state, selectedId, scanMode, onToggleScan, onObject,
   const myRoomObject = roomObjects.find((object) => object.id === "my-room-door");
   const macMiniObject = roomObjects.find((object) => object.id === "mac-mini");
   const mrr = state.atlasMission.status === "claimed" ? 120 : 0;
-  const runway = Math.min(3000, state.mockSupportUsd);
+  const autonomyMrr = Math.min(3000, mrr);
 
   return (
     <section className="room-scene" aria-label="Our Room">
@@ -55,9 +55,9 @@ export function RoomScene({ state, selectedId, scanMode, onToggleScan, onObject,
           </button>
           <div className="room-kpi-strip">
             <button className="room-kpi-card" onClick={() => supportObject && onObject(supportObject)}>
-              <span>Runway</span>
-              <strong>${runway} / $3k</strong>
-              <i style={{ width: `${Math.min(100, Math.floor((runway / 3000) * 100))}%` }} />
+              <span>Autonomy</span>
+              <strong>${autonomyMrr} / $3k MRR</strong>
+              <i style={{ width: `${Math.min(100, Math.floor((autonomyMrr / 3000) * 100))}%` }} />
             </button>
             <button className="room-kpi-card is-main" onClick={() => supportObject && onObject(supportObject)}>
               <span>Season Goal</span>

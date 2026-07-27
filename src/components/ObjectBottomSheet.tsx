@@ -107,7 +107,7 @@ function AssetIndex() {
       </div>
       <div className="stat-grid">
         <div><span>Utility</span><strong>{totalUtility}</strong></div>
-        <div><span>Runway cost</span><strong>${monthlyBurn}</strong></div>
+        <div><span>Ops cost</span><strong>${monthlyBurn}</strong></div>
         <div><span>Catalog</span><strong>{assets.length}</strong></div>
         <div><span>Goal</span><strong>$30k MRR</strong></div>
       </div>

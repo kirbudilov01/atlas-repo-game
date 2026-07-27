@@ -15,21 +15,21 @@ const slides = [
   {
     eyebrow: "Step 2",
     title: "Production Chain",
-    body: "Collect ideas, research, prototype, launch, grow distribution and push runway. Every reward opens the next loop.",
+    body: "Collect ideas, research, prototype, launch, grow distribution and push project MRR. Every reward opens the next loop.",
     tag: "Idea to launch",
     visual: "factory"
   },
   {
     eyebrow: "Step 3",
     title: "Agents & Bottlenecks",
-    body: "Upgrade rooms, assign agents, clear bottlenecks and choose whether to push compute, attention, trust or runway.",
+    body: "Upgrade rooms, assign agents, clear bottlenecks and choose whether to push compute, attention, trust or autonomy.",
     tag: "Idle strategy",
     visual: "room"
   },
   {
     eyebrow: "Step 4",
     title: "Season Events",
-    body: "Launch Sprints, Funding Sprints and Content Raids give the ecosystem a calendar of reasons to return.",
+    body: "Launch Sprints, Autonomy Sprints and Content Raids give the ecosystem a calendar of reasons to return.",
     tag: "LiveOps",
     visual: "heart"
   },

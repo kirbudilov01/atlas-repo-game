@@ -3,10 +3,10 @@ import type { FundingGoal } from "../types/game";
 export const fundingGoals: FundingGoal[] = [
   {
     id: "monthly-runway",
-    title: "Ecosystem Runway",
+    title: "Autonomy Roadmap",
     targetUsd: 3000,
     currentUsd: 0,
-    strategy: "Cover tools, infrastructure and focused build time before any financialized mechanics appear.",
+    strategy: "Grow project revenue to cover tools, infrastructure and focused build time before any financialized mechanics appear.",
     useOfFunds: ["AI/dev subscriptions", "Hosting and storage", "Design/assets", "Prototype testing"],
     perkPreview: "Founder wall mention and local Support Ledger badge later",
     status: "mock"

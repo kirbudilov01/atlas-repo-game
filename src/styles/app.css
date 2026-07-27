@@ -5377,3 +5377,158 @@ code {
     grid-template-columns: none;
   }
 }
+
+.participate-page .support-hero h1 {
+  max-width: 260px;
+}
+
+.participate-page .support-hero p {
+  max-width: 310px;
+}
+
+.autonomy-roadmap-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 190px;
+  border-color: rgba(255, 210, 94, 0.42);
+  background:
+    radial-gradient(circle at 88% 14%, rgba(255, 204, 73, 0.2), transparent 90px),
+    radial-gradient(circle at 15% 0%, rgba(95, 211, 255, 0.14), transparent 110px),
+    linear-gradient(145deg, rgba(34, 45, 34, 0.96), rgba(20, 23, 18, 0.98));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 18px 34px rgba(0, 0, 0, 0.34);
+}
+
+.autonomy-roadmap-card .runway-top {
+  grid-template-columns: minmax(0, 1fr) 58px;
+}
+
+.autonomy-roadmap-card .runway-top strong {
+  font-size: 23px;
+}
+
+.autonomy-roadmap-card p {
+  margin-top: 8px;
+}
+
+.autonomy-roadmap-card::before {
+  content: "";
+  position: absolute;
+  right: 14px;
+  bottom: 18px;
+  width: 84px;
+  height: 84px;
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 48% 34%, rgba(146, 242, 132, 0.95) 0 7px, transparent 8px),
+    linear-gradient(135deg, rgba(255, 204, 73, 0.26), rgba(111, 217, 255, 0.1));
+  filter: blur(0.2px);
+  opacity: 0.36;
+  transform: rotate(-12deg);
+}
+
+.roadmap-milestone-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.roadmap-milestone-card {
+  position: relative;
+  overflow: hidden;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.025)),
+    rgba(9, 16, 22, 0.74);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 12px 24px rgba(0, 0, 0, 0.22);
+}
+
+.roadmap-milestone-card::after {
+  content: "";
+  position: absolute;
+  right: -18px;
+  top: -20px;
+  width: 76px;
+  height: 76px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(80, 213, 132, 0.26), transparent 68%);
+}
+
+.roadmap-milestone-card div {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 7px;
+}
+
+.roadmap-milestone-card span {
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(255, 210, 94, 0.13);
+  color: #ffdc89;
+  font-size: 10px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.roadmap-milestone-card b {
+  color: #8bf28f;
+  font-size: 12px;
+}
+
+.roadmap-milestone-card strong,
+.roadmap-milestone-card p,
+.roadmap-milestone-card i {
+  position: relative;
+  z-index: 1;
+}
+
+.roadmap-milestone-card strong {
+  display: block;
+  color: #fff2c9;
+  font-size: 15px;
+  letter-spacing: 0;
+}
+
+.roadmap-milestone-card i {
+  display: block;
+  height: 9px;
+  margin: 10px 0 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.34);
+}
+
+.roadmap-milestone-card em {
+  display: block;
+  height: 100%;
+  min-width: 8px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #53dc7a, #ffd45f);
+  box-shadow: 0 0 16px rgba(91, 230, 124, 0.3);
+}
+
+.roadmap-milestone-card p {
+  margin: 0;
+  color: rgba(239, 246, 231, 0.74);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.participate-page .wallet-preview-card {
+  border-color: rgba(93, 211, 255, 0.32);
+  background:
+    radial-gradient(circle at 15% 20%, rgba(93, 211, 255, 0.18), transparent 90px),
+    linear-gradient(135deg, rgba(20, 37, 46, 0.94), rgba(13, 22, 18, 0.96));
+}
+
+.participate-page .support-journal .support-ledger-head span {
+  color: rgba(238, 247, 230, 0.68);
+}
