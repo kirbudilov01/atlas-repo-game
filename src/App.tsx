@@ -104,6 +104,7 @@ export default function App() {
           <RoomScene
             state={game.state}
             selectedId={selectedId}
+            tapSignal={flash}
             scanMode={scanMode}
             onToggleScan={() => setScanMode((value) => !value)}
             onObject={setSelected}

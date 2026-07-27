@@ -7984,3 +7984,149 @@ code {
 .room-donate-cta em {
   display: none;
 }
+
+.room-product-desk {
+  left: 8%;
+  top: 36%;
+  max-width: 164px;
+  border-color: rgba(93, 211, 255, 0.34);
+}
+
+.room-product-desk i {
+  background-position: 50% 50%;
+}
+
+.room-sofa-clicker {
+  left: 50%;
+  top: 58%;
+  max-width: 150px;
+  min-height: 76px;
+  transform: translateX(-50%);
+  border-color: rgba(255, 210, 94, 0.44);
+  background:
+    radial-gradient(circle at 50% 12%, rgba(255, 210, 94, 0.22), transparent 54px),
+    linear-gradient(145deg, rgba(72, 48, 12, 0.84), rgba(13, 9, 5, 0.7));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 0 28px rgba(255, 210, 94, 0.12),
+    0 16px 30px rgba(0, 0, 0, 0.36);
+}
+
+.room-sofa-clicker i {
+  background-position: 0% 0%;
+}
+
+.room-support-node {
+  right: 6%;
+  top: 36%;
+  max-width: 160px;
+  border-color: rgba(128, 242, 141, 0.34);
+}
+
+.room-support-node i {
+  background-position: 0% 50%;
+}
+
+.room-tap-float {
+  position: absolute;
+  z-index: 30;
+  left: 50%;
+  top: 52%;
+  min-width: 64px;
+  padding: 7px 12px;
+  border: 1px solid rgba(255, 210, 94, 0.5);
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  background:
+    radial-gradient(circle at 50% 10%, rgba(255, 255, 255, 0.26), transparent 30px),
+    linear-gradient(180deg, rgba(255, 210, 94, 0.94), rgba(245, 158, 11, 0.9));
+  color: #160f05;
+  font-size: 15px;
+  font-weight: 950;
+  text-align: center;
+  pointer-events: none;
+  box-shadow: 0 0 28px rgba(245, 158, 11, 0.38);
+  animation: room-tap-float 760ms cubic-bezier(.2,.8,.2,1) both;
+}
+
+@keyframes room-tap-float {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -26%) scale(0.75);
+  }
+  18% {
+    opacity: 1;
+    transform: translate(-50%, -58%) scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -120%) scale(0.92);
+  }
+}
+
+.mission-progress {
+  position: relative;
+  overflow: hidden;
+  height: 16px;
+  max-width: 230px;
+  margin-top: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.mission-progress i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #80f28d, #f7d35b);
+  box-shadow: 0 0 18px rgba(128, 242, 141, 0.28);
+}
+
+.mission-progress b {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  height: 100%;
+  place-items: center;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 8px;
+  font-weight: 950;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.72);
+}
+
+.onboarding-slide {
+  min-height: 250px;
+}
+
+.onboarding-slide h1 {
+  max-width: 300px;
+}
+
+.onboarding-loop-preview span {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 210, 94, 0.18), transparent 32px),
+    rgba(255, 255, 255, 0.06);
+}
+
+.room-location-layer {
+  z-index: 42;
+}
+
+.room-sofa-clicker {
+  z-index: 48;
+}
+
+.room-tap-float {
+  z-index: 60;
+}
+
+.room-object.object-kirill {
+  top: 72% !important;
+  z-index: 18 !important;
+}
+
+.room-object.object-black-box {
+  top: 72% !important;
+  z-index: 18 !important;
+}

@@ -7,51 +7,48 @@ interface Props {
 const slides = [
   {
     eyebrow: "Welcome",
-    title: "Atlas Repo Game",
-    body: "A public idle game about building a real ecosystem from one room, real products and a transparent founder journey.",
-    note: "You are not entering a random clicker. You are entering the control room of FabricBot, AtlasRepo, Want2View and future experiments.",
+    title: "Kirill's Room",
+    body: "This room is the starting map. Products, videos, tools, supporters and decisions become game progress here.",
+    note: "You are entering a real build room, not a random token screen.",
     tag: "Our ecosystem",
-    visual: "bot"
+    visual: "room",
+    loop: ["Room", "Products", "Support", "Story"]
   },
   {
-    eyebrow: "What it is",
-    title: "Life as a Tycoon",
-    body: "Tap, earn BP, buy room upgrades, unlock terminals, reserve product perks and help projects move toward real revenue.",
-    note: "The game layer is simple on purpose: it gives people a playful way to understand what is being built.",
+    eyebrow: "Game loop",
+    title: "Tap For BP",
+    body: "Tap the sofa, earn BP, buy auto-generators and unlock better rooms, quests and product actions.",
+    note: "BP is the playful energy of the game. It is for progress, upgrades and perk reservations.",
     tag: "Idle tycoon",
-    visual: "factory"
+    visual: "coin",
+    loop: ["Tap", "+BP", "Upgrade", "Idle"]
   },
   {
-    eyebrow: "For you",
-    title: "What You Can Get",
-    body: "Earn BP, reserve promos, unlock previews, get access drops and participate in the growth of products you may actually use.",
-    note: "Some rewards are prototype-only today. The goal is to turn the useful ones into real product mechanics over time.",
-    tag: "Perks & access",
-    visual: "room"
+    eyebrow: "Support",
+    title: "FBC Is Memory",
+    body: "Support can create FBC credits in the prototype: a public memory of help, not equity and not a guaranteed token.",
+    note: "No profit promise, no cash redemption, no fake investment language.",
+    tag: "FBC credits",
+    visual: "heart",
+    loop: ["Support", "Journal", "FBC", "Thanks"]
   },
   {
-    eyebrow: "Author",
-    title: "Built by Kirill",
-    body: "This is Kirill's public build room: products, videos, lessons, experiments, supporters and decisions become game updates.",
-    note: "The story matters because the project is meant to be watched, played and improved in public.",
-    tag: "Founder story",
-    visual: "heart"
-  },
-  {
-    eyebrow: "Direction",
-    title: "Where We Are Going",
-    body: "First target: products reach $3k/month. Then growth, partner projects, community slots, wallet receipts and maybe TON mechanics later.",
-    note: "No empty token promises. First the ecosystem has to become useful, understandable and alive.",
-    tag: "Roadmap",
-    visual: "coin"
+    eyebrow: "Goal",
+    title: "$3k MRR First",
+    body: "The first serious target is products reaching $3k/month so Kirill can build calmly and keep shipping.",
+    note: "Donations help the path, but product revenue is the real roadmap KPI.",
+    tag: "Autonomy",
+    visual: "factory",
+    loop: ["Products", "$3k MRR", "Runway", "Next"]
   },
   {
     eyebrow: "Start",
-    title: "Begin in the Room",
-    body: "Start by tapping the core, collecting BP, buying the first auto clicker and opening the room sections: upgrades, quests, products and strategy.",
-    note: "FBC is only a support credit for now: no equity, no profit promise, no guaranteed token and no cash redemption.",
+    title: "Start Playing",
+    body: "Begin with three actions: tap the sofa, open the product desk, or inspect the Mac mini support goal.",
+    note: "The game gets better as real projects, videos and community actions are connected.",
     tag: "Start playing",
-    visual: "coin"
+    visual: "bot",
+    loop: ["Tap", "Open", "Support", "Grow"]
   }
 ];
 
@@ -87,10 +84,7 @@ export function Onboarding({ onDone }: Props) {
             <em>{slide.note}</em>
             <strong>{slide.tag}</strong>
             <div className="onboarding-loop-preview" aria-hidden="true">
-              <span>Collect</span>
-              <span>Upgrade</span>
-              <span>Assign</span>
-              <span>Event</span>
+              {slide.loop.map((item) => <span key={item}>{item}</span>)}
             </div>
           </article>
         </div>
