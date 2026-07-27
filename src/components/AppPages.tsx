@@ -2,7 +2,6 @@ import { useState, type CSSProperties } from "react";
 import { deviceGenerators } from "../config/deviceGenerators";
 import { fundingGoals } from "../config/funding";
 import { activeTasks, agentRoster, bottleneckTracks, collectionSets, productionChain, roomStages, seasonEvents } from "../config/idleMeta";
-import { perkShop } from "../config/perks";
 import { products } from "../config/products";
 import { getTotalComputeRatePerHour, type GameState } from "../store/gameStore";
 
@@ -75,30 +74,30 @@ const roadmapNeeds = [
   }
 ];
 
-const productRoomActions: Array<{ id: string; product: string; title: string; costCompute: number; detail: string; icon: GameIconName }> = [
+const roomItemActions: Array<{ id: string; category: string; title: string; costCompute: number; detail: string; icon: GameIconName }> = [
   {
-    id: "atlasrepo-scan-ticket",
-    product: "AtlasRepo",
-    title: "Repo Scan Ticket",
-    costCompute: 80,
-    detail: "Spend BP to reserve a repo analysis inside AtlasRepo.",
-    icon: "atlas"
-  },
-  {
-    id: "want2view-promo-signal",
-    product: "Want2View",
-    title: "Promo Signal",
-    costCompute: 120,
-    detail: "Turn room points into a future trend/promo insight.",
-    icon: "want2view"
-  },
-  {
-    id: "fabricbot-promo-code",
-    product: "FabricBot",
-    title: "Promo Code Draft",
-    costCompute: 160,
-    detail: "Prepare a product discount/access rule for later fulfillment.",
+    id: "room-focus-lamp",
+    category: "Room item",
+    title: "Focus Lamp",
+    costCompute: 60,
+    detail: "A cozy desk item that marks your room as active and focused.",
     icon: "bp"
+  },
+  {
+    id: "room-storage-drive",
+    category: "Room item",
+    title: "Storage Drive",
+    costCompute: 120,
+    detail: "Adds virtual space for drafts, notes and saved room progress.",
+    icon: "storage"
+  },
+  {
+    id: "room-idea-board",
+    category: "Room item",
+    title: "Idea Board",
+    costCompute: 180,
+    detail: "Turns your room into a planning board for future game actions.",
+    icon: "partner"
   }
 ];
 
@@ -121,7 +120,7 @@ function GameCardIcon({ icon }: { icon: GameIconName }) {
 export function AppPages({ view, state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onMockSupportMacMini, onBuyPerkReward, onBuyProductAction, onClaimSocialQuest }: Props) {
   if (view === "ecosystem") return <EcosystemPage state={state} />;
   if (view === "participate") return <ParticipatePage state={state} onMockSupportMacMini={onMockSupportMacMini} />;
-  if (view === "my-room") return <MyRoomPage state={state} onBuild={onBuild} onBuyGenerator={onBuyGenerator} onBuyDeviceGenerator={onBuyDeviceGenerator} onBuyProductAction={onBuyProductAction} onBuyPerkReward={onBuyPerkReward} onClaimSocialQuest={onClaimSocialQuest} />;
+  if (view === "my-room") return <MyRoomPage state={state} onBuild={onBuild} onBuyGenerator={onBuyGenerator} onBuyDeviceGenerator={onBuyDeviceGenerator} onBuyProductAction={onBuyProductAction} onClaimSocialQuest={onClaimSocialQuest} />;
   return <MarketPage state={state} onBuyProductAction={onBuyProductAction} />;
 }
 
@@ -405,7 +404,7 @@ function SupportLedger({ state }: { state: GameState }) {
   );
 }
 
-function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onBuyProductAction, onBuyPerkReward, onClaimSocialQuest }: { state: GameState; onBuild: () => void; onBuyGenerator: () => void; onBuyDeviceGenerator: (generatorId: string) => void; onBuyProductAction: (actionId: string, costCompute: number, title: string) => void; onBuyPerkReward: (perkId: string) => void; onClaimSocialQuest: (questId: string, rewardCompute: number, title: string) => void }) {
+function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onBuyProductAction, onClaimSocialQuest }: { state: GameState; onBuild: () => void; onBuyGenerator: () => void; onBuyDeviceGenerator: (generatorId: string) => void; onBuyProductAction: (actionId: string, costCompute: number, title: string) => void; onClaimSocialQuest: (questId: string, rewardCompute: number, title: string) => void }) {
   const totalRate = getTotalComputeRatePerHour(state);
   const myRoomBg = `${import.meta.env.BASE_URL}assets/game/my-room-game-bg-v1.png`;
   const [section, setSection] = useState<"room" | "upgrades" | "quests" | "products" | "strategy">("room");
@@ -414,14 +413,14 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onBu
     <section className="app-page my-room-page">
       <header className="room-title-bar">
         <div className="room-badge">My Room</div>
-        <div className="room-currency-pill"><span>FBC</span><strong>{Math.floor(state.resources.fbc)}</strong></div>
+        <div className="room-currency-pill"><span>BP</span><strong>{Math.floor(state.resources.compute)}</strong></div>
       </header>
       <nav className="my-room-tabs" aria-label="My Room sections">
         {[
           ["room", "Room"],
           ["upgrades", "Upgrades"],
           ["quests", "Quests"],
-          ["products", "Products"],
+          ["products", "Items"],
           ["strategy", "Strategy"]
         ].map(([id, label]) => (
           <button className={section === id ? "is-active" : ""} onClick={() => setSection(id as typeof section)} key={id}>{label}</button>
@@ -457,11 +456,11 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onBu
         <div><span>Room points</span><strong>{Math.floor(state.resources.compute)}</strong></div>
         <div><span>Income</span><strong>{totalRate}/hr</strong></div>
         <div><span>Level</span><strong>{state.accountLevel}</strong></div>
-        <div><span>FBC</span><strong>{Math.floor(state.resources.fbc)}</strong></div>
+        <div><span>Clicks</span><strong>{state.coreClicks}</strong></div>
       </div>
       {section === "upgrades" && <IdleUpgradePanel state={state} onBuyGenerator={onBuyGenerator} onBuyDeviceGenerator={onBuyDeviceGenerator} />}
       {section === "quests" && <SocialQuestPanel state={state} onClaimSocialQuest={onClaimSocialQuest} />}
-      {section === "products" && <ProductSpendPanel state={state} onBuyProductAction={onBuyProductAction} onBuyPerkReward={onBuyPerkReward} />}
+      {section === "products" && <RoomItemsPanel state={state} onBuyProductAction={onBuyProductAction} />}
       {section === "strategy" && (
         <>
           <MyRoomGoalPanel state={state} />
@@ -528,40 +527,27 @@ function SocialQuestPanel({ state, onClaimSocialQuest }: { state: GameState; onC
   );
 }
 
-function ProductSpendPanel({ state, onBuyProductAction, onBuyPerkReward }: { state: GameState; onBuyProductAction: (actionId: string, costCompute: number, title: string) => void; onBuyPerkReward: (perkId: string) => void }) {
+function RoomItemsPanel({ state, onBuyProductAction }: { state: GameState; onBuyProductAction: (actionId: string, costCompute: number, title: string) => void }) {
   return (
     <section className="product-spend-panel">
       <div className="section-head">
-        <span>Spend room points</span>
-        <strong>Inside our products</strong>
+        <span>Spend BP</span>
+        <strong>Room items</strong>
       </div>
       <div className="product-action-grid">
-        {productRoomActions.map((action) => {
+        {roomItemActions.map((action) => {
           const owned = state.purchasedProductActionIds.includes(action.id);
           const affordable = state.resources.compute >= action.costCompute;
           return (
             <article className="product-action-card" key={action.id}>
               <GameCardIcon icon={action.icon} />
-              <span>{action.product}</span>
+              <span>{action.category}</span>
               <strong>{action.title}</strong>
               <em>{action.detail}</em>
               <button disabled={owned || !affordable} onClick={() => onBuyProductAction(action.id, action.costCompute, action.title)}>
                 {owned ? "Reserved" : `${action.costCompute} BP`}
               </button>
             </article>
-          );
-        })}
-      </div>
-      <div className="product-perk-row">
-        {perkShop.slice(0, 2).map((perk) => {
-          const owned = state.purchasedPerkRewardIds.includes(perk.id);
-          const affordable = state.resources.fbc >= perk.costAmount;
-          return (
-            <button className="product-perk-chip" disabled={owned || !affordable} onClick={() => onBuyPerkReward(perk.id)} key={perk.id}>
-              <span>{perk.category}</span>
-              <strong>{perk.title}</strong>
-              <em>{owned ? "Reserved" : `${perk.costAmount} FBC`}</em>
-            </button>
           );
         })}
       </div>
