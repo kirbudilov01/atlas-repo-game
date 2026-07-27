@@ -147,10 +147,51 @@ function getLoopProgress(state: GameState) {
 
 function EcosystemPage({ state }: { state: GameState }) {
   const heroSrc = `${import.meta.env.BASE_URL}assets/game/ecosystem-factory-hero-v1.png`;
+  const mapSrc = `${import.meta.env.BASE_URL}assets/game/our-room-game-bg-v1.png`;
+  const totalSupport = state.mockSupportUsd;
 
   return (
     <section className="app-page ecosystem-page">
-      <header className="game-hero ecosystem-hero">
+      <header className="ecosystem-map-hero">
+        <img className="ecosystem-map-bg" src={mapSrc} alt="" draggable={false} />
+        <div className="ecosystem-map-grade" />
+        <div className="ecosystem-map-title">
+          <span>FabricBot Ecosystem</span>
+          <strong>Project Map</strong>
+          <em>Real room, real products, playable progress.</em>
+        </div>
+        <div className="ecosystem-map-lines" aria-hidden="true">
+          <i className="map-line map-line-products" />
+          <i className="map-line map-line-support" />
+          <i className="map-line map-line-market" />
+          <b />
+        </div>
+        <article className="ecosystem-location-card ecosystem-location-products">
+          <GameCardIcon icon="atlas" />
+          <span>Location 01</span>
+          <strong>Product Desk</strong>
+          <em>AtlasRepo · Want2View · FabricBot</em>
+        </article>
+        <article className="ecosystem-location-card ecosystem-location-room">
+          <GameCardIcon icon="bp" />
+          <span>Center</span>
+          <strong>Our Room</strong>
+          <em>Tap, earn BP, unlock access.</em>
+        </article>
+        <article className="ecosystem-location-card ecosystem-location-support">
+          <GameCardIcon icon="macmini" />
+          <span>{totalSupport ? `$${totalSupport} backed` : "Target"}</span>
+          <strong>Mac mini</strong>
+          <em>Render and video engine.</em>
+        </article>
+        <article className="ecosystem-location-card ecosystem-location-market">
+          <GameCardIcon icon="fbc" />
+          <span>Spend</span>
+          <strong>Promo Market</strong>
+          <em>BP perks and future access.</em>
+        </article>
+      </header>
+      <section className="game-hero ecosystem-hero ecosystem-products-hero">
         <img className="hero-bg" src={heroSrc} alt="" draggable={false} />
         <div className="hero-grade" />
         <div>
@@ -165,7 +206,7 @@ function EcosystemPage({ state }: { state: GameState }) {
           <i className="factory-park park-a" />
           <i className="factory-park park-b" />
         </div>
-      </header>
+      </section>
       <EcosystemMeaningCard />
       <VideoIntegrationCard />
       <section className="product-launch-grid">
@@ -411,6 +452,7 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onBu
   const totalRate = getTotalComputeRatePerHour(state);
   const myRoomBg = `${import.meta.env.BASE_URL}assets/game/my-room-game-bg-v1.png`;
   const [section, setSection] = useState<"room" | "upgrades" | "quests" | "products" | "strategy">("room");
+  const [terminal, setTerminal] = useState<"want2view" | "atlasrepo" | null>(null);
 
   return (
     <section className="app-page my-room-page">
@@ -433,16 +475,16 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onBu
         <div className="player-room-stage">
           <img className="my-room-bg" src={myRoomBg} alt="" draggable={false} />
           <div className="my-room-grade" />
-          <article className="notebook-status-card status-want2view">
+          <button className="notebook-status-card status-want2view" onClick={() => setTerminal("want2view")}>
             <span>Laptop 01</span>
             <strong>Want2View</strong>
             <em>Video demand feed · standby</em>
-          </article>
-          <article className="notebook-status-card status-atlasrepo">
+          </button>
+          <button className="notebook-status-card status-atlasrepo" onClick={() => setTerminal("atlasrepo")}>
             <span>Laptop 02</span>
             <strong>AtlasRepo</strong>
             <em>Repo intelligence feed · ready</em>
-          </article>
+          </button>
           <button className="room-clicker-object" onClick={onBuild}>
             <span className="sofa-clicker-icon" aria-hidden="true" />
             <b>Tap Sofa</b>
@@ -453,6 +495,7 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onBu
             <strong>Mac mini</strong>
             <em>$1000 target · UBT/video engine</em>
           </article>
+          {terminal && <ProjectTerminal terminal={terminal} state={state} onClose={() => setTerminal(null)} />}
         </div>
       )}
       <div className="stat-grid">
@@ -471,6 +514,43 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onBu
           <TaskDeck />
         </>
       )}
+    </section>
+  );
+}
+
+function ProjectTerminal({ terminal, state, onClose }: { terminal: "want2view" | "atlasrepo"; state: GameState; onClose: () => void }) {
+  const isAtlas = terminal === "atlasrepo";
+  const title = isAtlas ? "AtlasRepo Terminal" : "Want2View Terminal";
+  const status = isAtlas ? "Repo intelligence feed online" : "Video demand feed warming up";
+  const signal = isAtlas ? "First Scan" : "Trend Scanner";
+  const value = isAtlas ? `${Object.keys(state.atlasMission.answers).length}/3 signals` : `${Math.max(0, Math.floor(state.resources.compute / 10))} demand pings`;
+
+  return (
+    <section className={`project-terminal-overlay terminal-${terminal}`}>
+      <header>
+        <div>
+          <span>{isAtlas ? "Knowledge terminal" : "Video terminal"}</span>
+          <strong>{title}</strong>
+          <em>{status}</em>
+        </div>
+        <button onClick={onClose}>Close</button>
+      </header>
+      <div className="terminal-screen">
+        <i />
+        <code>{">"} boot {terminal}</code>
+        <code>{">"} sync room monitors</code>
+        <code>{">"} signal: {signal}</code>
+      </div>
+      <div className="terminal-stats">
+        <article>
+          <span>Current signal</span>
+          <strong>{value}</strong>
+        </article>
+        <article>
+          <span>Next use</span>
+          <strong>{isAtlas ? "Research quest" : "Video idea"}</strong>
+        </article>
+      </div>
     </section>
   );
 }

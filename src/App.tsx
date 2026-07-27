@@ -12,7 +12,7 @@ import "./styles/app.css";
 
 export default function App() {
   const game = useGameStore();
-  const [view, setView] = useState<AppView>("our-room");
+  const [view, setView] = useState<AppView>("ecosystem");
   const [selected, setSelected] = useState<RoomObjectConfig | null>(null);
   const [flash, setFlash] = useState(0);
   const [scanMode, setScanMode] = useState(false);

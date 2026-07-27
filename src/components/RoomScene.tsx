@@ -43,28 +43,39 @@ export function RoomScene({ state, selectedId, tapSignal, scanMode, onToggleScan
         <div className="room-cinematic-grade" />
         <div className="room-game-vignette" />
         <button className="room-map-caption" onClick={onToggleScan}>
-          <span>Our Room</span>
-          <strong>{scanMode ? "Photo check" : "Live build room"}</strong>
+          <span>Ecosystem Map</span>
+          <strong>{scanMode ? "Photo check" : "Project locations"}</strong>
         </button>
         <div className="room-location-layer" aria-hidden={scanMode}>
+          <div className="map-route-web" aria-hidden="true">
+            <i className="route route-products" />
+            <i className="route route-support" />
+            <i className="route route-sofa" />
+            <i className="map-center-pulse" />
+          </div>
           <button className="room-hotspot room-product-desk" style={{ "--i": 0 } as CSSProperties} onClick={() => onObject(productDeskObject)}>
             <i />
-            <span>Product desk</span>
-            <strong>Open products</strong>
+            <span>Location 01</span>
+            <strong>Product Desk</strong>
             <em>AtlasRepo · Want2View · FabricBot</em>
           </button>
           <button className="room-hotspot room-sofa-clicker" style={{ "--i": 1 } as CSSProperties} onClick={onCoreClick}>
             <i />
-            <span>Main action</span>
+            <span>Center room</span>
             <strong>Tap sofa</strong>
             <em>+BP for upgrades and perks</em>
           </button>
           <button className="room-hotspot room-support-node" style={{ "--i": 2 } as CSSProperties} onClick={() => onNavigate("participate")}>
             <i />
-            <span>{supportTotal ? `$${supportTotal} supported` : "Hardware goal"}</span>
+            <span>{supportTotal ? `$${supportTotal} supported` : "Location 02"}</span>
             <strong>Mac mini</strong>
             <em>render/video engine · FBC memory</em>
           </button>
+          <div className="map-project-strip" aria-hidden="true">
+            <span>AtlasRepo</span>
+            <span>Want2View</span>
+            <span>FabricBot</span>
+          </div>
           {tapSignal > 0 && <div className="room-tap-float" key={tapSignal}>+BP</div>}
         </div>
         {state.generatorPurchased && <div className="generator-node">Compute Generator L{state.generatorLevel}</div>}
