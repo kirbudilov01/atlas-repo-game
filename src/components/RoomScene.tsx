@@ -1,6 +1,6 @@
-import { productionChain, seasonEvents } from "../config/idleMeta";
-import { products } from "../config/products";
+import type { CSSProperties } from "react";
 import { roomObjects } from "../config/roomObjects";
+import type { AppView } from "./AppPages";
 import type { GameState } from "../store/gameStore";
 import type { RoomObjectConfig } from "../types/game";
 import { RoomObject } from "./RoomObject";
@@ -11,18 +11,59 @@ interface Props {
   scanMode: boolean;
   onToggleScan: () => void;
   onObject: (object: RoomObjectConfig) => void;
+  onNavigate: (view: AppView) => void;
   onCoreClick: () => void;
 }
 
-export function RoomScene({ state, selectedId, scanMode, onToggleScan, onObject, onCoreClick }: Props) {
+export function RoomScene({ state, selectedId, scanMode, onToggleScan, onObject, onNavigate, onCoreClick }: Props) {
   const realRoomSrc = `${import.meta.env.BASE_URL}assets/our-room-map.png`;
   const gameRoomSrc = `${import.meta.env.BASE_URL}assets/game/our-room-game-bg-v1.png`;
-  const ecosystemObject = roomObjects.find((object) => object.id === "asset-index");
-  const supportObject = roomObjects.find((object) => object.id === "funding-hub");
-  const myRoomObject = roomObjects.find((object) => object.id === "my-room-door");
   const macMiniObject = roomObjects.find((object) => object.id === "mac-mini");
-  const mrr = state.atlasMission.status === "claimed" ? 120 : 0;
-  const autonomyMrr = Math.min(3000, mrr);
+  const autonomyMrr = Math.min(3000, state.atlasMission.status === "claimed" ? 120 : 0);
+  const mapObjects = roomObjects.filter((object) => ["kirill", "black-box"].includes(object.id));
+
+  const locations = [
+    {
+      id: "ecosystem",
+      title: "Ecosystem",
+      subtitle: "Products and projects",
+      meta: "AtlasRepo · Want2View",
+      className: "location-ecosystem",
+      onClick: () => onNavigate("ecosystem")
+    },
+    {
+      id: "support",
+      title: "Support Roadmap",
+      subtitle: `$${autonomyMrr} / $3000 MRR`,
+      meta: "Runway and donations",
+      className: "location-support",
+      onClick: () => onNavigate("participate")
+    },
+    {
+      id: "room",
+      title: "My Room",
+      subtitle: `${Math.floor(state.resources.compute)} BP · ${state.accountLevel} lvl`,
+      meta: "Clicker and upgrades",
+      className: "location-room",
+      onClick: () => onNavigate("my-room")
+    },
+    {
+      id: "market",
+      title: "Market",
+      subtitle: "Promos and access",
+      meta: "Spend BP later",
+      className: "location-market",
+      onClick: () => onNavigate("market")
+    },
+    {
+      id: "render",
+      title: "Mac mini Render",
+      subtitle: state.mockSupportUsd >= 1000 ? "Funded" : "$1000 target",
+      meta: "UBT/video engine",
+      className: "location-render",
+      onClick: () => macMiniObject && onObject(macMiniObject)
+    }
+  ];
 
   return (
     <section className="room-scene" aria-label="Our Room">
@@ -32,56 +73,24 @@ export function RoomScene({ state, selectedId, scanMode, onToggleScan, onObject,
         <div className="room-cinematic-grade" />
         <div className="room-game-vignette" />
         <button className="room-map-caption" onClick={onToggleScan}>
-          <span>Our Room</span>
-          <strong>{scanMode ? "Scan mode" : "Live map"}</strong>
+          <span>Our Room Map</span>
+          <strong>{scanMode ? "Photo check" : "Choose location"}</strong>
         </button>
-        <div className="room-business-layer" aria-hidden={scanMode}>
-          <div className="room-chain-overlay">
-            {productionChain.slice(0, 4).map((step, index) => (
-              <span className={state.generatorPurchased || index < 2 ? "is-live" : ""} key={step.id}>
-                {step.label}
-              </span>
+        <div className="room-location-layer" aria-hidden={scanMode}>
+          <div className="map-route-line" />
+          <div className="map-location-grid">
+            {locations.map((location, index) => (
+              <button className={`map-location-card ${location.className}`} style={{ "--i": index } as CSSProperties} onClick={location.onClick} key={location.id}>
+                <i />
+                <span>{location.subtitle}</span>
+                <strong>{location.title}</strong>
+                <em>{location.meta}</em>
+              </button>
             ))}
-          </div>
-          <button className="room-portal portal-ecosystem" onClick={() => ecosystemObject && onObject(ecosystemObject)}>
-            <span>FabricBot</span>
-            <strong>Ecosystem</strong>
-            <em>AtlasRepo · Want2View</em>
-          </button>
-          <button className="room-portal portal-my-room" onClick={() => myRoomObject && onObject(myRoomObject)}>
-            <span>Player</span>
-            <strong>My Room</strong>
-            <em>Unlock upgrades later</em>
-          </button>
-          <div className="room-kpi-strip">
-            <button className="room-kpi-card" onClick={() => supportObject && onObject(supportObject)}>
-              <span>Autonomy</span>
-              <strong>${autonomyMrr} / $3k MRR</strong>
-              <i style={{ width: `${Math.min(100, Math.floor((autonomyMrr / 3000) * 100))}%` }} />
-            </button>
-            <button className="room-kpi-card is-main" onClick={() => supportObject && onObject(supportObject)}>
-              <span>Season Goal</span>
-              <strong>${mrr} / $30k MRR</strong>
-              <i style={{ width: `${Math.min(100, Math.floor((mrr / 30000) * 100))}%` }} />
-            </button>
-            <button className="room-kpi-card" onClick={() => macMiniObject && onObject(macMiniObject)}>
-              <span>Render Node</span>
-              <strong>Mac mini</strong>
-              <em>{state.mockSupportUsd >= 1000 ? "funded" : "$1k target"}</em>
-            </button>
-          </div>
-          <div className="room-event-overlay">
-            <span>{seasonEvents[0].title}</span>
-            <strong>{seasonEvents[0].goal}</strong>
-            <i><u style={{ width: `${seasonEvents[0].progress}%` }} /></i>
-          </div>
-          <div className="room-product-story">
-            <span>Current products</span>
-            <strong>{products.map((product) => product.name).join(" · ")}</strong>
           </div>
         </div>
         {state.generatorPurchased && <div className="generator-node">Compute Generator L{state.generatorLevel}</div>}
-        {roomObjects.map((object) => (
+        {mapObjects.map((object) => (
           <RoomObject
             key={object.id}
             object={object}

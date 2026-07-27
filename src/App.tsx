@@ -101,7 +101,15 @@ export default function App() {
       <ResourceHUD state={game.state} />
       {view === "our-room" ? (
         <>
-          <RoomScene state={game.state} selectedId={selectedId} scanMode={scanMode} onToggleScan={() => setScanMode((value) => !value)} onObject={setSelected} onCoreClick={handleCoreClick} />
+          <RoomScene
+            state={game.state}
+            selectedId={selectedId}
+            scanMode={scanMode}
+            onToggleScan={() => setScanMode((value) => !value)}
+            onObject={setSelected}
+            onNavigate={(target) => { setView(target); setSelected(null); }}
+            onCoreClick={handleCoreClick}
+          />
           <ContextActionBar state={game.state} nextAction={game.nextAction} onPrimary={handlePrimary} />
         </>
       ) : (

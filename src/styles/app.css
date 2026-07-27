@@ -6552,3 +6552,185 @@ code {
     0 14px 24px rgba(0, 0, 0, 0.3),
     0 0 0 1px rgba(255, 224, 136, 0.28);
 }
+
+.room-location-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 19;
+  pointer-events: none;
+}
+
+.map-route-line {
+  position: absolute;
+  left: 15%;
+  right: 12%;
+  top: 49%;
+  height: 2px;
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, transparent, rgba(128, 242, 141, 0.38), rgba(247, 211, 91, 0.42), transparent);
+  box-shadow: 0 0 18px rgba(128, 242, 141, 0.18);
+  transform: rotate(-7deg);
+}
+
+.map-location-grid {
+  position: absolute;
+  inset: 48px 12px 46px;
+}
+
+.map-location-card {
+  position: absolute;
+  pointer-events: auto;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  grid-template-rows: auto auto auto;
+  align-items: center;
+  min-width: 126px;
+  max-width: 154px;
+  min-height: 68px;
+  padding: 9px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  color: #f8fbf0;
+  text-align: left;
+  background:
+    radial-gradient(circle at 18% 24%, rgba(255, 255, 255, 0.13), transparent 36px),
+    linear-gradient(145deg, rgba(20, 31, 30, 0.88), rgba(5, 9, 12, 0.72));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -14px 20px rgba(0, 0, 0, 0.2),
+    0 14px 28px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+}
+
+.map-location-card i {
+  grid-row: 1 / 4;
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  background-image: url("/atlas-repo-game/assets/game/game-icon-sheet-v1.png");
+  background-repeat: no-repeat;
+  background-size: 300% 300%;
+  box-shadow:
+    0 8px 14px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 224, 136, 0.2);
+}
+
+.map-location-card span,
+.map-location-card strong,
+.map-location-card em {
+  grid-column: 2;
+  min-width: 0;
+}
+
+.map-location-card span {
+  color: #9fe8ff;
+  font-size: 8px;
+  font-weight: 950;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.map-location-card strong {
+  margin-top: 2px;
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.05;
+}
+
+.map-location-card em {
+  margin-top: 2px;
+  color: rgba(238, 246, 239, 0.7);
+  font-size: 9px;
+  font-style: normal;
+  line-height: 1.1;
+}
+
+.map-location-card:hover {
+  filter: brightness(1.08) saturate(1.08);
+}
+
+.location-ecosystem {
+  left: 4%;
+  top: 12%;
+  border-color: rgba(128, 242, 141, 0.3);
+}
+
+.location-ecosystem i,
+.location-index i {
+  background-position: 50% 50%;
+}
+
+.location-support {
+  right: 5%;
+  top: 18%;
+  border-color: rgba(247, 211, 91, 0.32);
+}
+
+.location-support i,
+.location-funding i,
+.location-market i {
+  background-position: 0% 0%;
+}
+
+.location-room {
+  left: 31%;
+  top: 42%;
+  border-color: rgba(93, 211, 255, 0.32);
+}
+
+.location-room i {
+  background-position: 50% 0%;
+}
+
+.location-market {
+  right: 5%;
+  bottom: 10%;
+  border-color: rgba(255, 210, 94, 0.34);
+}
+
+.location-render {
+  left: 5%;
+  bottom: 12%;
+  border-color: rgba(139, 242, 143, 0.28);
+}
+
+.location-render i {
+  background-position: 0% 50%;
+}
+
+.scan-mode .room-location-layer {
+  opacity: 0.18;
+}
+
+.room-object:not(.core-wrap):not(.object-kirill):not(.object-black-box) {
+  display: none;
+}
+
+.room-object.object-kirill,
+.room-object.object-black-box {
+  opacity: 0.95;
+}
+
+.context-bar {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  min-height: 92px;
+}
+
+.context-bar .quest-copy {
+  gap: 4px;
+}
+
+.context-bar .quest-copy p {
+  display: -webkit-box;
+  max-height: 34px;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.context-bar .primary-cta {
+  min-width: 112px;
+}
