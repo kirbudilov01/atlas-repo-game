@@ -49,6 +49,27 @@ const autonomyRoadmap = [
   }
 ];
 
+const roadmapNeeds = [
+  {
+    id: "now",
+    label: "Need now",
+    title: "Bring products to $3k MRR",
+    points: ["Package FabricBot offers", "Ship AtlasRepo access flow", "Launch Want2View promos", "Keep compute and tools alive"]
+  },
+  {
+    id: "next",
+    label: "Unlock next",
+    title: "Scale to $10k MRR",
+    points: ["Paid marketing tests", "More video distribution", "Partner/referral loops", "First contractor budget"]
+  },
+  {
+    id: "later",
+    label: "Later",
+    title: "Build the ecosystem layer",
+    points: ["Community project slots", "Real wallet receipts", "FBC utility design", "TON/web3 mechanics after rules are ready"]
+  }
+];
+
 export function AppPages({ view, state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onMockSupportMacMini, onBuyPerkReward }: Props) {
   if (view === "ecosystem") return <EcosystemPage state={state} />;
   if (view === "participate") return <ParticipatePage state={state} onMockSupportMacMini={onMockSupportMacMini} />;
@@ -198,7 +219,7 @@ function ParticipatePage({ state, onMockSupportMacMini }: { state: GameState; on
         </div>
         <div className="support-heart" aria-hidden="true"><i /></div>
       </header>
-      <LoopRail state={state} />
+      <RoadmapActionStrip onMockSupportMacMini={onMockSupportMacMini} />
       <article className="runway-card autonomy-roadmap-card">
         <div className="runway-top">
           <div>
@@ -212,20 +233,16 @@ function ParticipatePage({ state, onMockSupportMacMini }: { state: GameState; on
         <i style={{ width: `${autonomyProgress}%` }} />
         <p>Stage 1 is not "collect $3k in donations". The goal is to make FabricBot, AtlasRepo, Want2View and future products generate enough MRR for calm, focused building.</p>
       </article>
+      <RoadmapNeedsPanel />
       <RoadmapMilestones currentMrr={projectMrr} />
       <LatestSupportReceipt state={state} />
+      <LoopRail state={state} />
       <section className="need-grid">
         <MiniNeed icon="compute" label="AI Compute" value="48%" />
         <MiniNeed icon="feature" label="New Features" value="72%" />
         <MiniNeed icon="marketing" label="Marketing" value="36%" />
         <MiniNeed icon="talent" label="Talent" value="61%" />
       </section>
-      <button className="wallet-preview-card" onClick={onMockSupportMacMini}>
-        <span>Support the roadmap</span>
-        <strong>$1000 support route</strong>
-        <em>Mock Telegram Wallet · records FBC support credit</em>
-      </button>
-      <button className="ghost-button wide" onClick={onMockSupportMacMini}>Mock support $1000 · get 1000 FBC</button>
       <section className="support-summary-grid">
         <article>
           <span>FBC Coins balance</span>
@@ -247,6 +264,45 @@ function ParticipatePage({ state, onMockSupportMacMini }: { state: GameState; on
       </article>
       <SeasonEventBoard state={state} />
       <BottleneckBoard state={state} />
+    </section>
+  );
+}
+
+function RoadmapNeedsPanel() {
+  return (
+    <section className="roadmap-detail-panel">
+      <div className="section-head">
+        <span>Roadmap details</span>
+        <strong>Now → next → later</strong>
+      </div>
+      <div className="roadmap-need-list">
+        {roadmapNeeds.map((item) => (
+          <article className={`roadmap-need-card need-${item.id}`} key={item.id}>
+            <span>{item.label}</span>
+            <strong>{item.title}</strong>
+            <ul>
+              {item.points.map((point) => <li key={point}>{point}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function RoadmapActionStrip({ onMockSupportMacMini }: { onMockSupportMacMini: () => void }) {
+  return (
+    <section className="roadmap-action-strip">
+      <button className="roadmap-action-card is-support" onClick={onMockSupportMacMini}>
+        <span>Telegram Wallet</span>
+        <strong>Support roadmap</strong>
+        <em>Donation-style support, public journal receipt, FBC credit.</em>
+      </button>
+      <button className="roadmap-action-card is-reserve" onClick={onMockSupportMacMini}>
+        <span>FBC Reservation</span>
+        <strong>Reserve FBC Credits</strong>
+        <em>Prototype buyout button: no token promise, just early support memory.</em>
+      </button>
     </section>
   );
 }
