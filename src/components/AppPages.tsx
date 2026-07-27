@@ -166,14 +166,17 @@ function Supporter({ name, role, amount }: { name: string; role: string; amount:
 
 function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator }: { state: GameState; onBuild: () => void; onBuyGenerator: () => void; onBuyDeviceGenerator: (generatorId: string) => void }) {
   const totalRate = getTotalComputeRatePerHour(state);
+  const myRoomBg = `${import.meta.env.BASE_URL}assets/game/my-room-game-bg-v1.png`;
 
   return (
     <section className="app-page my-room-page">
       <header className="room-title-bar">
-        <div className="room-badge">Our Room</div>
+        <div className="room-badge">My Room</div>
         <div className="room-currency-pill"><span>FBC</span><strong>{Math.floor(state.resources.fbc)}</strong></div>
       </header>
       <div className="player-room-stage">
+        <img className="my-room-bg" src={myRoomBg} alt="" draggable={false} />
+        <div className="my-room-grade" />
         <div className="room-wall-panel" />
         <div className="room-floor-plane" />
         <div className="runner-track">
@@ -184,6 +187,7 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator }: { 
         <div className="room-monitor monitor-right"><i /></div>
         <div className="player-room-window" />
         <button className="room-clicker-object" onClick={onBuild}>
+          <span className="tap-rings" />
           <i />
           <b>Build</b>
           <span>+ room points</span>

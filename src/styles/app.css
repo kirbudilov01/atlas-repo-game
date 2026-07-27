@@ -1390,7 +1390,7 @@ button {
 }
 
 .room-object:not(.type-character):not(.core-wrap) {
-  opacity: 0.52;
+  opacity: 0.34;
 }
 
 .room-object:not(.type-character):not(.core-wrap) .object-label {
@@ -2635,17 +2635,59 @@ code {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 54% 50%;
-  filter: saturate(1.08) contrast(1.06) brightness(0.72);
+  object-position: 50% 48%;
+  filter: saturate(1.08) contrast(1.06) brightness(0.74);
 }
 
 .onboarding-grade {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 53% 45%, rgba(139, 92, 246, 0.18), transparent 24%),
-    linear-gradient(180deg, rgba(0,0,0,0.24), rgba(0,0,0,0.5));
+    radial-gradient(circle at 53% 54%, rgba(245, 158, 11, 0.22), transparent 22%),
+    radial-gradient(circle at 15% 20%, rgba(32, 200, 120, 0.16), transparent 25%),
+    linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.58));
 }
+
+.onboarding-art-card {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  min-height: 96px;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid rgba(255, 210, 94, 0.28);
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.13), rgba(255,255,255,0.025)),
+    rgba(5, 19, 17, 0.76);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.14), 0 18px 34px rgba(0,0,0,0.38);
+  backdrop-filter: blur(12px);
+}
+
+.onboarding-art-card i {
+  width: 62px;
+  height: 62px;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 35% 24%, rgba(255,255,255,0.84), transparent 7px),
+    linear-gradient(135deg, #49b7ff, #20c878);
+  box-shadow: 0 0 24px rgba(32,200,120,0.28);
+}
+
+.onboarding-art-card strong {
+  color: #f4f0e8;
+  font-size: 18px;
+  line-height: 1.05;
+}
+
+.art-factory i { background: linear-gradient(135deg, #49b7ff, #8b5cf6); }
+.art-heart i { background: linear-gradient(135deg, #a7ff58, #20c878); border-radius: 22px 22px 18px 18px; }
+.art-room i { background: linear-gradient(135deg, #f59e0b, #8b5cf6); }
+.art-coin i { background: linear-gradient(135deg, #f7d35b, #f59e0b); border-radius: 50%; }
 
 .mini-core,
 .mini-character {
@@ -3276,6 +3318,168 @@ code {
 .market-tabs span:first-child {
   color: #062b16;
   background: linear-gradient(180deg, #80f28d, #20c878);
+}
+
+.room-photo-game {
+  opacity: 1;
+  object-position: 50% 50%;
+  filter: saturate(1.08) contrast(1.06) brightness(0.86);
+}
+
+.room-photo-real {
+  opacity: 0;
+  object-position: 50% 50%;
+}
+
+.scan-mode .room-photo-game {
+  opacity: 0.18;
+}
+
+.scan-mode .room-photo-real {
+  opacity: 1;
+}
+
+.room-business-layer {
+  background:
+    radial-gradient(circle at 50% 60%, rgba(245, 158, 11, 0.12), transparent 9rem),
+    linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.22));
+}
+
+.room-map-caption {
+  background:
+    linear-gradient(180deg, rgba(22, 29, 32, 0.86), rgba(7, 11, 13, 0.74));
+  border-color: rgba(255, 210, 94, 0.2);
+}
+
+.room-portal,
+.room-kpi-card {
+  border-color: rgba(255, 210, 94, 0.24);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.13), rgba(255,255,255,0.025)),
+    rgba(5, 21, 19, 0.78);
+}
+
+.room-portal strong,
+.room-kpi-card strong {
+  text-shadow: 0 2px 10px rgba(0,0,0,0.42);
+}
+
+.room-kpi-card.is-main {
+  background:
+    linear-gradient(180deg, rgba(245, 158, 11, 0.18), rgba(255,255,255,0.025)),
+    rgba(18, 14, 7, 0.82);
+}
+
+.player-room-stage {
+  min-height: 420px;
+  isolation: isolate;
+  background: #050807;
+}
+
+.my-room-bg,
+.my-room-grade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.my-room-bg {
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 48%;
+  filter: saturate(1.04) contrast(1.03) brightness(0.86);
+}
+
+.my-room-grade {
+  z-index: 1;
+  background:
+    radial-gradient(circle at 50% 54%, rgba(245,158,11,0.18), transparent 6.5rem),
+    linear-gradient(180deg, rgba(2, 4, 5, 0.08), rgba(2, 4, 5, 0.54));
+}
+
+.player-room-stage .room-wall-panel,
+.player-room-stage .room-floor-plane,
+.player-room-stage .player-room-window,
+.player-room-stage .room-monitor,
+.player-room-stage .room-sofa {
+  opacity: 0;
+}
+
+.player-room-stage .runner-track,
+.player-room-stage .room-clicker-object,
+.player-room-stage .room-shelf,
+.player-room-stage .mac-mini-card,
+.player-room-stage .render-power-card {
+  z-index: 3;
+}
+
+.runner-track {
+  top: 14px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.025)),
+    rgba(5, 10, 11, 0.48);
+  backdrop-filter: blur(10px);
+}
+
+.room-clicker-object {
+  bottom: 136px;
+  width: 132px;
+  height: 96px;
+  border-radius: 22px;
+  border-color: rgba(255, 210, 94, 0.58);
+  background:
+    radial-gradient(circle at 50% 30%, rgba(255,255,255,0.26), transparent 28px),
+    linear-gradient(180deg, rgba(245,158,11,0.42), rgba(58, 35, 8, 0.82));
+  backdrop-filter: blur(5px);
+}
+
+.tap-rings {
+  position: absolute;
+  inset: -18px;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 210, 94, 0.28);
+  box-shadow: 0 0 28px rgba(245,158,11,0.22);
+  animation: tap-ring-pulse 1.8s ease-in-out infinite;
+}
+
+.room-clicker-object b {
+  font-size: 22px;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+}
+
+.shelf-left {
+  left: 18px;
+  bottom: 88px;
+}
+
+.shelf-right {
+  right: 18px;
+  bottom: 88px;
+}
+
+.room-shelf {
+  padding: 7px;
+  border: 1px solid rgba(255,255,255,0.13);
+  border-radius: 12px;
+  background: rgba(7, 15, 16, 0.52);
+  backdrop-filter: blur(8px);
+}
+
+.mac-mini-card {
+  right: 10px;
+  bottom: 156px;
+}
+
+.render-power-card {
+  right: 12px;
+  bottom: 92px;
+}
+
+@keyframes tap-ring-pulse {
+  0%, 100% { transform: scale(0.96); opacity: 0.42; }
+  50% { transform: scale(1.07); opacity: 0.88; }
 }
 
 @media (max-width: 370px), (max-height: 720px) {

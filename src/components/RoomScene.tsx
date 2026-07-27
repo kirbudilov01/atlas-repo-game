@@ -13,7 +13,8 @@ interface Props {
 }
 
 export function RoomScene({ state, selectedId, scanMode, onToggleScan, onObject, onCoreClick }: Props) {
-  const roomMapSrc = `${import.meta.env.BASE_URL}assets/our-room-map.png`;
+  const realRoomSrc = `${import.meta.env.BASE_URL}assets/our-room-map.png`;
+  const gameRoomSrc = `${import.meta.env.BASE_URL}assets/game/our-room-game-bg-v1.png`;
   const ecosystemObject = roomObjects.find((object) => object.id === "asset-index");
   const supportObject = roomObjects.find((object) => object.id === "funding-hub");
   const myRoomObject = roomObjects.find((object) => object.id === "my-room-door");
@@ -24,7 +25,8 @@ export function RoomScene({ state, selectedId, scanMode, onToggleScan, onObject,
   return (
     <section className="room-scene" aria-label="Our Room">
       <div className={`room-backdrop ${scanMode ? "scan-mode" : ""}`}>
-        <img className="room-photo" src={roomMapSrc} alt="" draggable={false} />
+        <img className="room-photo room-photo-game" src={gameRoomSrc} alt="" draggable={false} />
+        <img className="room-photo room-photo-real" src={realRoomSrc} alt="" draggable={false} />
         <div className="room-cinematic-grade" />
         <div className="room-game-vignette" />
         <button className="room-map-caption" onClick={onToggleScan}>
