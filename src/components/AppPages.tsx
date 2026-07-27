@@ -151,8 +151,8 @@ function EcosystemPage({ state }: { state: GameState }) {
         <div className="hero-grade" />
         <div>
           <span>FabricBot Ecosystem</span>
-          <h1>Current Products</h1>
-          <p>AtlasRepo, Want2View, FabricBot and the public YouTube build story.</p>
+          <h1>Build in public</h1>
+          <p>Real products, public story, playable progress.</p>
         </div>
         <div className="factory-diorama" aria-hidden="true">
           <i className="factory-base" />
@@ -162,86 +162,54 @@ function EcosystemPage({ state }: { state: GameState }) {
           <i className="factory-park park-b" />
         </div>
       </header>
-      <LoopRail state={state} />
-      <ProductStoryBoard />
-      <ProductionChain state={state} />
+      <EcosystemMeaningCard />
+      <VideoIntegrationCard />
       <section className="product-launch-grid">
         {products.map((product, index) => (
             <article className={`launch-card launch-${product.color}`} style={{ "--i": index } as CSSProperties} key={product.id}>
               <i className="launch-icon" />
               <div>
                 <strong>{product.name}</strong>
-                <span>{product.description}</span>
-                <em>LVL {12 - index}</em>
+                <span>{product.role}</span>
+                <em>{product.metric}</em>
                 <small><u style={{ width: `${Math.max(36, 76 - index * 9)}%` }} /></small>
               </div>
               <b />
             </article>
         ))}
       </section>
-      <article className="ecosystem-level-card">
-        <div>
-          <span>Ecosystem Level</span>
-          <strong>Lv. 12</strong>
-          <em>2,450 / 3,600 XP</em>
-        </div>
-        <i><b /></i>
-      </article>
-      <BottleneckBoard state={state} />
-      <div className="ecosystem-map compact-map">
-        <div className="map-grid" />
-        <div className="ecosystem-road road-a" />
-        <div className="ecosystem-road road-b" />
-        <div className="ecosystem-road road-c" />
-        <div className="ecosystem-core">
-          <i className="core-room-icon" />
-          <strong>Our Room</strong>
-          <span>central project room</span>
-        </div>
-        {products.map((product, index) => (
-          <article className={`ecosystem-node node-${index} product-${product.color}`} key={product.id}>
-            <i className="product-icon" />
-            <div>
-              <b>{product.name}</b>
-              <span>{product.role}</span>
-            </div>
-            <em>{product.metric}</em>
-          </article>
-        ))}
-      </div>
-      <AgentBench compact />
-      <div className="page-card-grid">
-        <article className="page-card">
-          <strong>SaaS Factory</strong>
-          <span>Launch small products, subscriptions and internal tools.</span>
-        </article>
-        <article className="page-card">
-          <strong>Payment Bot</strong>
-          <span>Future access, promo and subscription layer. Mock-only for now.</span>
-        </article>
+    </section>
+  );
+}
+
+function EcosystemMeaningCard() {
+  return (
+    <section className="ecosystem-meaning-card">
+      <i className="meaning-icon" aria-hidden="true" />
+      <div>
+        <span>Why this exists</span>
+        <strong>Real work becomes a playable ecosystem</strong>
+        <p>Kirill's real build process becomes a game where people follow progress and unlock useful perks.</p>
       </div>
     </section>
   );
 }
 
-function ProductStoryBoard() {
+function VideoIntegrationCard() {
   return (
-    <section className="product-story-board">
-      <div className="section-head">
-        <span>Story entry</span>
-        <strong>Real products become game chapters</strong>
+    <section className="video-integration-card">
+      <div className="video-frame" aria-hidden="true">
+        <i />
+        <b />
       </div>
-      <div className="story-product-grid">
-        {products.map((product, index) => (
-          <article className={`story-product-card tone-${product.color}`} key={product.id}>
-            <i>{index + 1}</i>
-            <div>
-              <strong>{product.name}</strong>
-              <span>{product.role}</span>
-              <em>{product.metric}</em>
-            </div>
-          </article>
-        ))}
+      <div>
+        <span>Video layer</span>
+        <strong>YouTube / X build series</strong>
+        <p>Episodes explain what we build, why runway matters, and what changed this week.</p>
+        <div className="video-pill-row">
+          <em>Founder diary</em>
+          <em>Product updates</em>
+        </div>
       </div>
     </section>
   );

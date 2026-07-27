@@ -6734,3 +6734,188 @@ code {
 .context-bar .primary-cta {
   min-width: 112px;
 }
+
+.ecosystem-meaning-card,
+.video-integration-card {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  height: auto;
+  min-height: 116px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 16% 18%, rgba(128, 242, 141, 0.16), transparent 90px),
+    linear-gradient(145deg, rgba(22, 32, 31, 0.96), rgba(7, 11, 14, 0.98));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 16px 32px rgba(0, 0, 0, 0.26);
+}
+
+.ecosystem-meaning-card::after,
+.video-integration-card::after {
+  content: "";
+  position: absolute;
+  inset: auto -28px -42px auto;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(247, 211, 91, 0.16), transparent 66%);
+  pointer-events: none;
+}
+
+.meaning-icon,
+.video-frame {
+  position: relative;
+  z-index: 1;
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  background-image: url("/atlas-repo-game/assets/game/game-icon-sheet-v1.png");
+  background-repeat: no-repeat;
+  background-size: 300% 300%;
+  background-position: 50% 50%;
+  box-shadow:
+    0 14px 24px rgba(0, 0, 0, 0.34),
+    0 0 0 1px rgba(255, 224, 136, 0.22);
+}
+
+.ecosystem-meaning-card div,
+.video-integration-card div:not(.video-frame) {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 4px;
+}
+
+.ecosystem-meaning-card span,
+.video-integration-card span {
+  color: #8bf28f;
+  font-size: 9px;
+  font-weight: 950;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.ecosystem-meaning-card strong,
+.video-integration-card strong {
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.05;
+}
+
+.ecosystem-meaning-card p,
+.video-integration-card p {
+  margin: 0;
+  color: rgba(235, 243, 239, 0.74);
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+.video-integration-card {
+  grid-template-columns: 92px minmax(0, 1fr);
+  min-height: 128px;
+  border-color: rgba(73, 183, 255, 0.18);
+  background:
+    radial-gradient(circle at 18% 24%, rgba(73, 183, 255, 0.18), transparent 90px),
+    radial-gradient(circle at 92% 8%, rgba(247, 211, 91, 0.12), transparent 100px),
+    linear-gradient(145deg, rgba(20, 28, 38, 0.96), rgba(6, 9, 14, 0.98));
+}
+
+.video-frame {
+  width: 88px;
+  height: 64px;
+  border-radius: 17px;
+  background:
+    linear-gradient(180deg, rgba(10, 18, 28, 0.42), rgba(0, 0, 0, 0.18)),
+    url("/atlas-repo-game/assets/game/game-icon-sheet-v1.png");
+  background-size: auto, 300% 300%;
+  background-position: center, 100% 50%;
+}
+
+.video-frame i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 0 24px rgba(73, 183, 255, 0.34);
+}
+
+.video-frame b {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-left: 11px solid #0b1620;
+  transform: translate(-38%, -50%);
+}
+
+.video-pill-row {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 6px !important;
+  margin-top: 2px;
+}
+
+.video-pill-row em {
+  padding: 4px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  color: rgba(247, 252, 245, 0.78);
+  background: rgba(255, 255, 255, 0.05);
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 850;
+}
+
+.ecosystem-page .product-launch-grid {
+  grid-auto-flow: row;
+  grid-auto-columns: initial;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  overflow: visible;
+}
+
+.ecosystem-page .launch-card {
+  min-height: 98px;
+}
+
+.ecosystem-page .game-hero {
+  min-height: 214px;
+}
+
+.ecosystem-page .game-hero h1 {
+  font-size: 34px;
+}
+
+.ecosystem-page .game-hero p {
+  max-width: 210px;
+}
+
+@media (max-width: 370px) {
+  .ecosystem-meaning-card,
+  .video-integration-card {
+    grid-template-columns: 54px minmax(0, 1fr);
+    min-height: 122px;
+  }
+
+  .meaning-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .video-frame {
+    width: 54px;
+    height: 54px;
+  }
+}
