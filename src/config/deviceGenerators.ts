@@ -3,29 +3,29 @@ import type { DeviceGenerator } from "../types/game";
 export const deviceGenerators: DeviceGenerator[] = [
   {
     id: "phone-render-bot",
-    name: "Phone Render Bot",
+    name: "Auto Clicker Bot",
     tier: "starter",
-    description: "A small phone-style bot that clips drafts, captions shorts and keeps Compute trickling in.",
+    description: "A simple idle helper that keeps tapping room points while the player is away.",
     costCompute: 45,
     ratePerHour: 18,
-    unlock: "Buy after first room generator"
+    unlock: "Auto taps the room"
   },
   {
     id: "macbook-social-kit",
-    name: "MacBook Social Kit",
+    name: "Storage Drive",
     tier: "pro",
-    description: "Kirill's editing/social kit for posts, cuts, thumbnails and service announcements.",
+    description: "Stores more generated signals, drafts and product actions before the next strategy push.",
     costCompute: 120,
     ratePerHour: 55,
-    unlock: "Needs Atlas Rank 2 later"
+    unlock: "More room capacity"
   },
   {
     id: "mac-mini-render-node",
-    name: "Mac mini Render Node",
+    name: "Mac mini Ability Node",
     tier: "render",
-    description: "Dedicated render device for vertical videos, service promos and Kirill's social content pipeline.",
+    description: "Dedicated ability node for UBT/video generation, service promos and content strategy.",
     costCompute: 260,
     ratePerHour: 140,
-    unlock: "Crowdfunding target preview: $1,000"
+    unlock: "Unlocks render abilities later"
   }
 ];

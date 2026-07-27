@@ -6055,6 +6055,123 @@ code {
   font-style: normal;
 }
 
+.idle-upgrade-panel,
+.social-quest-panel {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(128, 242, 141, 0.14), transparent 110px),
+    linear-gradient(180deg, rgba(20, 28, 28, 0.96), rgba(7, 12, 14, 0.98));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 16px 28px rgba(0, 0, 0, 0.28);
+}
+
+.social-quest-panel {
+  background:
+    radial-gradient(circle at 88% 0%, rgba(93, 211, 255, 0.14), transparent 110px),
+    linear-gradient(180deg, rgba(19, 25, 33, 0.96), rgba(7, 11, 15, 0.98));
+}
+
+.idle-upgrade-row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 138px;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.idle-upgrade-card,
+.social-quest-list button {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  gap: 5px;
+  min-height: 104px;
+  padding: 11px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 15px;
+  text-align: left;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.025)),
+    rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.idle-upgrade-card::before,
+.social-quest-list button::before {
+  content: "";
+  position: absolute;
+  right: -20px;
+  top: -22px;
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 210, 94, 0.22), transparent 68%);
+}
+
+.idle-upgrade-card span,
+.idle-upgrade-card strong,
+.idle-upgrade-card em,
+.social-quest-list span,
+.social-quest-list strong,
+.social-quest-list em {
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+
+.idle-upgrade-card span,
+.social-quest-list span {
+  color: #9fe8ff;
+  font-size: 9px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.idle-upgrade-card strong,
+.social-quest-list strong {
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.05;
+}
+
+.idle-upgrade-card em,
+.social-quest-list em {
+  color: rgba(228, 239, 242, 0.68);
+  font-size: 10px;
+  font-style: normal;
+  line-height: 1.22;
+}
+
+.idle-upgrade-card.is-owned,
+.social-quest-list button.is-claimed {
+  border-color: rgba(128, 242, 141, 0.3);
+  background:
+    radial-gradient(circle at 82% 10%, rgba(128, 242, 141, 0.18), transparent 54px),
+    linear-gradient(145deg, rgba(20, 70, 42, 0.78), rgba(8, 18, 14, 0.96));
+}
+
+.idle-upgrade-card:disabled,
+.social-quest-list button:disabled {
+  opacity: 0.62;
+}
+
+.social-quest-list {
+  display: grid;
+  gap: 8px;
+}
+
+.social-quest-list button {
+  min-height: 86px;
+}
+
 @media (max-width: 370px) {
   .product-action-grid {
     grid-auto-columns: 150px;

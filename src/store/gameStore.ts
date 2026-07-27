@@ -21,6 +21,7 @@ export interface GameState {
   purchasedDeviceGeneratorIds: string[];
   purchasedPerkRewardIds: string[];
   purchasedProductActionIds: string[];
+  claimedSocialQuestIds: string[];
   mockSupportUsd: number;
   generatorPurchasedAt?: string;
   lastSavedAt: string;
@@ -83,6 +84,7 @@ const initialState = (): GameState => ({
   purchasedDeviceGeneratorIds: [],
   purchasedPerkRewardIds: [],
   purchasedProductActionIds: [],
+  claimedSocialQuestIds: [],
   mockSupportUsd: 0,
   lastSavedAt: nowIso(),
   lastOfflineClaimAt: nowIso(),
@@ -109,7 +111,8 @@ function loadState(): GameState {
       supportLedger: parsed.supportLedger ?? initial.supportLedger,
       purchasedDeviceGeneratorIds: parsed.purchasedDeviceGeneratorIds ?? initial.purchasedDeviceGeneratorIds,
       purchasedPerkRewardIds: parsed.purchasedPerkRewardIds ?? initial.purchasedPerkRewardIds,
-      purchasedProductActionIds: parsed.purchasedProductActionIds ?? initial.purchasedProductActionIds
+      purchasedProductActionIds: parsed.purchasedProductActionIds ?? initial.purchasedProductActionIds,
+      claimedSocialQuestIds: parsed.claimedSocialQuestIds ?? initial.claimedSocialQuestIds
     };
   } catch {
     return initialState();
@@ -464,7 +467,7 @@ export function useGameStore() {
       return {
         ...current,
         mockSupportUsd: current.mockSupportUsd + 1000,
-        resources: { ...current.resources, fbc: current.resources.fbc + 1000 },
+        resources: { ...current.resources, fbc: current.resources.fbc + 1000, compute: current.resources.compute + 250 },
         supportLedger: [
           entry,
           ...current.supportLedger
@@ -482,9 +485,38 @@ export function useGameStore() {
         ].slice(0, 20),
         transactions: [
           tx("fbc", 1000, "mock_mac_mini_support_fbc"),
+          tx("compute", 250, "support_bp_boost"),
           ...current.transactions
         ].slice(0, 30),
-        debugMessage: "Mock support registered: +1000 FBC. No real payment, token, equity or return."
+        debugMessage: "Mock support registered: +1000 FBC and +250 BP. No real payment, token, equity or return."
+      };
+    });
+    return ok;
+  }
+
+  function claimSocialQuest(questId: string, rewardCompute: number, title: string): boolean {
+    let ok = false;
+    setState((current) => {
+      if (current.claimedSocialQuestIds.includes(questId)) {
+        return { ...current, debugMessage: `${title} reward already claimed.` };
+      }
+      ok = true;
+      return {
+        ...current,
+        claimedSocialQuestIds: [...current.claimedSocialQuestIds, questId],
+        resources: { ...current.resources, compute: current.resources.compute + rewardCompute },
+        transactions: [
+          tx("compute", rewardCompute, `social_quest_${questId}`),
+          ...current.transactions
+        ].slice(0, 30),
+        contributionEvents: [
+          {
+            ...contributionEvent(title, rewardCompute, "Social quest reward for spreading the ecosystem."),
+            source: "network" as const
+          },
+          ...current.contributionEvents
+        ].slice(0, 24),
+        debugMessage: `${title}: +${rewardCompute} BP social reward.`
       };
     });
     return ok;
@@ -566,6 +598,7 @@ export function useGameStore() {
     mockSupportMacMini,
     buyPerkReward,
     buyProductAction,
+    claimSocialQuest,
     claimOfflineNow,
     answerRepo,
     completeAtlasMission,

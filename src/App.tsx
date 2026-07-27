@@ -114,6 +114,7 @@ export default function App() {
           onMockSupportMacMini={game.mockSupportMacMini}
           onBuyPerkReward={game.buyPerkReward}
           onBuyProductAction={game.buyProductAction}
+          onClaimSocialQuest={game.claimSocialQuest}
         />
       )}
       <BottomNavigation

@@ -17,6 +17,7 @@ interface Props {
   onMockSupportMacMini: () => void;
   onBuyPerkReward: (perkId: string) => void;
   onBuyProductAction: (actionId: string, costCompute: number, title: string) => void;
+  onClaimSocialQuest: (questId: string, rewardCompute: number, title: string) => void;
 }
 
 const marketExtras = [
@@ -95,10 +96,16 @@ const productRoomActions = [
   }
 ];
 
-export function AppPages({ view, state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onMockSupportMacMini, onBuyPerkReward, onBuyProductAction }: Props) {
+const socialQuests = [
+  { id: "tell-story", title: "Tell about us", rewardCompute: 60, detail: "Share the ecosystem story in chat, channel or social feed." },
+  { id: "invite-friend", title: "Invite a friend", rewardCompute: 90, detail: "Bring someone who may use AtlasRepo, Want2View or FabricBot." },
+  { id: "connect-service", title: "Bring a project", rewardCompute: 140, detail: "Suggest a product/service that can join the ecosystem later." }
+];
+
+export function AppPages({ view, state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onMockSupportMacMini, onBuyPerkReward, onBuyProductAction, onClaimSocialQuest }: Props) {
   if (view === "ecosystem") return <EcosystemPage state={state} />;
   if (view === "participate") return <ParticipatePage state={state} onMockSupportMacMini={onMockSupportMacMini} />;
-  if (view === "my-room") return <MyRoomPage state={state} onBuild={onBuild} onBuyGenerator={onBuyGenerator} onBuyDeviceGenerator={onBuyDeviceGenerator} onBuyProductAction={onBuyProductAction} onBuyPerkReward={onBuyPerkReward} />;
+  if (view === "my-room") return <MyRoomPage state={state} onBuild={onBuild} onBuyGenerator={onBuyGenerator} onBuyDeviceGenerator={onBuyDeviceGenerator} onBuyProductAction={onBuyProductAction} onBuyPerkReward={onBuyPerkReward} onClaimSocialQuest={onClaimSocialQuest} />;
   return <MarketPage state={state} onBuyPerkReward={onBuyPerkReward} />;
 }
 
@@ -414,7 +421,7 @@ function SupportLedger({ state }: { state: GameState }) {
   );
 }
 
-function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onBuyProductAction, onBuyPerkReward }: { state: GameState; onBuild: () => void; onBuyGenerator: () => void; onBuyDeviceGenerator: (generatorId: string) => void; onBuyProductAction: (actionId: string, costCompute: number, title: string) => void; onBuyPerkReward: (perkId: string) => void }) {
+function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onBuyProductAction, onBuyPerkReward, onClaimSocialQuest }: { state: GameState; onBuild: () => void; onBuyGenerator: () => void; onBuyDeviceGenerator: (generatorId: string) => void; onBuyProductAction: (actionId: string, costCompute: number, title: string) => void; onBuyPerkReward: (perkId: string) => void; onClaimSocialQuest: (questId: string, rewardCompute: number, title: string) => void }) {
   const totalRate = getTotalComputeRatePerHour(state);
   const myRoomBg = `${import.meta.env.BASE_URL}assets/game/my-room-game-bg-v1.png`;
 
@@ -470,25 +477,63 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator, onBu
         <div><span>Level</span><strong>{state.accountLevel}</strong></div>
         <div><span>FBC</span><strong>{Math.floor(state.resources.fbc)}</strong></div>
       </div>
+      <IdleUpgradePanel state={state} onBuyGenerator={onBuyGenerator} onBuyDeviceGenerator={onBuyDeviceGenerator} />
+      <SocialQuestPanel state={state} onClaimSocialQuest={onClaimSocialQuest} />
       <ProductSpendPanel state={state} onBuyProductAction={onBuyProductAction} onBuyPerkReward={onBuyPerkReward} />
       <AgentBench />
       <TaskDeck />
-      {!state.generatorPurchased && <button className="primary-cta" onClick={onBuyGenerator}>Buy first room generator · 25</button>}
-      <section className="room-upgrade-grid">
+    </section>
+  );
+}
+
+function IdleUpgradePanel({ state, onBuyGenerator, onBuyDeviceGenerator }: { state: GameState; onBuyGenerator: () => void; onBuyDeviceGenerator: (generatorId: string) => void }) {
+  return (
+    <section className="idle-upgrade-panel">
+      <div className="section-head">
+        <span>Idle upgrades</span>
+        <strong>Make the room play itself</strong>
+      </div>
+      <div className="idle-upgrade-row">
+        <button className={`idle-upgrade-card ${state.generatorPurchased ? "is-owned" : ""}`} disabled={state.generatorPurchased || state.resources.compute < 25} onClick={onBuyGenerator}>
+          <span>Core</span>
+          <strong>Auto Clicker</strong>
+          <em>{state.generatorPurchased ? `Lvl ${state.generatorLevel} online` : "25 BP · starts passive clicks"}</em>
+        </button>
         {deviceGenerators.map((item) => {
           const owned = state.purchasedDeviceGeneratorIds.includes(item.id);
+          const affordable = state.resources.compute >= item.costCompute;
           return (
-            <article className={`room-upgrade-card tier-card-${item.tier} ${owned ? "is-owned" : ""}`} key={item.id}>
-              <i className="upgrade-aura" />
-              <div className={`upgrade-icon tier-${item.tier}`} />
+            <button className={`idle-upgrade-card tier-${item.tier} ${owned ? "is-owned" : ""}`} disabled={owned || !affordable} onClick={() => onBuyDeviceGenerator(item.id)} key={item.id}>
+              <span>{item.tier}</span>
               <strong>{item.name}</strong>
-              <span>+{item.ratePerHour}/hr</span>
-              <em>{item.unlock}</em>
-              <button disabled={owned} onClick={() => onBuyDeviceGenerator(item.id)}><span>{owned ? "Owned" : `${item.costCompute} pts`}</span></button>
-            </article>
+              <em>{owned ? `+${item.ratePerHour}/hr active` : `${item.costCompute} BP · +${item.ratePerHour}/hr`}</em>
+            </button>
           );
         })}
-      </section>
+      </div>
+    </section>
+  );
+}
+
+function SocialQuestPanel({ state, onClaimSocialQuest }: { state: GameState; onClaimSocialQuest: (questId: string, rewardCompute: number, title: string) => void }) {
+  return (
+    <section className="social-quest-panel">
+      <div className="section-head">
+        <span>Social quests</span>
+        <strong>Bring people into the ecosystem</strong>
+      </div>
+      <div className="social-quest-list">
+        {socialQuests.map((quest) => {
+          const claimed = state.claimedSocialQuestIds.includes(quest.id);
+          return (
+            <button className={claimed ? "is-claimed" : ""} disabled={claimed} onClick={() => onClaimSocialQuest(quest.id, quest.rewardCompute, quest.title)} key={quest.id}>
+              <span>+{quest.rewardCompute} BP</span>
+              <strong>{quest.title}</strong>
+              <em>{claimed ? "Reward claimed" : quest.detail}</em>
+            </button>
+          );
+        })}
+      </div>
     </section>
   );
 }
