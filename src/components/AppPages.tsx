@@ -27,12 +27,34 @@ export function AppPages({ view, state, onBuild, onBuyGenerator, onBuyDeviceGene
 function EcosystemPage() {
   return (
     <section className="app-page ecosystem-page">
-      <header className="page-hero">
-        <span>FabricBot Ecosystem</span>
-        <h1>Build products from one room</h1>
-        <p>AtlasRepo, Want2View, FabricBot and future tools become a playable business map.</p>
+      <header className="game-hero ecosystem-hero">
+        <div>
+          <span>FabricBot Ecosystem</span>
+          <h1>Bot Factory</h1>
+          <p>Our products. Our power.</p>
+        </div>
+        <div className="factory-diorama" aria-hidden="true">
+          <i className="factory-base" />
+          <i className="factory-tower" />
+          <i className="factory-screen" />
+          <i className="factory-park park-a" />
+          <i className="factory-park park-b" />
+        </div>
       </header>
-      <div className="ecosystem-map">
+      <section className="product-launch-grid">
+        {products.map((product, index) => (
+          <article className={`launch-card launch-${product.color}`} key={product.id}>
+            <i className="launch-icon" />
+            <div>
+              <strong>{product.name}</strong>
+              <span>{product.description}</span>
+              <em>LVL {12 - index}</em>
+            </div>
+            <b />
+          </article>
+        ))}
+      </section>
+      <div className="ecosystem-map compact-map">
         <div className="map-grid" />
         <div className="ecosystem-road road-a" />
         <div className="ecosystem-road road-b" />
@@ -74,10 +96,13 @@ function ParticipatePage({ state, onMockSupportMacMini }: { state: GameState; on
 
   return (
     <section className="app-page participate-page">
-      <header className="page-hero">
-        <span>Participate</span>
-        <h1>Help the ecosystem survive and grow</h1>
-        <p>Support is crowdfunding in prototype mode. No equity, token claim, profit share or guaranteed return.</p>
+      <header className="game-hero support-hero">
+        <div>
+          <span>Participate & Support</span>
+          <h1>Ecosystem Runway</h1>
+          <p>Keeping the mission alive and building for the future.</p>
+        </div>
+        <div className="support-heart" aria-hidden="true"><i /></div>
       </header>
       <article className="runway-card">
         <div className="runway-top">
@@ -92,6 +117,12 @@ function ParticipatePage({ state, onMockSupportMacMini }: { state: GameState; on
         <i style={{ width: `${runwayProgress}%` }} />
         <p>{runwayGoal.strategy}</p>
       </article>
+      <section className="need-grid">
+        <MiniNeed icon="compute" label="AI Compute" value="48%" />
+        <MiniNeed icon="feature" label="New Features" value="72%" />
+        <MiniNeed icon="marketing" label="Marketing" value="36%" />
+        <MiniNeed icon="talent" label="Talent" value="61%" />
+      </section>
       <button className="wallet-preview-card" onClick={onMockSupportMacMini}>
         <span>Telegram Wallet preview</span>
         <strong>$1000 support route</strong>
@@ -108,6 +139,16 @@ function ParticipatePage({ state, onMockSupportMacMini }: { state: GameState; on
         <Supporter name="Future partner" role="Reserved slot" amount={0} />
       </section>
     </section>
+  );
+}
+
+function MiniNeed({ icon, label, value }: { icon: string; label: string; value: string }) {
+  return (
+    <article className={`need-card need-${icon}`}>
+      <i />
+      <strong>{label}</strong>
+      <span>{value}</span>
+    </article>
   );
 }
 
@@ -128,10 +169,9 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator }: { 
 
   return (
     <section className="app-page my-room-page">
-      <header className="page-hero compact">
-        <span>My Room</span>
-        <h1>Personal idle room</h1>
-        <p>Click, buy items, unlock levels and earn virtual room points.</p>
+      <header className="room-title-bar">
+        <div className="room-badge">Our Room</div>
+        <div className="room-currency-pill"><span>FBC</span><strong>{Math.floor(state.resources.fbc)}</strong></div>
       </header>
       <div className="player-room-stage">
         <div className="room-wall-panel" />
@@ -149,6 +189,15 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator }: { 
           <span>+ room points</span>
         </button>
         <div className="room-sofa" />
+        <article className="mac-mini-card">
+          <span>Mac mini</span>
+          <strong>Render Node</strong>
+          <em>Lvl 6</em>
+        </article>
+        <article className="render-power-card">
+          <span>Render Power</span>
+          <strong>84%</strong>
+        </article>
         <div className="room-shelf shelf-left">
           <i />
           <strong>Desk</strong>
@@ -186,14 +235,23 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator }: { 
 function MarketPage({ state, onBuyPerkReward }: { state: GameState; onBuyPerkReward: (perkId: string) => void }) {
   return (
     <section className="app-page market-page">
-      <header className="page-hero compact">
-        <span>Market</span>
-        <h1>Spend credits on ecosystem perks</h1>
-        <p>Prototype reservations only: no real access, token claim or guaranteed discount yet.</p>
+      <header className="game-hero market-hero">
+        <div>
+          <span>Market</span>
+          <h1>Perks from the FabricBot Ecosystem</h1>
+          <p>Boost your support mission. Unlock, earn and reserve rewards.</p>
+        </div>
+        <div className="reward-box" aria-hidden="true"><i /></div>
       </header>
       <div className="market-balance">
         <span>Available FBC</span>
         <strong>{Math.floor(state.resources.fbc)}</strong>
+      </div>
+      <div className="market-tabs" aria-hidden="true">
+        <span>All</span>
+        <span>Promos</span>
+        <span>Access</span>
+        <span>Tools</span>
       </div>
       <section className="market-grid">
         {perkShop.map((perk, index) => {
