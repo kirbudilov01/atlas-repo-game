@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { deviceGenerators } from "../config/deviceGenerators";
 import { fundingGoals } from "../config/funding";
 import { perkShop } from "../config/perks";
@@ -32,14 +33,22 @@ function EcosystemPage() {
         <p>AtlasRepo, Want2View, FabricBot and future tools become a playable business map.</p>
       </header>
       <div className="ecosystem-map">
+        <div className="map-grid" />
+        <div className="ecosystem-road road-a" />
+        <div className="ecosystem-road road-b" />
+        <div className="ecosystem-road road-c" />
         <div className="ecosystem-core">
+          <i className="core-room-icon" />
           <strong>Our Room</strong>
           <span>central project room</span>
         </div>
         {products.map((product, index) => (
-          <article className={`ecosystem-node node-${index}`} key={product.id}>
-            <b>{product.name}</b>
-            <span>{product.role}</span>
+          <article className={`ecosystem-node node-${index} product-${product.color}`} key={product.id}>
+            <i className="product-icon" />
+            <div>
+              <b>{product.name}</b>
+              <span>{product.role}</span>
+            </div>
             <em>{product.metric}</em>
           </article>
         ))}
@@ -71,14 +80,23 @@ function ParticipatePage({ state, onMockSupportMacMini }: { state: GameState; on
         <p>Support is crowdfunding in prototype mode. No equity, token claim, profit share or guaranteed return.</p>
       </header>
       <article className="runway-card">
-        <div>
-          <span>Current runway</span>
-          <strong>${totalSupport} / ${runwayGoal.targetUsd}</strong>
+        <div className="runway-top">
+          <div>
+            <span>Current runway</span>
+            <strong>${totalSupport} / ${runwayGoal.targetUsd}</strong>
+          </div>
+          <div className="runway-ring" style={{ "--progress": `${runwayProgress}%` } as CSSProperties}>
+            <b>{runwayProgress}%</b>
+          </div>
         </div>
         <i style={{ width: `${runwayProgress}%` }} />
         <p>{runwayGoal.strategy}</p>
       </article>
-      <button className="primary-cta wallet-cta" onClick={onMockSupportMacMini}>Telegram Wallet preview</button>
+      <button className="wallet-preview-card" onClick={onMockSupportMacMini}>
+        <span>Telegram Wallet preview</span>
+        <strong>$1000 support route</strong>
+        <em>Mock only · records FBC credit</em>
+      </button>
       <button className="ghost-button wide" onClick={onMockSupportMacMini}>Mock support $1000 · get 1000 FBC</button>
       <section className="support-ledger standalone">
         <div className="support-ledger-head">
@@ -116,14 +134,21 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator }: { 
         <p>Click, buy items, unlock levels and earn virtual room points.</p>
       </header>
       <div className="player-room-stage">
+        <div className="room-wall-panel" />
+        <div className="room-floor-plane" />
         <div className="runner-track">
           <span className="runner-dot" />
+          <em>auto runner</em>
         </div>
+        <div className="room-monitor monitor-left"><i /></div>
+        <div className="room-monitor monitor-right"><i /></div>
         <div className="player-room-window" />
         <button className="room-clicker-object" onClick={onBuild}>
+          <i />
           <b>Build</b>
           <span>+ room points</span>
         </button>
+        <div className="room-sofa" />
         <div className="room-shelf shelf-left">
           <i />
           <strong>Desk</strong>
@@ -148,6 +173,7 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator }: { 
               <div className={`upgrade-icon tier-${item.tier}`} />
               <strong>{item.name}</strong>
               <span>+{item.ratePerHour}/hr</span>
+              <em>{item.unlock}</em>
               <button disabled={owned} onClick={() => onBuyDeviceGenerator(item.id)}>{owned ? "Owned" : `${item.costCompute} pts`}</button>
             </article>
           );
@@ -170,11 +196,11 @@ function MarketPage({ state, onBuyPerkReward }: { state: GameState; onBuyPerkRew
         <strong>{Math.floor(state.resources.fbc)}</strong>
       </div>
       <section className="market-grid">
-        {perkShop.map((perk) => {
+        {perkShop.map((perk, index) => {
           const owned = state.purchasedPerkRewardIds.includes(perk.id);
           const affordable = state.resources[perk.costResource] >= perk.costAmount;
           return (
-            <article className="market-card" key={perk.id}>
+            <article className={`market-card market-card-${index}`} key={perk.id}>
               <div className={`market-icon category-${perk.category}`} />
               <strong>{perk.title}</strong>
               <span>{perk.benefitPreview}</span>
