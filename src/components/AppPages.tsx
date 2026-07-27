@@ -54,15 +54,16 @@ function EcosystemPage() {
       </header>
       <section className="product-launch-grid">
         {products.map((product, index) => (
-          <article className={`launch-card launch-${product.color}`} key={product.id}>
-            <i className="launch-icon" />
-            <div>
-              <strong>{product.name}</strong>
-              <span>{product.description}</span>
-              <em>LVL {12 - index}</em>
-            </div>
-            <b />
-          </article>
+            <article className={`launch-card launch-${product.color}`} key={product.id}>
+              <i className="launch-icon" />
+              <div>
+                <strong>{product.name}</strong>
+                <span>{product.description}</span>
+                <em>LVL {12 - index}</em>
+                <small><u style={{ width: `${Math.max(36, 76 - index * 9)}%` }} /></small>
+              </div>
+              <b />
+            </article>
         ))}
       </section>
       <article className="ecosystem-level-card">
@@ -261,7 +262,7 @@ function MyRoomPage({ state, onBuild, onBuyGenerator, onBuyDeviceGenerator }: { 
               <strong>{item.name}</strong>
               <span>+{item.ratePerHour}/hr</span>
               <em>{item.unlock}</em>
-              <button disabled={owned} onClick={() => onBuyDeviceGenerator(item.id)}>{owned ? "Owned" : `${item.costCompute} pts`}</button>
+              <button disabled={owned} onClick={() => onBuyDeviceGenerator(item.id)}><span>{owned ? "Owned" : `${item.costCompute} pts`}</span></button>
             </article>
           );
         })}
@@ -305,7 +306,7 @@ function MarketPage({ state, onBuyPerkReward }: { state: GameState; onBuyPerkRew
               <strong>{perk.title}</strong>
               <span>{perk.benefitPreview}</span>
               <button disabled={owned || !affordable} onClick={() => onBuyPerkReward(perk.id)}>
-                {owned ? "Reserved" : `${perk.costAmount} FBC`}
+                <span>{owned ? "Reserved" : `${perk.costAmount} FBC`}</span>
               </button>
             </article>
           );
@@ -315,7 +316,7 @@ function MarketPage({ state, onBuyPerkReward }: { state: GameState; onBuyPerkRew
             <div className={`market-icon category-${perk.category}`} />
             <strong>{perk.title}</strong>
             <span>{perk.body}</span>
-            <button disabled>{perk.cost} FBC</button>
+            <button disabled><span>{perk.cost} FBC</span></button>
           </article>
         ))}
       </section>
