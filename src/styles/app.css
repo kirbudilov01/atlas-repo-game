@@ -7766,3 +7766,221 @@ code {
 .my-room-page .stat-grid strong {
   font-size: 14px;
 }
+
+/* Section-by-section polish: reduce visual conflicts between game objects and UI cards. */
+.room-backdrop {
+  min-height: 405px;
+}
+
+.room-location-layer {
+  z-index: 16;
+}
+
+.room-hotspot,
+.room-donate-cta {
+  grid-template-columns: 30px minmax(0, 1fr);
+  min-width: 118px;
+  max-width: 145px;
+  min-height: 58px;
+  padding: 8px;
+  border-radius: 15px;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(255, 255, 255, 0.12), transparent 36px),
+    linear-gradient(145deg, rgba(10, 18, 18, 0.78), rgba(4, 7, 9, 0.68));
+  backdrop-filter: blur(10px) saturate(1.12);
+}
+
+.room-hotspot i {
+  width: 25px;
+  height: 25px;
+  border-radius: 9px;
+}
+
+.room-hotspot span,
+.room-donate-cta span {
+  font-size: 7px;
+}
+
+.room-hotspot strong,
+.room-donate-cta strong {
+  font-size: 12px;
+}
+
+.room-hotspot em,
+.room-donate-cta em {
+  font-size: 8px;
+}
+
+.hotspot-want2view {
+  left: 8%;
+  top: 34%;
+}
+
+.hotspot-atlasrepo {
+  right: 5%;
+  top: 34%;
+}
+
+.mac-mini-hotspot {
+  left: 5%;
+  top: 60%;
+}
+
+.couch-support-hotspot {
+  left: auto;
+  right: 22%;
+  top: 59%;
+}
+
+.room-donate-cta {
+  bottom: 10px;
+  width: min(70%, 255px);
+  min-height: 50px;
+  padding-inline: 12px;
+  border-color: rgba(128, 242, 141, 0.34);
+}
+
+.generator-node {
+  right: 35%;
+  top: 50%;
+  z-index: 15;
+  padding: 4px 7px;
+  border-radius: 999px;
+  font-size: 9px;
+  background: rgba(20, 12, 38, 0.76);
+}
+
+.room-object.object-kirill {
+  left: 41% !important;
+  top: 66% !important;
+}
+
+.room-object.object-black-box {
+  left: 63% !important;
+  top: 66% !important;
+}
+
+.market-page {
+  gap: 8px;
+}
+
+.market-page .market-hero {
+  min-height: 142px;
+}
+
+.market-page .game-hero h1 {
+  font-size: 26px;
+}
+
+.market-page .game-hero p {
+  max-width: 260px;
+  font-size: 10px;
+}
+
+.bp-market-balance {
+  min-height: 48px;
+  padding: 8px 11px;
+}
+
+.bp-market-balance i {
+  width: 36px;
+  height: 36px;
+}
+
+.bp-market-balance strong {
+  font-size: 24px;
+}
+
+.market-page .market-card {
+  grid-template-columns: 38px minmax(0, 1fr);
+  min-height: 128px;
+  padding: 9px;
+  gap: 4px 8px;
+}
+
+.market-page .market-card .game-card-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+}
+
+.market-page .market-card strong {
+  font-size: 11px;
+  line-height: 1.08;
+}
+
+.market-page .market-card span {
+  font-size: 9px;
+  line-height: 1.12;
+}
+
+.market-page .market-card em {
+  padding: 2px 6px;
+}
+
+.market-page .market-card button {
+  min-height: 30px;
+  border-radius: 11px;
+}
+
+.market-page .market-card button span {
+  font-size: 10px;
+}
+
+.participate-page {
+  gap: 8px;
+}
+
+.participate-page .support-hero {
+  min-height: 146px;
+}
+
+.participate-page .roadmap-action-card {
+  min-height: 80px;
+}
+
+.participate-page .autonomy-roadmap-card {
+  min-height: 102px;
+}
+
+.latest-support-receipt {
+  min-height: 48px;
+  padding: 9px 12px;
+}
+
+.my-room-page .player-room-stage {
+  min-height: 382px;
+}
+
+.my-room-page .notebook-status-card,
+.my-room-page .mac-mini-card,
+.my-room-page .room-clicker-object {
+  transform: scale(0.96);
+  transform-origin: center;
+}
+
+.room-donate-cta {
+  grid-template-columns: minmax(0, 1fr);
+  width: min(76%, 300px);
+  min-height: 46px;
+  padding: 8px 14px;
+  text-align: left;
+}
+
+.room-donate-cta span,
+.room-donate-cta strong,
+.room-donate-cta em {
+  grid-column: 1;
+}
+
+.room-donate-cta span {
+  font-size: 8px;
+}
+
+.room-donate-cta strong {
+  font-size: 14px;
+}
+
+.room-donate-cta em {
+  display: none;
+}
