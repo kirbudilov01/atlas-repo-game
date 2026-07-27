@@ -30,6 +30,9 @@ Application shell and first retention loop polish in progress. Next work can mov
 - Real photo restored as the main Our Room background; generated art remains a reference, not the core room.
 - Business-game HUD: MRR, Users, Compute and FBC.
 - Five-tab bottom navigation: Ecosystem, Support, Room, My Room, Market.
+- Bottom navigation switches full app pages instead of opening bottom sheets.
+- Standalone Ecosystem, Support, My Room and Market pages.
+- My Room page has a drawn room stage, top runner animation, clicker object and upgrade cards.
 - Six-step animated onboarding carousel.
 - Real-room hotspot layer for desk, monitors, Dell laptop, bed, wall grid and floor zones.
 - More game-like room pins, couch clicker placement and bottom dock.
@@ -162,6 +165,11 @@ Screenshots:
 - `output/playwright/business-onboarding-carousel-final.png`
 - `output/playwright/real-room-business-shell.png`
 - `output/playwright/participate-telegram-wallet-preview.png`
+- `output/playwright/visible-concept-elements-room.png`
+- `output/playwright/page-ecosystem.png`
+- `output/playwright/page-support.png`
+- `output/playwright/page-my-room.png`
+- `output/playwright/page-market.png`
 
 ## Next Stage
 

@@ -1023,6 +1023,296 @@ button {
   box-shadow: inset 0 0 0 1px rgba(32, 200, 120, 0.28), 0 0 18px rgba(32, 200, 120, 0.25);
 }
 
+.app-page {
+  grid-row: 2 / 4;
+  min-height: 0;
+  overflow: auto;
+  padding: 10px 12px 14px;
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(32, 200, 120, 0.08), transparent 18rem),
+    linear-gradient(180deg, rgba(8, 13, 20, 0.96), rgba(5, 7, 12, 0.99));
+}
+
+.page-hero {
+  display: grid;
+  gap: 7px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(32, 200, 120, 0.1), rgba(73, 183, 255, 0.045)),
+    rgba(255,255,255,0.035);
+  padding: 12px;
+}
+
+.page-hero.compact {
+  padding: 10px;
+}
+
+.page-hero span,
+.market-balance span,
+.runway-card span {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.page-hero h1 {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.page-hero p,
+.page-card span,
+.runway-card p,
+.market-card span,
+.room-upgrade-card span {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.ecosystem-map {
+  min-height: 250px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(32, 200, 120, 0.18);
+  border-radius: 10px;
+  background:
+    radial-gradient(circle at 50% 47%, rgba(32, 200, 120, 0.2), transparent 6rem),
+    radial-gradient(circle at 30% 25%, rgba(73, 183, 255, 0.12), transparent 5rem),
+    linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+}
+
+.ecosystem-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 118px;
+  height: 86px;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 3px;
+  border: 1px solid rgba(32, 200, 120, 0.38);
+  border-radius: 8px;
+  background: rgba(5, 12, 10, 0.82);
+  box-shadow: 0 0 38px rgba(32, 200, 120, 0.18);
+}
+
+.ecosystem-core strong,
+.ecosystem-node b,
+.page-card strong,
+.market-card strong,
+.room-upgrade-card strong {
+  font-size: 13px;
+}
+
+.ecosystem-core span,
+.ecosystem-node span,
+.ecosystem-node em {
+  color: var(--muted);
+  font-size: 10px;
+  font-style: normal;
+}
+
+.ecosystem-node {
+  position: absolute;
+  width: 112px;
+  display: grid;
+  gap: 3px;
+  padding: 9px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  background: rgba(12, 17, 26, 0.84);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.32);
+}
+
+.node-0 { left: 12px; top: 18px; border-color: rgba(32,200,120,0.28); }
+.node-1 { right: 12px; top: 18px; border-color: rgba(139,92,246,0.3); }
+.node-2 { left: 12px; bottom: 18px; border-color: rgba(245,158,11,0.3); }
+.node-3 { right: 12px; bottom: 18px; border-color: rgba(73,183,255,0.3); }
+
+.page-card-grid,
+.market-grid,
+.room-upgrade-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.page-card,
+.runway-card,
+.market-balance,
+.market-card,
+.room-upgrade-card {
+  display: grid;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.035);
+  padding: 10px;
+}
+
+.runway-card strong,
+.market-balance strong {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 22px;
+}
+
+.runway-card i {
+  display: block;
+  height: 9px;
+  min-width: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--atlas), var(--gold));
+}
+
+.support-ledger.standalone {
+  padding-top: 10px;
+}
+
+.player-room-stage {
+  position: relative;
+  min-height: 255px;
+  overflow: hidden;
+  border: 1px solid rgba(73, 183, 255, 0.18);
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 50% 72%, rgba(139, 92, 246, 0.18), transparent 6rem),
+    linear-gradient(180deg, #141a21, #070a0f);
+  box-shadow: inset 0 -60px 70px rgba(0,0,0,0.34);
+}
+
+.runner-track {
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  top: 18px;
+  height: 28px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.22);
+}
+
+.runner-dot {
+  position: absolute;
+  top: 5px;
+  left: 4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff, var(--atlas) 45%, rgba(32,200,120,0.12));
+  box-shadow: 0 0 22px rgba(32,200,120,0.6);
+  animation: runner-move 2.8s ease-in-out infinite alternate;
+}
+
+.player-room-window {
+  position: absolute;
+  left: 50%;
+  top: 58px;
+  width: 130px;
+  height: 82px;
+  transform: translateX(-50%);
+  border-radius: 8px;
+  border: 1px solid rgba(73,183,255,0.3);
+  background:
+    linear-gradient(180deg, rgba(73,183,255,0.18), rgba(73,183,255,0.03)),
+    repeating-linear-gradient(90deg, transparent 0 30px, rgba(255,255,255,0.04) 31px 32px);
+}
+
+.room-clicker-object {
+  position: absolute;
+  left: 50%;
+  bottom: 35px;
+  width: 132px;
+  height: 80px;
+  transform: translateX(-50%);
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 2px;
+  border: 1px solid rgba(245, 158, 11, 0.42);
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(245,158,11,0.22), rgba(25, 18, 7, 0.9));
+  box-shadow: 0 0 34px rgba(245,158,11,0.22), inset 0 1px 0 rgba(255,255,255,0.14);
+}
+
+.room-clicker-object b {
+  font-size: 21px;
+}
+
+.room-clicker-object span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.room-shelf {
+  position: absolute;
+  bottom: 43px;
+  display: grid;
+  gap: 5px;
+  justify-items: center;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.shelf-left { left: 26px; }
+.shelf-right { right: 26px; }
+
+.room-shelf i,
+.upgrade-icon,
+.market-icon {
+  display: block;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background:
+    radial-gradient(circle at 50% 35%, rgba(255,255,255,0.2), transparent 12px),
+    rgba(255,255,255,0.06);
+}
+
+.room-upgrade-card,
+.market-card {
+  align-content: start;
+}
+
+.room-upgrade-card button,
+.market-card button {
+  min-height: 34px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 7px;
+  background: rgba(32, 200, 120, 0.12);
+  color: var(--text);
+  font-weight: 800;
+}
+
+.room-upgrade-card button:disabled,
+.market-card button:disabled {
+  opacity: 0.52;
+}
+
+.market-balance {
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+
+.add-project-card {
+  border-color: rgba(73,183,255,0.24);
+}
+
+@keyframes runner-move {
+  from { transform: translateX(0) scale(0.92); }
+  to { transform: translateX(calc(100vw * 0.34)) scale(1.08); }
+}
+
 .sheet-backdrop {
   position: fixed;
   inset: 0;
